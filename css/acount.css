@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #dfdfdf;
+}
+
+.login-box, 
+.register-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 400px;
+    height: 480px;
+    padding: 30px;
+}
+
+.login-header,
+.register-header {
+    text-align: center;
+    margin: 20px 0 40px;
+}
+
+.login-header .tilte,
+.register-header .tilte {
+    color: black;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+/* form */
+form input {
+    border: none;
+    outline: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    font-size: 17px;
+    padding: 0 20px;
+    border-radius: 30px;
+    margin-bottom: 15px;
+}
+
+/* icon */
+input.password {
+    margin-bottom: 5px;
+}
+.pw {
+    position: relative;
+}
+i {
+    position: absolute;
+    top: 17px;
+    right: 20px;
+}
+
+/* forgot password */
+.forgot {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+
+/* button */
+button {
+    width: 100%;
+    height: 40px;
+    font-size: 17px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    background-color: green;
+    color: white;
+    margin: 25px 0;
+}
+
+/* link login, register*/
+.login-link,
+.register-link {
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+    color: red;
+}
