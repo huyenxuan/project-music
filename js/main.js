@@ -1,167 +1,142 @@
-// khai báo
-const audio = document.getElementById('myAudio');
-const togglePlayPause = document.querySelector('.toggle-playPause');
-const progress = document.getElementById('progress');
-const repeatButton = document.querySelector('.btn-repeat');
-const content = document.querySelector('.fullscreen');
-const fullscreenButton = document.getElementById('fullscreenButton');
-const leftTime = document.querySelector('.time.left');
-const rightTime = document.querySelector('.time.right');
-let isPlaying = false;
-let isSeeking = false;
-let isRepeating = false;
+document.addEventListener('DOMContentLoaded', () => {
+    const audio = document.getElementById('myAudio');
 
-
-// func ẩn hiện classname
-function toggleClassName(obj, classOld, classNew) {
-    obj.className = obj.className.replace(classOld, classNew);
-}
-
-// ẩn hiện yêu thích
-const toggleHeart = document.querySelector('.toggle-heart');
-toggleHeart.addEventListener('click', () => {
-    toggleClassName(toggleHeart, 'fa-regular fa-heart', 'fa-solid fa-heart');
-});
-
-// func play / pause nhạc
-function playPause() {
-    if (isPlaying) {
-        audio.pause();
-        toggleClassName(togglePlayPause, 'fa-pause', 'fa-play');
-    } else {
-        audio.play();
-        toggleClassName(togglePlayPause, 'fa-play', 'fa-pause');
+    const repeatButtons = document.querySelectorAll('.btn-repeat');
+    const playPauseButtons = document.querySelectorAll('.btn-toggle-play');
+    const progressBars = document.querySelectorAll('.progress');
+    const leftTimeElements = document.querySelectorAll('.time.left');
+    const rightTimeElements = document.querySelectorAll('.time.right');
+    const fullscreenButton = document.getElementById('fullscreenButton');
+    const fullscreenContent = document.querySelector('.fullscreen');
+    const volumeAudio = document.querySelectorAll('.volume');
+    let isPlaying = false;
+    let isSeeking = false;
+    let isRepeating = false;
+    // xử lý âm lượng
+    volumeAudio.forEach(button => {
+        button.addEventListener('input', () => {
+            audio.volume = button.value / 100;
+        })
+    })
+    // xử lý repeat 
+    repeatButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            isRepeating = !isRepeating;
+            repeatButtons.forEach(btn => btn.classList.toggle('active', isRepeating));
+        });
+    });
+    // xử lý nút phát / tạm dừng
+    playPauseButtons.forEach(button => {
+        button.addEventListener('click', playPause);
+    });
+    // phát / tạm dừng
+    function playPause() {
+        if (isPlaying) {
+            audio.pause();
+        } else {
+            audio.play();
+        }
+        isPlaying = !isPlaying;
+        playPauseButtons.forEach(button => toggleClassName(button.querySelector('i'), 'fa-play', 'fa-pause'));
     }
-    isPlaying = !isPlaying;
-}
+    // thanh tiến trình nhạc
+    progressBars.forEach(bar => {
+        bar.addEventListener('mousedown', () => isSeeking = true);
+        bar.addEventListener('mouseup', (e) => {
+            isSeeking = false;
+            const newTime = (e.target.value / 100) * audio.duration;
+            audio.currentTime = newTime;
+        });
+    });
+    // cập nhật thời gian
+    audio.addEventListener('timeupdate', () => {
+        if (!isSeeking) {
+            const percentage = (audio.currentTime / audio.duration) * 100;
+            progressBars.forEach(bar => bar.value = percentage);
+        }
+        updateDisplayTime();
+    });
+    // hiển thị thời gian
+    function updateDisplayTime() {
+        const currentTime = Math.floor(audio.currentTime);
+        const duration = Math.floor(audio.duration);
+        const currentMinutes = Math.floor(currentTime / 60);
+        const currentSeconds = currentTime % 60;
+        const durationMinutes = Math.floor(duration / 60);
+        const durationSeconds = duration % 60;
 
-// thay đổi icon play / pause
-togglePlayPause.addEventListener('click', playPause);
-document.addEventListener('keydown', (event) => {
-    if (event.code === 'Space') {
-        event.preventDefault();
-        playPause();
+        leftTimeElements.forEach(el => el.textContent = `${currentMinutes.toString().padStart(2, '0')}:${currentSeconds.toString().padStart(2, '0')}`);
+        rightTimeElements.forEach(el => el.textContent = `${durationMinutes.toString().padStart(2, '0')}:${durationSeconds.toString().padStart(2, '0')}`);
     }
-});
-
-// lưu tiến trình nhạc
-function saveState() {
-    localStorage.setItem('isPlaying', isPlaying);
-    localStorage.setItem('currentTime', audio.currentTime);
-}
-// lấy tiến trình nhạc
-function restoreState() {
-    const savedIsPlaying = localStorage.getItem('isPlaying');
-    const savedCurrentTime = localStorage.getItem('currentTime');
-    if (savedIsPlaying === 'true') {
-        audio.play();
-        audio.currentTime = savedCurrentTime;
-        toggleClassName(togglePlayPause, 'fa-play', 'fa-pause');
+    // thay đổi tên class
+    function toggleClassName(element, class1, class2) {
+        if (element.classList.contains(class1)) {
+            element.classList.remove(class1);
+            element.classList.add(class2);
+        } else {
+            element.classList.remove(class2);
+            element.classList.add(class1);
+        }
     }
-    isPlaying = savedIsPlaying === 'true';
-}
+    // xử lý khi hết bài
+    audio.addEventListener('ended', () => {
+        if (isRepeating) {
+            audio.currentTime = 0;
+            audio.play();
+        } else {
+            toggleClassName(togglePlayPause, 'fa-pause', 'fa-play');
+            isPlaying = false;
+        }
 
-window.onbeforeunload = saveState;
-window.onload = restoreState;
+    });
 
-// cập nhật tiến trình 
-audio.addEventListener('timeupdate', () => {
-    if (!isSeeking) {
-        const percentage = (audio.currentTime / audio.duration) * 100;
-        progress.value = percentage;
-    }
-    updateDisplayTime();
-});
+    // Thêm sự kiện keydown để phát/tạm dừng bài hát khi nhấn phím Space
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space') {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của phím Space
+            playPause();
+        }
+    });
 
-// cập nhật tgian
-function updateDisplayTime() {
-    const currentTime = Math.floor(audio.currentTime);
-    const duration = Math.floor(audio.duration);
-    const currentMinutes = Math.floor(currentTime / 60);
-    const currentSeconds = currentTime % 60;
-    const durationMinutes = Math.floor(duration / 60);
-    const durationSeconds = duration % 60;
-
-    leftTime.textContent = `${currentMinutes.toString().padStart(2, '0')}:${currentSeconds.toString().padStart(2, '0')}`;
-    rightTime.textContent = `${durationMinutes.toString().padStart(2, '0')}:${durationSeconds.toString().padStart(2, '0')}`;
-}
-
-// tua nhạc
-progress.addEventListener('mousedown', () => {
-    isSeeking = true;
-});
-progress.addEventListener('mouseup', (e) => {
-    isSeeking = false;
-    const newTime = (e.target.value / 100) * audio.duration;
-    audio.currentTime = newTime;
-});
-
-// lặp bài
-repeatButton.addEventListener('click', () => {
-    isRepeating = !isRepeating;
-    if (isRepeating) {
-        repeatButton.classList.add('active');
-    } else {
-        repeatButton.classList.remove('active');
-    }
-});
-
-// xử lý khi hết bài
-audio.addEventListener('ended', () => {
-    if (isRepeating) {
-        audio.currentTime = 0;
-        audio.play();
-    } else {
-        toggleClassName(togglePlayPause, 'fa-pause', 'fa-play');
-        isPlaying = false;
+    // Fullscreen functionality
+    function enterFullscreen() {
+        if (fullscreenContent.requestFullscreen) {
+            fullscreenContent.requestFullscreen();
+        } else if (fullscreenContent.mozRequestFullScreen) { // Firefox
+            fullscreenContent.mozRequestFullScreen();
+        } else if (fullscreenContent.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            fullscreenContent.webkitRequestFullscreen();
+        } else if (fullscreenContent.msRequestFullscreen) { // IE/Edge
+            fullscreenContent.msRequestFullscreen();
+        }
+        fullscreenContent.classList.add('show');
+        fullscreenButton.style.display = 'none';
     }
 
-});
+    function exitFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+        fullscreenContent.classList.remove('show');
+        fullscreenButton.style.display = 'block';
+    }
 
-// func full màn hình
-function enterFullscreen() {
-    content.classList.add('show');
-    fullscreenButton.style.display = 'none';
+    document.addEventListener('fullscreenchange', checkFullscreen);
+    document.addEventListener('webkitfullscreenchange', checkFullscreen);
+    document.addEventListener('mozfullscreenchange', checkFullscreen);
+    document.addEventListener('msfullscreenchange', checkFullscreen);
 
-    if (content.requestFullscreen) {
-        content.requestFullscreen();
-    } else if (content.mozRequestFullScreen) { // Firefox
-        content.mozRequestFullScreen();
-    } else if (content.webkitRequestFullscreen) { // Chrome, Safari, Opera
-        content.webkitRequestFullscreen();
-    } else if (content.msRequestFullscreen) { // IE/Edge
-        content.msRequestFullscreen();
+    function checkFullscreen() {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+            exitFullscreen();
+        }
     }
-}
 
-function exitFullscreen() {
-    content.classList.remove('show');
-    fullscreenButton.style.display = 'block';
-}
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-        exitFullscreen();
-    }
+    fullscreenButton.addEventListener('click', enterFullscreen);
 });
-document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement) {
-        exitFullscreen();
-    }
-});
-document.addEventListener('mozfullscreenchange', () => {
-    if (!document.mozFullScreenElement) {
-        exitFullscreen();
-    }
-});
-document.addEventListener('webkitfullscreenchange', () => {
-    if (!document.webkitFullscreenElement) {
-        exitFullscreen();
-    }
-});
-document.addEventListener('msfullscreenchange', () => {
-    if (!document.msFullscreenElement) {
-        exitFullscreen();
-    }
-});
-
-

@@ -129,7 +129,7 @@
                             </div>
                         </div>
                         <!-- time -->
-                        <div class="item">
+                        <div class="item-time">
                             <div class="time left">00:00</div>
                             <div class="duration-bar">
                                 <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
@@ -145,7 +145,7 @@
                             </div>
                             <div class="btn btn-volume">
                                 <i class="fa-solid fa-volume-high"></i>
-                                <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+                                <input id="volume" class="volume" type="range" value="100" step="1" min="0" max="100">
                             </div>
                             <div class="btn btn-zoom" id="fullscreenButton" onclick="enterFullscreen()">
                                 <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
@@ -157,11 +157,45 @@
 
             <!-- fullcreen -->
             <div class="fullscreen">
-                <div class="image-song">
-                    <img src="asset/music/img/Trống Cơm.jpg" alt="">
+                <div class="song-title">
+                    <div class="image-song">
+                        <img src="asset/music/img/Trống Cơm.jpg" alt="">
+                    </div>
+                    <div class="title">
+                        <div class="name-song">Trống cơm</div>
+                        <div class="artists">Cường Seven, Soobin, Tự Long</div>
+                    </div>
                 </div>
-                <div class="name-song">Trống cơm</div>
-                <div class="artists">Cường Seven, Soobin, Tự Long</div>
+                <div class="player-control-bar">
+                    <!-- action song -->
+                    <div class="action-ctn">
+                        <div class="action">
+                            <div class="btn btn-repeat">
+                                <i class="fas fa-redo"></i>
+                            </div>
+                            <div class="btn btn-prev">
+                                <i class="fas fa-step-backward"></i>
+                            </div>
+                            <div class="btn btn-toggle-play">
+                                <i class="toggle-playPause fas fa-play"></i>
+                            </div>
+                            <div class="btn btn-next">
+                                <i class="fas fa-step-forward"></i>
+                            </div>
+                            <div class="btn btn-random">
+                                <i class="fas fa-random"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- time -->
+                    <div class="item-time">
+                        <div class="time left">00:00</div>
+                        <div class="duration-bar">
+                            <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+                        </div>
+                        <div class="time right">00:00</div>
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -1,5 +1,7 @@
 :root {
     --primary-color: #88C562;
+    --primary-color-text: black;
+    --color-text-secondary: gray;
 }
 
 * {
@@ -14,40 +16,49 @@ header {
     height: 80px;
     background-color: var(--primary-color);
 }
+
 .hd-ctn {
     width: 100%;
     margin: auto;
     max-width: 1240px;
     display: flex;
 }
+
 .hd-ctn .logo {
     width: 80px;
     height: 80px;
 }
+
 .hd-ctn .logo img {
     width: 100%;
 }
+
 /* menu */
 .menu {
     align-content: center;
     margin-left: 30px;
 }
+
 .menu ul {
     display: flex;
     list-style: none;
 }
+
 .menu ul li {
     padding: 0 10px;
 }
+
 a {
     text-decoration: none;
-    color: black;
+    color: var(--primary-color-text);
     font-weight: 600;
     font-size: 17px;
 }
+
 .menu ul a:hover {
-    color: grey;
+    color: var(--color-text-secondary);
 }
+
 /* search */
 .search {
     position: relative;
@@ -55,6 +66,7 @@ a {
     align-content: center;
     margin-left: 30px;
 }
+
 .search i {
     position: absolute;
     right: 10px;
@@ -62,6 +74,7 @@ a {
     transform: translateY(-50%);
     cursor: pointer;
 }
+
 .search input {
     width: 100%;
     height: 30px;
@@ -71,6 +84,7 @@ a {
     padding-left: 10px;
     margin-bottom: 7px;
 }
+
 /* timer */
 .timer {
     align-content: center;
@@ -80,11 +94,13 @@ a {
     display: flex;
     align-items: center;
 }
+
 .timer i {
     font-size: 25px;
     margin-bottom: 10px;
     margin-right: 5px;
 }
+
 /* account */
 .account {
     flex: 1;
@@ -92,6 +108,7 @@ a {
     align-items: center;
     justify-content: right;
 }
+
 .account i {
     margin-bottom: 4px;
     margin-right: 3px;
@@ -102,18 +119,203 @@ a {
     color: #88C562;
 }
 
+/* control player */
+.player-control {
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+    background-color: var(--primary-color);
+    padding: 0 5px;
+}
+
+.player-control-ctn {
+    width: 100%;
+    display: flex;
+    max-width: 1240px;
+    margin: auto;
+}
+
+.player-control-left,
+.player-control-right {
+    width: 30%;
+    height: 80px;
+}
+
+.player-control-left .item {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+}
+
+.player-control-left .item .media {
+    display: flex;
+    align-items: center;
+}
+
+.player-control-left .song-img {
+    width: 65px;
+    height: 65px;
+}
+
+.player-control-left .song-img img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.player-control-left .media-content {
+    padding-left: 6px;
+    width: 220px;
+}
+
+.song-name {
+    font-weight: 600;
+}
+
+.media-right {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: right;
+}
+
+.media-right div:last-child {
+    margin: 0 20px 0 10px;
+}
+
+/* control bar */
+.player-control-bar {
+    flex: 1;
+    margin: 10px 0;
+    padding: 0 10px;
+}
+
+.action-ctn {
+    width: 100%;
+}
+
+.action-ctn .action {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.action .btn {
+    margin: 0 20px;
+    font-size: 17px;
+    align-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.action .btn-toggle-play {
+    font-size: 25px;
+}
+
+.action .btn:hover {
+    background-color: var(--color-text-secondary);
+}
+
+.item-time {
+    display: flex;
+    margin-top: 5px;
+    justify-content: center;
+}
+
+.item-time .duration-bar {
+    width: 350px;
+    padding: 0 15px;
+}
+
+.item-time .duration-bar input {
+    width: 100%;
+    height: 7px;
+}
+
+/* player-control-right */
+.player-control-right {
+    align-content: center;
+}
+
+.player-control-right .container {
+    display: flex;
+    float: right;
+    align-items: center;
+}
+
+.player-control-right .btn {
+    padding: 0 10px;
+}
+
+.btn-volume {
+    display: flex;
+    align-items: center;
+}
+
+.volume {
+    height: 5px;
+    width: 100px;
+    margin-left: 3px;
+    outline: none;
+    border: none;
+}
+
+
+.player-control-right .btn-list {
+    font-size: 21px;
+}
+
 /* full màn hình */
 .fullscreen {
     display: none;
     width: 100%;
     height: 100%;
-    background: #ccc;
+    background: #b55555;
+}
+
+.fullscreen .song-title {
     position: fixed;
-    top: 0;
-    left: 0;
-    justify-content: center;
+    bottom: 250px;
+    left: 100px;
+    display: flex;
+}
+
+.song-title .image-song {
+    width: 200px;
+    height: 200px;
+}
+
+.image-song img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.song-title .title {
+    align-content: end;
+    padding-left: 15px;
+}
+
+.song-title .name-song {
+    font-size: 27px;
+    font-weight: 600;
+    color: white;
+}
+
+.song-title .artists {
+    color: black;
+    font-size: 17px;
+}
+
+.fullscreen .player-control-bar {
+    position: fixed;
+    bottom: 50px;
+    width: 100%;
     align-items: center;
 }
+
 .show {
     display: flex;
 }
@@ -126,7 +328,8 @@ footer {
     align-content: center;
     text-align: center;
 }
+
 .ft-ctn {
     width: 100%;
-    color: rgb(204, 191, 191);
+    color: var(--color-text-secondary);
 }
