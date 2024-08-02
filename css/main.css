@@ -215,8 +215,13 @@ a {
     font-size: 25px;
 }
 
-.action .btn:hover {
-    background-color: var(--color-text-secondary);
+main input,
+.btn {
+    cursor: pointer;
+}
+
+.btn:hover {
+    color: rgb(55, 84, 64);
 }
 
 .item-time {
@@ -270,10 +275,45 @@ a {
 
 /* full màn hình */
 .fullscreen {
-    display: none;
     width: 100%;
     height: 100%;
-    background: #b55555;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    /* Initially hidden */
+    z-index: 9999;
+    animation: colorChange 60s infinite;
+}
+
+@keyframes colorChange {
+    0% {
+        background-color: #7dd4d4;
+    }
+
+    20% {
+        background-color: #566ea6;
+    }
+
+    40% {
+        background-color: #848484;
+    }
+
+    60% {
+        background-color: #996699;
+    }
+
+    80% {
+        background-color: #FF0066;
+    }
+
+    100% {
+        background-color: #996633;
+    }
+}
+
+.show {
+    display: block;
 }
 
 .fullscreen .song-title {
@@ -332,4 +372,15 @@ footer {
 .ft-ctn {
     width: 100%;
     color: var(--color-text-secondary);
+}
+
+.bai2 {
+    width: 100px;
+    height: 100px;
+    background: red;
+}
+
+.song-item-ctn {
+    width: 100%;
+    height: 100%;
 }

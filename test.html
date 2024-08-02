@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="shortcut icon" type="image/png" href="asset/img/icon.jpg"/>
+    <link rel="shortcut icon" type="image/png" href="asset/img/icon.jpg" />
     <link rel="stylesheet" href="./css/main.css">
     <title>HHMusic</title>
 </head>
+
 <body>
     <!-- header -->
     <header>
@@ -44,7 +46,7 @@
 
             <!-- search -->
             <div class="search">
-                <input required type="text" placeholder="Tìm kiếm ...">
+                <input type="text" required placeholder="Tìm kiếm ...">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
 
@@ -58,7 +60,7 @@
             <div class="account">
                 <i class="fa-solid fa-user"></i>
                 <a href="register.html" class="nav-link" data-url="register.html">Đăng ký</a>
-                <span> / </span>
+                <span style="margin: 0 5px;"> / </span>
                 <a href="login.html" class="nav-link" data-url="login.html">Đăng nhập</a>
             </div>
         </div>
@@ -68,15 +70,17 @@
     <main>
         <div class="main-ctn" id="content">
 
+
+
             <!-- audio -->
-            <audio hidden id="myAudio" controls>
+            <audio hidden id="myAudio">
                 <source src="asset/music/songs/trong-com.mp3" type="audio/mp3">
                 Your browser does not support the audio element.
             </audio>
-
             <!-- player control -->
             <div class="player-control">
                 <div class="player-control-ctn">
+                    <!-- control left -->
                     <div class="player-control-left">
                         <div class="item">
                             <div class="media">
@@ -85,19 +89,28 @@
                                         <img src="asset/music/img/Trống Cơm.jpg" alt="">
                                     </div>
                                 </div>
+                                <!-- name song, artists -->
                                 <div class="media-content">
                                     <div class="song-name">Trống cơm</div>
                                     <div class="artists">Cường Seven, Soobin, Tự Long</div>
                                 </div>
+                                <!-- action add list -->
                                 <div class="media-right">
-                                    <div class="heart">
+                                    <!-- favorite song -->
+                                    <div class="btn heart">
                                         <i class="toggle-heart fa-regular fa-heart"></i>
+                                    </div>
+                                    <!-- playlist add -->
+                                    <div class="btn playlist-add">
+                                        <i class="fa-solid fa-plus"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- control bar -->
                     <div class="player-control-bar">
+                        <!-- action song -->
                         <div class="action-ctn">
                             <div class="action">
                                 <div class="btn btn-repeat">
@@ -117,14 +130,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item">
+                        <!-- time -->
+                        <div class="item-time">
                             <div class="time left">00:00</div>
                             <div class="duration-bar">
-                                <input id="progress" class="progress" type="range" value="0" step="0.1" min="0" max="100">
+                                <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
                             </div>
                             <div class="time right">00:00</div>
                         </div>
                     </div>
+                    <!-- control right -->
                     <div class="player-control-right">
                         <div class="container">
                             <div class="btn btn-list">
@@ -132,8 +147,9 @@
                             </div>
                             <div class="btn btn-volume">
                                 <i class="fa-solid fa-volume-high"></i>
+                                <input id="volume" class="volume" type="range" value="100" step="1" min="0" max="100">
                             </div>
-                            <div class="btn btn-zoom" onclick="enterFullscreen()">
+                            <div class="btn btn-zoom" id="fullscreenButton" onclick="enterFullscreen()">
                                 <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                             </div>
                         </div>
@@ -142,20 +158,87 @@
             </div>
 
             <!-- fullcreen -->
-            <div class="fullscreen"></div>
+            <div class="fullscreen">
+                <div class="song-title">
+                    <div class="image-song">
+                        <img src="asset/music/img/Trống Cơm.jpg" alt="">
+                    </div>
+                    <div class="title">
+                        <div class="name-song">Trống cơm</div>
+                        <div class="artists">Cường Seven, Soobin, Tự Long</div>
+                    </div>
+                </div>
+                <div class="player-control-bar">
+                    <!-- action song -->
+                    <div class="action-ctn">
+                        <div class="action">
+                            <div class="btn btn-repeat">
+                                <i class="fas fa-redo"></i>
+                            </div>
+                            <div class="btn btn-prev">
+                                <i class="fas fa-step-backward"></i>
+                            </div>
+                            <div class="btn btn-toggle-play">
+                                <i class="toggle-playPause fas fa-play"></i>
+                            </div>
+                            <div class="btn btn-next">
+                                <i class="fas fa-step-forward"></i>
+                            </div>
+                            <div class="btn btn-random">
+                                <i class="fas fa-random"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- time -->
+                    <div class="item-time">
+                        <div class="time left">00:00</div>
+                        <div class="duration-bar">
+                            <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+                        </div>
+                        <div class="time right">00:00</div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- list nhạc -->
+            <div class="list-song">
+                <div class="media">
+                    <div class="media-left">
+                        <div class="song-img">
+                            <img src="asset/music/img/Trống Cơm.jpg" alt="">
+                        </div>
+                    </div>
+                    <!-- name song, artists -->
+                    <div class="media-content">
+                        <div class="song-name">Trống cơm</div>
+                        <div class="artists">Cường Seven, Soobin, Tự Long</div>
+                    </div>
+                    <!-- action add list -->
+                    <div class="media-right">
+                        <!-- favorite song -->
+                        <div class="btn heart">
+                            <i class="toggle-heart fa-regular fa-heart"></i>
+                        </div>
+                        <!-- playlist add -->
+                        <div class="btn playlist-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <!-- footer -->
     <footer>
         <div class="ft-ctn">
-            Bản quyền thuộc về HHMusic 
-            
+            Bản quyền thuộc về HHMusic
         </div>
     </footer>
 
     <!-- javascript -->
     <script src="./js/main.js"></script>
+    <script src="./js/funcFullScreen.js"></script>
 </body>
+
 </html>

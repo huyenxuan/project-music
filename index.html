@@ -69,12 +69,34 @@
     <!-- main -->
     <main>
         <div class="main-ctn" id="content">
+            <!-- list song -->
+            <div class="list-song">
+                <div class="song-item">
+                    <div class="song-item-ctn">
+                        <!-- audio -->
+                        <div hidden class="audio">
+                            <audio class="audioClick" controls>
+                                <source src="asset/music/songs/Nợ nhau một lời.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                        <!-- song detail -->
+                        <div class="song-item-img">
+                            <img src="asset/music/img/Nợ nhau một lời.jpg" alt="">
+                        </div>
+                        <div class="song-item-detail">
+                            <div class="song-item-name">Nợ nhau một lời</div>
+                            <div class="song-item-artists">Phúc Chinh</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- audio -->
-            <audio hidden id="myAudio" controls>
+            <audio hidden id="myAudio">
                 <source src="asset/music/songs/trong-com.mp3" type="audio/mp3">
                 Your browser does not support the audio element.
             </audio>
-
             <!-- player control -->
             <div class="player-control">
                 <div class="player-control-ctn">
@@ -95,11 +117,11 @@
                                 <!-- action add list -->
                                 <div class="media-right">
                                     <!-- favorite song -->
-                                    <div class="heart">
+                                    <div class="btn heart">
                                         <i class="toggle-heart fa-regular fa-heart"></i>
                                     </div>
                                     <!-- playlist add -->
-                                    <div class="playlist-add">
+                                    <div class="btn playlist-add">
                                         <i class="fa-solid fa-plus"></i>
                                     </div>
                                 </div>
@@ -198,6 +220,32 @@
                 </div>
             </div>
 
+            <!-- media -->
+            <div class="media-ctn">
+                <div class="media">
+                    <div class="media-left">
+                        <div class="song-img">
+                            <img src="asset/music/img/Trống Cơm.jpg" alt="">
+                        </div>
+                    </div>
+                    <!-- name song, artists -->
+                    <div class="media-content">
+                        <div class="song-name">Trống cơm</div>
+                        <div class="artists">Cường Seven, Soobin, Tự Long</div>
+                    </div>
+                    <!-- action add list -->
+                    <div class="media-right">
+                        <!-- favorite song -->
+                        <div class="btn heart">
+                            <i class="toggle-heart fa-regular fa-heart"></i>
+                        </div>
+                        <!-- playlist add -->
+                        <div class="btn playlist-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -210,6 +258,7 @@
 
     <!-- javascript -->
     <script src="./js/main.js"></script>
+    <script src="./js/funcFullScreen.js"></script>
 </body>
 
 </html>
