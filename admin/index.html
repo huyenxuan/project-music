@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HHMusic</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" type="image/png" href="../asset/img/icon.jpg" />
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <div class="header-ctn">
+            <div class="logo">
+                <a href="index.php" class="nav-link"">
+                            <img src=" ../asset/img/logo.png" alt="">
+                </a>
+            </div>
+            <div class="account">
+                <i class="fa-solid fa-user"></i>
+                <div class="name-admin">Admin</div>
+                <span> | </span>
+                <div class="logout">
+                    <a href="logout.php">Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- main -->
+    <main>
+        <div class="main-ctn">
+            <div class="menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <div class="sidebar">
+                <!-- close button -->
+                <div class="close-btn">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="sidebar-ctn">
+                    <div class="sidebar-sub slider">
+                        <div class="title">
+                            <h3>Banner Slider</h3>
+                            <i class="fa-solid fa-angle-right dropdown"></i>
+                        </div>
+                        <ul>
+                            <li><a href="bannerAdd.php">Thêm ảnh banner</a></li>
+                            <li><a href="bannerShow.php">Danh sách ảnh banner</a></li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-sub category">
+                        <div class="title">
+                            <h3>QL thể loại</h3>
+                            <i class="fa-solid fa-angle-right dropdown"></i>
+                        </div>
+                        <ul>
+                            <li><a href="cateAdd.php">Thêm thể loại</a></li>
+                            <li><a href="cateShow.php">Danh sách thể loại</a></li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-sub song">
+                        <div class="title">
+                            <h3>QL bài hát</h3>
+                            <i class="fa-solid fa-angle-right dropdown"></i>
+                        </div>
+                        <ul>
+                            <li><a href="">Thêm bài hát</a></li>
+                            <li><a href="">Danh sách bài hát</a></li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-sub album">
+                        <div class="title">
+                            <h3>QL album</h3>
+                            <i class="fa-solid fa-angle-right dropdown"></i>
+                        </div>
+                        <ul>
+                            <li><a href="">Thêm album</a></li>
+                            <li><a href="">Danh sách album</a></li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-sub playlist">
+                        <div class="title">
+                            <h3>QL playlist</h3>
+                            <i class="fa-solid fa-angle-right dropdown"></i>
+                        </div>
+                        <ul>
+                            <li><a href="">Thêm playlist</a></li>
+                            <li><a href="">Danh sách playlist</a></li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-sub account">
+                        <div class="title">
+                            <h3>QL người dùng</h3>
+                            <i class="fa-solid fa-angle-right dropdown"></i>
+                        </div>
+                        <ul>
+                            <li><a href="userAdd.php">Thêm tài khoản</a></li>
+                            <li><a href="userShow.php">Danh sách tài khoản</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="main-content">
+                Xin chào Admin HHMusic!
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-ctn">
+            Bản quyền thuộc về HHMusic
+        </div>
+    </footer>
+</body>
+
+</html>

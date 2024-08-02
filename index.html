@@ -9,6 +9,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" type="image/png" href="asset/img/icon.jpg" />
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/index.css">
     <title>HHMusic</title>
 </head>
 
@@ -69,8 +70,91 @@
     <!-- main -->
     <main>
         <div class="main-ctn" id="content">
+            <!-- banner -->
+            <div class="banner">
+                <div class="baner-ctn">
+                    <div>Đây là banner</div>
+                </div>
+            </div>
+
+            <!-- may like -->
+            <div class="likely">
+                <div class="likely-ctn">
+                    <div>Đây là phần có thể bạn thích</div>
+                </div>
+            </div>
+
+            <!-- suggest -->
+            <div class="suggest">
+                <div class="suggest-ctn">
+                    <div>Đây là phần đề xuất</div>
+                </div>
+            </div>
+
+            <!-- album -->
+            <div class="album">
+                <div class="album-ctn">
+                    <div>Đây là phần album</div>
+                </div>
+            </div>
+
+            <!-- playlist -->
+            <div class="playlist">
+                <div class="playlist-ctn">
+                    <div>Đây là phần playlist</div>
+                </div>
+            </div>
+
+            <!-- idols -->
+            <div class="idols">
+                <div class="likely-ctn">
+                    <div>Đây là phần người nổi tiếng</div>
+                </div>
+            </div>
+
             <!-- list song -->
             <div class="list-song">
+                <!-- item1 -->
+                <div class="song-item">
+                    <div class="song-item-ctn">
+                        <!-- audio -->
+                        <div hidden class="audio">
+                            <audio class="audioClick" controls>
+                                <source src="asset/music/songs/Nợ nhau một lời.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                        <!-- song detail -->
+                        <div class="song-item-img">
+                            <img src="asset/music/img/Nợ nhau một lời.jpg" alt="">
+                        </div>
+                        <div class="song-item-detail">
+                            <div class="song-item-name">Nợ nhau một lời</div>
+                            <div class="song-item-artists">Phúc Chinh</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- item2 -->
+                <div class="song-item">
+                    <div class="song-item-ctn">
+                        <!-- audio -->
+                        <div hidden class="audio">
+                            <audio class="audioClick" controls>
+                                <source src="asset/music/songs/Nợ nhau một lời.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                        <!-- song detail -->
+                        <div class="song-item-img">
+                            <img src="asset/music/img/Nợ nhau một lời.jpg" alt="">
+                        </div>
+                        <div class="song-item-detail">
+                            <div class="song-item-name">Nợ nhau một lời</div>
+                            <div class="song-item-artists">Phúc Chinh</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- item3 -->
                 <div class="song-item">
                     <div class="song-item-ctn">
                         <!-- audio -->
@@ -216,33 +300,6 @@
                             <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
                         </div>
                         <div class="time right">00:00</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- media -->
-            <div class="media-ctn">
-                <div class="media">
-                    <div class="media-left">
-                        <div class="song-img">
-                            <img src="asset/music/img/Trống Cơm.jpg" alt="">
-                        </div>
-                    </div>
-                    <!-- name song, artists -->
-                    <div class="media-content">
-                        <div class="song-name">Trống cơm</div>
-                        <div class="artists">Cường Seven, Soobin, Tự Long</div>
-                    </div>
-                    <!-- action add list -->
-                    <div class="media-right">
-                        <!-- favorite song -->
-                        <div class="btn heart">
-                            <i class="toggle-heart fa-regular fa-heart"></i>
-                        </div>
-                        <!-- playlist add -->
-                        <div class="btn playlist-add">
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
                     </div>
                 </div>
             </div>

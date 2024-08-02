@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isSeeking = false;
     let isRepeating = false;
 
-    const bai2 = document.querySelector('.song-item-ctn');
+    const newSong = document.querySelector('.song-item-ctn');
     const audioClickSource = document.querySelector('.audioClick source');
     const myAudioSource = audio.querySelector('source');
     const songName = document.querySelector('.song-name');
@@ -20,9 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const songNameItem = document.querySelector('.song-item-name');
     const songArtistsItem = document.querySelector('.song-item-artists');
     const songImgItem = document.querySelector('.song-item-img img');
+    const songNameFullScreen = document.querySelector('.fullscreen .name-song');
+    const songArtistsFullScreen = document.querySelector('.fullscreen .artists');
+    const songImgFullScreen = document.querySelector('.fullscreen img');
 
     // Add click event to bai2 to change the audio source
-    bai2.addEventListener('click', () => {
+    newSong.addEventListener('click', () => {
         audio.pause();
 
         const newSrcAudio = audioClickSource.getAttribute('src');
@@ -30,11 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         myAudioSource.setAttribute('src', newSrcAudio);
         songImg.setAttribute('src', newSrcImg);
+        songImgFullScreen.setAttribute('src', newSrcImg);
         audio.load();
         audio.currentTime = 0;
         audio.duration = 0;
         songName.innerText = songNameItem.textContent;
         songArtists.innerText = songArtistsItem.textContent;
+        songNameFullScreen.innerText = songNameItem.textContent;
+        songArtistsFullScreen.innerText = songArtistsItem.textContent;
 
         audio.addEventListener('canplaythrough', () => {
             if (!isPlaying) {
@@ -42,6 +48,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         audio.play();
+    });
+
+    document.querySelectorAll('.song-item-ctn').forEach(songItem => {
+        songItem.addEventListener('click', () => {
+            const audioClickSource = songItem.querySelector('.audioClick source');
+            const myAudioSource = audio.querySelector('source');
+            const songName = document.querySelector('.song-name');
+            const songArtists = document.querySelector('.artists');
+            const songImg = document.querySelector('.song-img img');
+            const songNameItem = songItem.querySelector('.song-item-name');
+            const songArtistsItem = songItem.querySelector('.song-item-artists');
+            const songImgItem = songItem.querySelector('.song-item-img img');
+            const songNameFullScreen = document.querySelector('.fullscreen .name-song');
+            const songArtistsFullScreen = document.querySelector('.fullscreen .artists');
+            const songImgFullScreen = document.querySelector('.fullscreen img');
+
+            audio.pause();
+
+            const newSrcAudio = audioClickSource.getAttribute('src');
+            const newSrcImg = songImgItem.getAttribute('src');
+
+            myAudioSource.setAttribute('src', newSrcAudio);
+            songImg.setAttribute('src', newSrcImg);
+            songImgFullScreen.setAttribute('src', newSrcImg);
+            songName.innerText = songNameItem.textContent;
+            songArtists.innerText = songArtistsItem.textContent;
+            songNameFullScreen.innerText = songNameItem.textContent;
+            songArtistsFullScreen.innerText = songArtistsItem.textContent;
+
+            audio.load();
+            audio.currentTime = 0;
+            audio.duration = 0;
+
+            audio.addEventListener('canplaythrough', () => {
+                if (!isPlaying) {
+                    playPause();
+                }
+            });
+
+            audio.play();
+        });
     });
 
     // Handle the play/pause button

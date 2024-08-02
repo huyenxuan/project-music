@@ -1,5 +1,5 @@
 <?php
-include("config.php");
+include(__DIR__ . "/../config/config.php");
 ?>
 <?php
 class Database
