@@ -2,8 +2,8 @@
 ob_start(); // Bắt đầu bộ đệm đầu ra
 session_start();
 
-include("./class/loginUser.php");
-$loginUser = new loginUser();
+include("./class/userClass.php");
+$loginUser = new user();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             echo $loginCheck;
                                         } ?></span>
         <div class="register-link">
-            <p>Bạn chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+            <p>Bạn chưa có tài khoản? <a href="register.php">Đăng ký ngay</a></p>
         </div>
     </div>
 

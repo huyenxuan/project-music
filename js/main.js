@@ -162,14 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Handle volume control
+    // Xử lý nút âm lượng
     volumeControls.forEach(control => {
         control.addEventListener('input', () => {
             audio.volume = control.value / 100;
         });
     });
 
-    // Handle spacebar to play/pause
+    // xử lý nút play / pause khi ấn space
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
             event.preventDefault();
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Save and restore audio state
+    // xử lý lưu và lấy dữ liệu âm thanh từ localstorage
     const savedCurrentTime = localStorage.getItem('audioCurrentTime');
     const savedIsPlaying = localStorage.getItem('audioIsPlaying') === 'true';
 
