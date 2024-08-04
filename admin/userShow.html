@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <link rel="stylesheet" href="./css/user.css">
+    <title>Danh sách người dùng</title>
+    <!-- main-content -->
+    <div class="main-content">
+        <h2 class="title">Danh sách người dùng</h2>
+        <table border="1">
+            <tr>
+                <th>STT</th>
+                <th>Tên người dùng</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Ảnh</th>
+                <th>Hành động</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Nguyễn Xuân Huyến</td>
+                <td>goat2625@gmail.com</td>
+                <td>0362322124</td>
+                <td>...</td>
+                <td>
+                    <a href="userEdit.php">Sửa</a>
+                    <span> | </span>
+                    <a onclick="return confirm('Bạn muốn xóa người dùng này?')" href="userDel.php">Xóa</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -5,14 +5,11 @@
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     background-color: #dfdfdf;
 }
 
-.login-box, 
+.login-box,
 .register-box {
     display: flex;
     justify-content: center;
@@ -40,7 +37,6 @@ form input {
     border: none;
     outline: none;
     width: 100%;
-    display: flex;
     align-items: center;
     height: 45px;
     font-size: 17px;
@@ -53,9 +49,11 @@ form input {
 input.password {
     margin-bottom: 5px;
 }
+
 .pw {
     position: relative;
 }
+
 i {
     position: absolute;
     top: 17px;

@@ -29,8 +29,8 @@
                             <i class="fa-solid fa-angle-right dropdown"></i>
                         </div>
                         <ul>
-                            <li><a href="#">Thêm bài hát</a></li>
-                            <li><a href="#">Danh sách bài hát</a></li>
+                            <li><a href="songAdd.php">Thêm bài hát</a></li>
+                            <li><a href="songShow.php">Danh sách bài hát</a></li>
                         </ul>
                     </div>
                     <div class="sidebar-sub album">
@@ -39,8 +39,8 @@
                             <i class="fa-solid fa-angle-right dropdown"></i>
                         </div>
                         <ul>
-                            <li><a href="#">Thêm album</a></li>
-                            <li><a href="#">Danh sách album</a></li>
+                            <li><a href="albumAdd.php">Thêm album</a></li>
+                            <li><a href="albumShow.php">Danh sách album</a></li>
                         </ul>
                     </div>
                     <div class="sidebar-sub playlist">
@@ -49,8 +49,8 @@
                             <i class="fa-solid fa-angle-right dropdown"></i>
                         </div>
                         <ul>
-                            <li><a href="#">Thêm playlist</a></li>
-                            <li><a href="#">Danh sách playlist</a></li>
+                            <li><a href="playlistAdd.php">Thêm playlist</a></li>
+                            <li><a href="playlistShow.php">Danh sách playlist</a></li>
                         </ul>
                     </div>
                     <div class="sidebar-sub account">

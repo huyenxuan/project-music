@@ -24,6 +24,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Đăng ký</title>
     <link rel="stylesheet" href="./css/acount.css">
+    <style>
+        body {
+            display: block !important;
+        }
+
+        .register-box {
+            margin: auto;
+        }
+
+        h2 {
+            color: red;
+            width: 100%;
+            z-index: 99;
+            position: fixed;
+            top: 75px;
+            left: 35%;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,16 +49,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="register-header">
             <div class="tilte">Đăng ký</div>
         </div>
-        <form action="" class="form-signup" method="POST">
-            <input required type="name" name="fullName" id="" placeholder="Họ và tên">
-            <input required type="email" name="email" id="" placeholder="Email">
-            <input type="text" name="phoneNumber" id="" placeholder="Số điện thoại">
-            <div class="pw">
-                <input required type="password" name="password" class="password" placeholder="Mật khẩu">
-                <i class="toggle-password fa-solid fa-eye"></i>
-            </div>
-            <button type="submit">Đăng ký</button>
-        </form>
+        <div class="form-ctn">
+            <form action="" class="form-signup" method="POST">
+                <input required type="name" name="fullName" id="" placeholder="Họ và tên">
+                <input required type="email" name="email" id="" placeholder="Email">
+                <input type="text" name="phoneNumber" id="" placeholder="Số điện thoại">
+                <div class="pw">
+                    <input required type="password" name="password" class="password" placeholder="Mật khẩu">
+                    <i class="toggle-password fa-solid fa-eye"></i>
+                </div>
+                <button type="submit">Đăng ký</button>
+            </form>
+        </div>
         <div class="login-link">
             <p>Bạn đã có tài khoản? <a href="login.php">Đăng nhập ngay</a></p>
         </div>
