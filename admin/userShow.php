@@ -3,6 +3,11 @@ ob_start();
 include('../class/userClass.php');
 $user = new user();
 
+$data = $user->show_user();
+$show_user = $data['result'];
+$totalpage = $data['totalpage'];
+$page = $data['page'];
+
 include("include/header.php");
 include("include/sidebar.php");
 ?>
@@ -25,6 +30,31 @@ include("include/sidebar.php");
             width: 100px;
             height: 70px;
         }
+
+        /* pages */
+        .pages {
+            display: flex;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .pages div {
+            width: 30px;
+            height: 30px;
+            border: 1px solid green;
+            color: black;
+            align-content: center;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .active a {
+            color: red;
+        }
     </style>
 </head>
 
@@ -44,7 +74,6 @@ include("include/sidebar.php");
                     <th>STT</th>
                     <th>Tên người dùng</th>
                     <th>Email</th>
-                    <th>Số điện thoại</th>
                     <th>Số người theo dõi</th>
                     <th>Số người đang theo dõi</th>
                     <th>Ảnh</th>
@@ -53,7 +82,7 @@ include("include/sidebar.php");
             </thead>
             <tbody id="userTableBody">
                 <?php
-                $show_user = $user->show_user();
+                // $show_user = $user->show_user();
                 if ($show_user) {
                     $i = 0;
                     while ($result = $show_user->fetch_assoc()) {
@@ -64,13 +93,12 @@ include("include/sidebar.php");
                 ?>
                         <tr>
                             <td><?php echo $i ?></td>
-                            <td><?php echo $result['username'] ?></td>
+                            <td><?php echo $result['fullName'] ?></td>
                             <td><?php echo $result['email'] ?></td>
-                            <td><?php echo $result['phoneNumber'] ?></td>
                             <td><?php echo $count_follow_user ?></td>
                             <td><?php echo $count_user_follow ?></td>
                             <td class="image">
-                                <img src="../asset/img/logo.png" alt="">
+                                <img src="upload/images/imageuser/<?php echo $result['userimage'] ?>" alt="">
                             </td>
                             <td class="action">
                                 <a href="userEdit.php?user_id=<?php echo $result['user_id'] ?>">Sửa</a>
@@ -84,9 +112,27 @@ include("include/sidebar.php");
                 ?>
             </tbody>
         </table>
-        <div class="pages">
 
+        <div class="pages">
+            <?php
+            if ($page >= 3) {
+                echo '<div class="prev"><a href="userShow.php?page=' . ($page - 1) . '"><i class="fa-solid fa-chevron-left"></i></a></div>';
+                echo '<div class="etc">...</div>';
+            }
+
+            for ($i = max(1, $page - 1); $i <= min($totalpage, $page + 1); $i++) {
+                echo '<div class="number ' . ($page == $i ? 'active' : '') . '">';
+                echo '<a href="userShow.php?page=' . $i . '">' . $i . '</a>';
+                echo '</div>';
+            }
+
+            if ($page <= $totalpage - 2) {
+                echo '<div class="etc">...</div>';
+                echo '<div class="next"><a href="userShow.php?page=' . ($page + 1) . '"><i class="fa-solid fa-chevron-right"></i></a></div>';
+            }
+            ?>
         </div>
+
     </div>
     <script>
         document.getElementById('searchUser').addEventListener('input', function() {

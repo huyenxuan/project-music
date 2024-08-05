@@ -34,9 +34,9 @@ if (!isset($_SESSION['email'])) {
             <div class="account">
                 <i class="fa-solid fa-user"></i>
                 <?php
-                if (isset($_SESSION['username'])) {
-                    $username = $_SESSION['username'];
-                    echo '<div class="name-admin">' . $username . '</div>';
+                if (isset($_SESSION['fullName'])) {
+                    $fullName = $_SESSION['fullName'];
+                    echo '<div class="name-admin">' . $fullName . '</div>';
                 } else {
                 ?>
                     <div class="name-admin">Admin</div>

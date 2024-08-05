@@ -8,12 +8,16 @@ if ($search_user) {
     $i = 0;
     while ($row = $search_user->fetch_assoc()) {
         $i++;
+        $user_id = $row['user_id'];
+        $count_follow_user = $user->count_follow_user($user_id);
+        $count_user_follow = $user->count_user_follow($user_id);
         echo "<tr>";
         echo "<td>" . $i . "</td>";
-        echo "<td>" . $row['username'] . "</td>";
+        echo "<td>" . $row['fullName'] . "</td>";
         echo "<td>" . $row['email'] . "</td>";
-        echo "<td>" . $row['phoneNumber'] . "</td>";
-        echo "<td><img src='../asset/img/logo.png' alt=''></td>";
+        echo "<td>" . $count_follow_user . "</td>";
+        echo "<td>" . $count_user_follow . "</td>";
+        echo "<td><img src='upload/images/imageuser/" . $row['userimage'] . "'</td>";
         echo "<td>
                 <a href='userEdit.php?user_id=" . $row['user_id'] . "'>Sửa</a>
                 <span> | </span>

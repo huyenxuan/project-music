@@ -23,10 +23,10 @@ class loginAdmin
             $row = $result->fetch_assoc();
             if ($row['role'] === 'admin') {
                 $_SESSION['email'] = $email;
-                $queryName = "SELECT username FROM tbl_user WHERE email = '$email' AND password = '$password'";
+                $queryName = "SELECT fullName FROM tbl_user WHERE email = '$email' AND password = '$password'";
                 $resultName = $this->db->select($queryName);
                 if ($resultName != false) {
-                    $_SESSION["username"] = $row["username"];
+                    $_SESSION["fullName"] = $row["fullName"];
                 }
                 header('Location: index.php');
                 exit();

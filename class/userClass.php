@@ -49,34 +49,36 @@ class user
     // func show user
     public function show_user()
     {
-        if (isset($_GET['page'])) {
-            $page = $_GET['page'];
-        } else {
-            $page = 1;
-        }
-        $row = 2;
-        $from = ($page - 1) * $row;
+        $limit = 6;
+
+        $queryALl = 'SELECT * FROM tbl_user';
+        $resultAll = $this->db->select($queryALl);
+        $totalpage = ceil($resultAll->num_rows / $limit);
+
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+        $from = ($page - 1) * $limit;
         $query = "SELECT * FROM tbl_user 
-                LIMIT $from, $row";
+                LIMIT $from, $limit";
         $result = $this->db->select($query);
-        return $result;
+        return ['result' => $result, 'totalpage' => $totalpage, 'page' => $page];
     }
     // func insert
-    public function insert_user($fullName, $email, $phoneNumber, $password, $description, $role)
+    public function insert_user($fullName, $email, $password, $description, $role, $userimage)
     {
         $query = "INSERT INTO tbl_user (
-            username,
+            fullName,
             email,
-            phoneNumber,
             password,
             description,
+            userimage,
             role) 
         VALUES (
             '$fullName',
             '$email',
-            '$phoneNumber',
             '$password',
             '$description',
+            '$userimage',
             '$role')";
         $result = $this->db->insert($query);
         return $result;
@@ -86,7 +88,7 @@ class user
     {
         if (!$this->check_user($email, $phoneNumber)) {
             $query = "INSERT INTO tbl_user (
-                    username,
+                    fullName,
                     email,
                     phoneNumber,
                     password) 
@@ -108,15 +110,15 @@ class user
     }
 
     // func update
-    public function update_user($fullName, $email, $phoneNumber, $password, $description, $role, $user_id)
+    public function update_user($fullName, $email, $password, $description, $role, $userimage, $user_id)
     {
         $query = "UPDATE tbl_user
-                SET username = '$fullName', 
+                SET fullName = '$fullName', 
                     email = '$email', 
-                    phoneNumber = '$phoneNumber',
                     password = '$password', 
                     description = '$description',
-                    role = '$role'
+                    role = '$role',
+                    userimage = '$userimage'
                 WHERE user_id = '$user_id'";
         $result = $this->db->update($query);
         return $result;
@@ -130,9 +132,11 @@ class user
         return $result;
     }
     // func search
-    public function search_user($username)
+    public function search_user($fullName)
     {
-        $query = "SELECT * FROM tbl_user WHERE username LIKE '%$username%'";
+        $query = "SELECT * FROM tbl_user 
+                WHERE fullName LIKE '%$fullName%'
+                OR role LIKE '%$fullName%'";
         $result = $this->db->select($query);
         return $result;
     }

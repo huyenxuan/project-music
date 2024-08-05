@@ -6,12 +6,13 @@ $user = new user();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullName'];
     $email = $_POST['email'];
-    $phoneNumber = $_POST['phoneNumber'];
     $password = $_POST['password'];
     $description = $_POST['description'];
     $role = isset($_POST['role']) ? 'admin' : 'user';
+    $userimage = $_FILES['userimage']['name'];
+    move_uploaded_file($_FILES['userimage']['tmp_name'], "upload/images/imageuser/" . $_FILES['userimage']['name']);
 
-    $insert_user = $user->insert_user($fullName, $email, $phoneNumber, $password, $description, $role);
+    $insert_user = $user->insert_user($fullName, $email, $password, $description, $role, $userimage);
 
     header("Location: userAdd.php?user_name=" . urlencode($fullName));
     exit();
@@ -31,32 +32,68 @@ include("include/sidebar.php");
         height: 90px;
         border-radius: 10px;
     }
+
+    .info {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .info div {
+        width: 50% !important;
+    }
+
+    label {
+        font-weight: 600;
+    }
+
+    .info div input {
+        width: 90% !important;
+    }
+
+    .image {
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .image img {
+        width: 100%;
+        object-fit: contain;
+        padding: 5px 0 10px 10px;
+    }
+
+    .isAdmin {
+        margin-top: 20px;
+    }
 </style>
 <link rel="stylesheet" href="./css/user.css">
 <title>Thêm tài khoản người dùng</title>
 <!-- main content -->
 <div class="main-content">
     <h2 class="title">Thêm người dùng</h2>
-    <form action="" method="POST">
-        <div class="name">
-            <label for="fullName">Tên người dùng <span style="color: red">*</span></label><br>
-            <input required name="fullName" type="text" placeholder="Tên người dùng"><br>
-        </div>
-        <div class="email">
-            <label for="">Địa chỉ email <span style="color: red">*</span></label><br>
-            <input required name="email" type="email" placeholder="Địa chỉ email"><br>
-        </div>
-        <div class="phoneNumber">
-            <label for="">Số điện thoại </label><br>
-            <input name="phoneNumber" type="text" placeholder="Số điện thoại"><br>
-        </div>
-        <div class="password">
-            <label for="">Mật khẩu <span style="color: red">*</span></label><br>
-            <input required name="password" type="text" placeholder="Mật khẩu"><br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <div class="info">
+            <div class="name">
+                <label for="fullName">Tên người dùng <span style="color: red">*</span></label><br>
+                <input required name="fullName" type="text" placeholder="Tên người dùng"><br>
+            </div>
+            <div class="email">
+                <label for="">Địa chỉ email <span style="color: red">*</span></label><br>
+                <input required name="email" type="email" placeholder="Địa chỉ email"><br>
+            </div>
+            <div class="password">
+                <label for="">Mật khẩu <span style="color: red">*</span></label><br>
+                <input required name="password" type="text" placeholder="Mật khẩu"><br>
+            </div>
         </div>
         <div class="description">
             <label for="">Mô tả </label><br>
             <textarea name="description" id="" rows="10" cols="30"></textarea>
+        </div>
+        <div class="image">
+            <label for="image">Ảnh đại diện</label>
+            <input id="image" type="file" name="userimage">
         </div>
         <div class="isAdmin">
             <label for="" style="margin-right: 10px">Là admin: </label>

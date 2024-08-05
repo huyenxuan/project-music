@@ -14,13 +14,26 @@ if ($get_user) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullName'];
     $email = $_POST['email'];
-    $phoneNumber = $_POST['phoneNumber'];
     $password = $_POST['password'];
     $description = $_POST['description'];
     $role = isset($_POST['role']) ? 'admin' : 'user';
 
-    $insert_user = $user->update_user($fullName, $email, $phoneNumber, $password, $description, $role, $user_id);
+    if (!empty($_FILES['userimage']['name'])) {
+        $userimage = $_FILES['userimage']['name'];
+        $uploadDir = "upload/images/imageuser/";
+        $uploadFile = $uploadDir . basename($userimage);
 
+        if (move_uploaded_file($_FILES['userimage']['tmp_name'], $uploadFile)) {
+            echo 'Upload thành công';
+        } else {
+            echo "Failed to upload image.";
+        }
+    } else {
+        // Nếu không có ảnh mới, giữ nguyên ảnh cũ
+        $userimage = $result['userimage'];
+    }
+
+    $update_user = $user->update_user($fullName, $email, $password, $description, $role, $userimage, $user_id);
     header("Location: userShow.php");
     exit();
 }
@@ -43,37 +56,72 @@ include("include/sidebar.php");
     form input:not([type="checkbox"]) {
         color: black !important;
     }
+
+    .info {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .info div {
+        width: 50% !important;
+    }
+
+    label {
+        font-weight: 600;
+    }
+
+    .info div input {
+        width: 90% !important;
+    }
+
+    .image {
+        width: 300px;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .image input {
+        margin: 0 0 0 10px !important;
+    }
+
+    .image img {
+        width: 50%;
+        padding: 5px 0 10px 10px;
+    }
+
+    .isAdmin {
+        margin-top: 20px;
+    }
 </style>
 <link rel="stylesheet" href="./css/user.css">
-<title>Thêm tài khoản người dùng</title>
+<title>Sửa tài khoản người dùng</title>
 <!-- main content -->
 <div class="main-content">
-    <h2 class="title">Thêm người dùng</h2>
-    <form action="" method="POST">
-        <div class="name">
-            <label for="fullName">Tên người dùng <span style="color: red">*</span></label><br>
-            <input required name="fullName" type="text" placeholder="Tên người dùng" value="<?php echo $result['username'] ?>"><br>
-        </div>
-        <div class="email">
-            <label for="">Địa chỉ email <span style="color: red">*</span></label><br>
-            <input required name="email" type="email" placeholder="Địa chỉ email" value="<?php echo $result['email'] ?>"><br>
-        </div>
-        <div class="phoneNumber">
-            <label for="">Số điện thoại </label><br>
-            <input name="phoneNumber" type="text" placeholder="Số điện thoại" value="<?php echo $result['phoneNumber'] ?>"><br>
-        </div>
-        <div class="password">
-            <label for="">Mật khẩu <span style="color: red">*</span></label><br>
-            <input required name="password" type="text" placeholder="Mật khẩu" value="<?php echo $result['password'] ?>"><br>
+    <h2 class="title">Sửa người dùng</h2>
+    <form action="userEdit.php?user_id=<?php echo $user_id; ?>" method="POST" enctype="multipart/form-data">
+        <div class="info">
+            <div class="name">
+                <label for="fullName">Tên người dùng <span style="color: red">*</span></label><br>
+                <input required name="fullName" type="text" placeholder="Tên người dùng" value="<?php echo $result['fullName'] ?>"><br>
+            </div>
+            <div class="email">
+                <label for="">Địa chỉ email <span style="color: red">*</span></label><br>
+                <input required name="email" type="email" placeholder="Địa chỉ email" value="<?php echo $result['email'] ?>"><br>
+            </div>
+            <div class="password">
+                <label for="">Mật khẩu <span style="color: red">*</span></label><br>
+                <input required name="password" type="text" placeholder="Mật khẩu" value="<?php echo $result['password'] ?>"><br>
+            </div>
         </div>
         <div class="description">
             <label for="des">Mô tả </label><br>
             <textarea name="description" id="des" rows="10" cols="30"><?php echo $result['description'] ?></textarea>
         </div>
         <div class="image">
-            <label for="image">
-                <input type="file" id="image" name="image">
-            </label>
+            <label for="image">Ảnh đại diện</label>
+            <input type="file" id="image" name="userimage" accept=".jpg, .jpeg, .png"><br>
+            <img src="upload/images/imageuser/<?php echo $result['userimage'] ?>" alt="">
         </div>
         <div class="isAdmin">
             <label for="" style="margin-right: 10px">Là admin: </label>
