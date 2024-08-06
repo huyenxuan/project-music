@@ -2,7 +2,7 @@
 session_start();
 
 include("../class/loginAdmin.php");
-$loginAdmin = new loginAdmin();
+$loginAdmin = new LoginAdmin();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];

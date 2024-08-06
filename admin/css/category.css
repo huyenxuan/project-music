@@ -1,0 +1,89 @@
+* form {
+    width: 90%;
+}
+
+form input {
+    width: 250px;
+    height: 35px;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px 7px;
+    margin-top: 7px;
+    font-size: 17px;
+    text-transform: capitalize;
+}
+
+form button {
+    width: 100px;
+    height: 38px;
+    color: rgb(58, 56, 56);
+    background-color: rgb(0, 191, 0);
+    border: 1px solid black;
+    outline: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+/* table */
+table {
+    width: 95%;
+    border-collapse: collapse;
+    text-align: center;
+    color: rgb(32, 30, 30);
+    margin-top: 5px;
+}
+
+thead tr {
+    height: 30px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: aqua;
+}
+
+.action {
+    width: 130px;
+}
+
+td a {
+    color: green;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+td a:last-child {
+    color: red;
+}
+
+/* search */
+.search {
+    position: absolute;
+    top: 110px;
+    right: 47px;
+    width: 250px;
+}
+
+.search .search-ctn {
+    position: relative;
+}
+
+.search .search-ctn input {
+    height: 30px;
+    outline: none;
+    border: 1px solid black;
+    padding-left: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    width: 100%;
+}
+
+.search .search-ctn i {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    color: black;
+}

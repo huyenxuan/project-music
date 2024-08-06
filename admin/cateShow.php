@@ -1,10 +1,10 @@
 <?php
 ob_start();
-include('../class/userClass.php');
-$user = new User();
+include('../class/cateClass.php');
+$category = new Category();
 
-$data = $user->show_user();
-$show_user = $data['result'];
+$data = $category->show_category();
+$show_category = $data['result'];
 $totalpage = $data['totalpage'];
 $page = $data['page'];
 
@@ -19,18 +19,8 @@ include("include/sidebar.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh sách người dùng</title>
-    <link rel="stylesheet" href="./css/user.css">
+    <link rel="stylesheet" href="./css/category.css">
     <style>
-        tr td:nth-child(5),
-        tr td:nth-child(6) {
-            width: 110px;
-        }
-
-        tbody tr .image {
-            width: 100px;
-            height: 70px;
-        }
-
         /* pages */
         .pages {
             display: flex;
@@ -63,47 +53,33 @@ include("include/sidebar.php");
     <div class="main-content">
         <div class="search">
             <div class="search-ctn">
-                <input type="text" id="searchUser" placeholder="Nhập tên người dùng">
+                <input type="text" id="searchcategory" placeholder="Nhập tên thể loại">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
         </div>
-        <h2 class="title">Danh sách người dùng</h2>
+        <h2 class="title" style="color:black">Danh sách thể loại</h2>
         <table border="1">
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Tên người dùng</th>
-                    <th>Email</th>
-                    <th>Số người theo dõi</th>
-                    <th>Số người đang theo dõi</th>
-                    <th>Ảnh</th>
+                    <th>Tên thể loại</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
-            <tbody id="userTableBody">
+            <tbody id="categoryTableBody">
                 <?php
-                // $show_user = $user->show_user();
-                if ($show_user) {
+                if ($show_category) {
                     $i = 0;
-                    while ($result = $show_user->fetch_assoc()) {
+                    while ($result = $show_category->fetch_assoc()) {
                         $i++;
-                        $user_id = $result['user_id'];
-                        $count_follow_user = $user->count_follow_user($user_id);
-                        $count_user_follow = $user->count_user_follow($user_id);
                 ?>
                         <tr>
                             <td><?php echo $i ?></td>
-                            <td><?php echo $result['fullName'] ?></td>
-                            <td><?php echo $result['email'] ?></td>
-                            <td><?php echo $count_follow_user ?></td>
-                            <td><?php echo $count_user_follow ?></td>
-                            <td class="image">
-                                <img src="upload/images/imageuser/<?php echo $result['userimage'] ?>" alt="">
-                            </td>
+                            <td><?php echo $result['category_name'] ?></td>
                             <td class="action">
-                                <a href="userEdit.php?user_id=<?php echo $result['user_id'] ?>">Sửa</a>
+                                <a href="cateEdit.php?category_id=<?php echo $result['category_id'] ?>">Sửa</a>
                                 <span> | </span>
-                                <a onclick="return confirm('Bạn muốn xóa người dùng này?')" href="userDel.php?user_id=<?php echo $result['user_id'] ?>">Xóa</a>
+                                <a onclick="return confirm('Bạn muốn xóa tên thể loại này?')" href="cateDel.php?category_id=<?php echo $result['category_id'] ?>">Xóa</a>
                             </td>
                         </tr>
                 <?php
@@ -116,32 +92,32 @@ include("include/sidebar.php");
         <div class="pages">
             <?php
             if ($page >= 3) {
-                echo '<div class="prev"><a href="userShow.php?page=' . ($page - 1) . '"><i class="fa-solid fa-chevron-left"></i></a></div>';
+                echo '<div class="prev"><a href="categoryShow.php?page=' . ($page - 1) . '"><i class="fa-solid fa-chevron-left"></i></a></div>';
                 echo '<div class="etc">...</div>';
             }
 
             for ($i = max(1, $page - 1); $i <= min($totalpage, $page + 1); $i++) {
                 echo '<div class="number ' . ($page == $i ? 'active' : '') . '">';
-                echo '<a href="userShow.php?page=' . $i . '">' . $i . '</a>';
+                echo '<a href="cateShow.php?page=' . $i . '">' . $i . '</a>';
                 echo '</div>';
             }
 
             if ($page <= $totalpage - 2) {
                 echo '<div class="etc">...</div>';
-                echo '<div class="next"><a href="userShow.php?page=' . ($page + 1) . '"><i class="fa-solid fa-chevron-right"></i></a></div>';
+                echo '<div class="next"><a href="cateShow.php?page=' . ($page + 1) . '"><i class="fa-solid fa-chevron-right"></i></a></div>';
             }
             ?>
         </div>
 
     </div>
     <script>
-        document.getElementById('searchUser').addEventListener('input', function() {
+        document.getElementById('searchcategory').addEventListener('input', function() {
             let query = this.value;
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'userSearch.php?query=' + query, true);
+            xhr.open('GET', 'cateSearch.php?query=' + query, true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('userTableBody').innerHTML = xhr.responseText;
+                    document.getElementById('categoryTableBody').innerHTML = xhr.responseText;
                 }
             };
             xhr.send();

@@ -2,7 +2,7 @@
 include(__DIR__ . "/../lib/database.php");
 ?>
 <?php
-class loginAdmin
+class LoginAdmin
 {
     private $db;
     public function __construct()

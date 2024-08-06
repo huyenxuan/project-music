@@ -1,6 +1,6 @@
 <?php
 include("../class/userClass.php");
-$user = new user();
+$user = new User();
 $query = $_GET['query'];
 $search_user = $user->search_user($query);
 

@@ -1,7 +1,7 @@
 <?php
 ob_start();
 include('../class/userClass.php');
-$user = new user();
+$user = new User();
 
 $user_id = $_GET['user_id'];
 $get_user = $user->get_user($user_id);

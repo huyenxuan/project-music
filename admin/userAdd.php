@@ -1,7 +1,7 @@
 <?php
 ob_start();
 include('../class/userClass.php');
-$user = new user();
+$user = new User();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullName'];
