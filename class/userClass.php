@@ -37,6 +37,7 @@ class User
             $row = $result->fetch_assoc();
             if ($row['role'] == 'admin') {
                 $_SESSION['email'] = $email;
+                $_SESSION['user_id'] = $row['user_id'];
                 header('Location: index.php');
                 exit();
             } else {
@@ -66,20 +67,23 @@ class User
     // func insert
     public function insert_user($fullName, $email, $password, $description, $role, $userimage)
     {
+        $slug = $this->create_slug($fullName);
         $query = "INSERT INTO tbl_user (
             fullName,
             email,
             password,
             description,
             userimage,
-            role) 
+            role,
+            slug) 
         VALUES (
             '$fullName',
             '$email',
             '$password',
             '$description',
             '$userimage',
-            '$role')";
+            '$role',
+            slug = '$slug')";
         $result = $this->db->insert($query);
         return $result;
     }
@@ -87,16 +91,19 @@ class User
     public function register($fullName, $email, $phoneNumber, $password)
     {
         if (!$this->check_user($email, $phoneNumber)) {
+            $slug = $this->create_slug($fullName);
             $query = "INSERT INTO tbl_user (
                     fullName,
                     email,
                     phoneNumber,
-                    password) 
+                    password,
+                    slug) 
                 VALUES (
                     '$fullName',
                     '$email',
                     '$phoneNumber',
-                    '$password')";
+                    '$password',
+                    '$slug')";
             $result = $this->db->insert($query);
 
             $_SESSION['email'] = $email;
@@ -112,21 +119,23 @@ class User
     // func update
     public function update_user($fullName, $email, $password, $description, $role, $userimage, $user_id)
     {
+        $slug = $this->create_slug($fullName);
         $query = "UPDATE tbl_user
                 SET fullName = '$fullName', 
                     email = '$email', 
                     password = '$password', 
                     description = '$description',
                     role = '$role',
-                    userimage = '$userimage'
+                    userimage = '$userimage',
+                    slug = '$slug'
                 WHERE user_id = '$user_id'";
         $result = $this->db->update($query);
         return $result;
     }
     // func delete
-    public function delete_user($user_id)
+    public function delete_user($slug)
     {
-        $query = "DELETE FROM tbl_user WHERE user_id = '$user_id'";
+        $query = "DELETE FROM tbl_user WHERE slug = '$slug'";
         $result = $this->db->delete($query);
         header('location: userShow.php');
         return $result;
@@ -171,10 +180,52 @@ class User
             return 0;
         }
     }
-    // func get user 
-    public function get_user($user_id)
+    // slug
+    public function create_slug($string)
     {
-        $query = "SELECT * FROM tbl_user WHERE user_id = '$user_id'";
+        $search = array(
+            '#(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)#',
+            '#(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)#',
+            '#(ì|í|ị|ỉ|ĩ)#',
+            '#(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)#',
+            '#(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)#',
+            '#(ỳ|ý|ỵ|ỷ|ỹ)#',
+            '#(đ)#',
+            '#(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)#',
+            '#(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)#',
+            '#(Ì|Í|Ị|Ỉ|Ĩ)#',
+            '#(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)#',
+            '#(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)#',
+            '#(Ỳ|Ý|Ỵ|Ỷ|Ỹ)#',
+            '#(Đ)#',
+            "/[^a-zA-Z0-9\-\_]/",
+        );
+        $replace = array(
+            'a',
+            'e',
+            'i',
+            'o',
+            'u',
+            'y',
+            'd',
+            'A',
+            'E',
+            'I',
+            'O',
+            'U',
+            'Y',
+            'D',
+            '-',
+        );
+        $string = preg_replace($search, $replace, $string);
+        $string = preg_replace('/(-)+/', '-', $string);
+        $string = strtolower($string);
+        return $string;
+    }
+    // lấy thông tin qua slug
+    public function get_user_by_slug($slug)
+    {
+        $query = "SELECT * FROM tbl_user WHERE slug = '$slug'";
         $result = $this->db->select($query);
         return $result;
     }

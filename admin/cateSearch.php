@@ -12,9 +12,9 @@ if ($search_category) {
         echo "<td>" . $i . "</td>";
         echo "<td>" . $row['category_name'] . "</td>";
         echo "<td>
-                <a href='cateEdit.php?cate_id=" . $row['category_id'] . "'>Sửa</a>
+                <a href='cateEdit.php?slug=" . $row['slug'] . "'>Sửa</a>
                 <span> | </span>
-                <a onclick=\"return confirm('Bạn muốn xóa tên thể loại này?')\" href='cateDel.php?category_id=" . $row['category_id'] . "'>Xóa</a>
+                <a onclick=\"return confirm('Bạn muốn xóa tên thể loại này?')\" href='cateDel.php?slug=" . $row['slug'] . "'>Xóa</a>
               </td>";
         echo "</tr>";
     }

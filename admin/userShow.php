@@ -101,9 +101,9 @@ include("include/sidebar.php");
                                 <img src="upload/images/imageuser/<?php echo $result['userimage'] ?>" alt="">
                             </td>
                             <td class="action">
-                                <a href="userEdit.php?user_id=<?php echo $result['user_id'] ?>">Sửa</a>
+                                <a href="userEdit.php?slug=<?php echo $result['slug'] ?>">Sửa</a>
                                 <span> | </span>
-                                <a onclick="return confirm('Bạn muốn xóa người dùng này?')" href="userDel.php?user_id=<?php echo $result['user_id'] ?>">Xóa</a>
+                                <a onclick="return confirm('Bạn muốn xóa người dùng này?')" href="userDel.php?slug=<?php echo $result['slug'] ?>">Xóa</a>
                             </td>
                         </tr>
                 <?php

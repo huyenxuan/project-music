@@ -53,7 +53,7 @@ include("include/sidebar.php");
 
     .image {
         width: 200px;
-        height: 200px;
+        /* height: 200px; */
         overflow: hidden;
     }
 
@@ -93,7 +93,7 @@ include("include/sidebar.php");
         </div>
         <div class="image">
             <label for="image">Ảnh đại diện</label>
-            <input id="image" type="file" name="userimage">
+            <input id="image" type="file" name="userimage" accept="image/*">
         </div>
         <div class="isAdmin">
             <label for="" style="margin-right: 10px">Là admin: </label>

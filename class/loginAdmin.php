@@ -27,6 +27,7 @@ class LoginAdmin
                 $resultName = $this->db->select($queryName);
                 if ($resultName != false) {
                     $_SESSION["fullName"] = $row["fullName"];
+                    $_SESSION["user_id"] = $row['user_id'];
                 }
                 header('Location: index.php');
                 exit();

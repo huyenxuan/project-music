@@ -3,13 +3,15 @@ ob_start();
 include('../class/userClass.php');
 $user = new User();
 
-$user_id = $_GET['user_id'];
-$get_user = $user->get_user($user_id);
+$user_slug = $_GET['slug'];
+$get_user = $user->get_user_by_slug($user_slug);
 if ($get_user) {
     $result = $get_user->fetch_assoc();
+    $user_id = $result['user_id'];
 } else {
     echo 'Không tồn tại người dùng này';
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullName'];
@@ -77,7 +79,7 @@ include("include/sidebar.php");
 
     .image {
         width: 300px;
-        height: 200px;
+        /* height: 200px; */
         overflow: hidden;
     }
 
@@ -99,7 +101,7 @@ include("include/sidebar.php");
 <!-- main content -->
 <div class="main-content">
     <h2 class="title">Sửa người dùng</h2>
-    <form action="userEdit.php?user_id=<?php echo $user_id; ?>" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         <div class="info">
             <div class="name">
                 <label for="fullName">Tên người dùng <span style="color: red">*</span></label><br>
@@ -120,7 +122,7 @@ include("include/sidebar.php");
         </div>
         <div class="image">
             <label for="image">Ảnh đại diện</label>
-            <input type="file" id="image" name="userimage" accept=".jpg, .jpeg, .png"><br>
+            <input type="file" id="image" name="userimage" accept="image/*"><br>
             <img src="upload/images/imageuser/<?php echo $result['userimage'] ?>" alt="">
         </div>
         <div class="isAdmin">

@@ -2,10 +2,10 @@
 include("../class/userClass.php");
 $user = new User();
 
-if (!isset($_GET["user_id"]) || $_GET["user_id"] == null) {
+if (!isset($_GET["slug"]) || $_GET["slug"] == null) {
     return;
 } else {
-    $user_id = $_GET["user_id"];
+    $slug = $_GET["slug"];
 }
-$delete_user = $user->delete_user($user_id);
+$delete_user = $user->delete_user($slug);
 header("location: userShow.php");

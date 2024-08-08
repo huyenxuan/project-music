@@ -77,10 +77,11 @@ include("include/sidebar.php");
                             <td><?php echo $i ?></td>
                             <td><?php echo $result['category_name'] ?></td>
                             <td class="action">
-                                <a href="cateEdit.php?category_id=<?php echo $result['category_id'] ?>">Sửa</a>
+                                <a href="cateEdit.php?slug=<?php echo $result['slug'] ?>">Sửa</a>
                                 <span> | </span>
-                                <a onclick="return confirm('Bạn muốn xóa tên thể loại này?')" href="cateDel.php?category_id=<?php echo $result['category_id'] ?>">Xóa</a>
+                                <a onclick="return confirm('Bạn muốn xóa tên thể loại này?')" href="cateDel.php?slug=<?php echo $result['slug'] ?>">Xóa</a>
                             </td>
+
                         </tr>
                 <?php
                     }

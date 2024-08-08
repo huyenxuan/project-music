@@ -3,8 +3,8 @@ ob_start();
 include("../class/cateClass.php");
 $category = new Category();
 
-$category_id = $_GET['category_id'];
-$get_category = $category->get_category($category_id);
+$category_slug = $_GET['slug'];
+$get_category = $category->get_category_by_slug($category_slug);
 if ($get_category) {
     $result = $get_category->fetch_assoc();
 } else {
@@ -13,8 +13,7 @@ if ($get_category) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_name = $_POST['category_name'];
-
-    $update_category = $category->update_category($category_name, $category_id);
+    $update_category = $category->update_category($category_name, $result['category_id']);
     header('location: cateShow.php');
     exit();
 }
