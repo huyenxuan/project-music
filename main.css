@@ -8,21 +8,19 @@
 body {
     min-height: 100vh;
     background: white;
+    color: white;
     background-size: cover;
     background-position: center;
-}
-
-main {
-    display: flex;
 }
 
 /* header */
 header {
     width: 100%;
+    height: 50px;
     background: #fd6060;
 }
 
-.header-ctn {
+header .header-ctn {
     width: 100%;
     margin: auto;
     display: flex;
@@ -37,7 +35,7 @@ header {
     font-weight: 600;
 }
 
-.header-ctn .account .icon-user {
+.header-ctn .account i {
     margin-bottom: 2px;
 }
 
@@ -51,12 +49,13 @@ header {
     margin: 0 10px;
 }
 
-/* sidebar */
 .side-bar {
     background: #1b1a1b;
     backdrop-filter: blur(15px);
     width: 250px;
     height: 100vh;
+    position: fixed;
+    top: 0;
     overflow-y: auto;
     transition: 0.6s ease;
     transition-property: left;
@@ -74,12 +73,11 @@ header {
     background: #33363a;
 }
 
-.header #image_admin {
+.header .image {
     width: 100%;
     border-radius: 10px;
     display: flex;
     justify-content: center;
-    text-align: center;
 }
 
 img {
@@ -90,14 +88,13 @@ img {
     border: 2px solid #b4b8b9;
 }
 
-.main-content h1 {
+h1 {
     text-align: center;
     font-weight: 500;
     font-size: 25px;
     padding-bottom: 13px;
     font-family: sans-serif;
     letter-spacing: 2px;
-    color: black;
 }
 
 .side-bar .menu {
@@ -146,30 +143,4 @@ img {
 
 .rotate {
     transform: rotate(90deg);
-}
-
-/* main */
-.main {
-    height: auto;
-    min-height: 100vh;
-}
-
-.main-ctn {
-    /* display: flex; */
-    flex: 1;
-    height: auto;
-    min-height: 100vh;
-}
-
-.main-content {
-    margin-top: 10px;
-    flex: 1;
-}
-
-.main-content p {
-    text-align: center;
-    color: rgb(56, 54, 54);
-    font-size: 25px;
-    font-weight: 600;
-    padding-top: 100px;
 }

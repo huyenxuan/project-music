@@ -8,8 +8,8 @@ $show_user = $data['result'];
 $totalpage = $data['totalpage'];
 $page = $data['page'];
 
-include("include/header.php");
 include("include/sidebar.php");
+include("include/header.php");
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +54,10 @@ include("include/sidebar.php");
 
         .active a {
             color: red;
+        }
+
+        .main-content {
+            margin: 15px;
         }
     </style>
 </head>

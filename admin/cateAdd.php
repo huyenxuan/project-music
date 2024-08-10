@@ -13,16 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php
-include("include/header.php");
 include("include/sidebar.php");
+include("include/header.php");
 ?>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thêm thể loại</title>
 <link rel="stylesheet" href="./css/category.css">
 
 <style>
-
+    .main-content {
+        margin: 15px;
+    }
 </style>
 
 <body>

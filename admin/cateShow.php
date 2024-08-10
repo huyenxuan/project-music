@@ -8,17 +8,12 @@ $show_category = $data['result'];
 $totalpage = $data['totalpage'];
 $page = $data['page'];
 
-include("include/header.php");
 include("include/sidebar.php");
+include("include/header.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách người dùng</title>
+    <title>Danh sách Thể loại</title>
     <link rel="stylesheet" href="./css/category.css">
     <style>
         /* pages */
@@ -44,6 +39,10 @@ include("include/sidebar.php");
 
         .active a {
             color: red;
+        }
+
+        .main-content {
+            margin: 15px;
         }
     </style>
 </head>
@@ -93,7 +92,7 @@ include("include/sidebar.php");
         <div class="pages">
             <?php
             if ($page >= 3) {
-                echo '<div class="prev"><a href="categoryShow.php?page=' . ($page - 1) . '"><i class="fa-solid fa-chevron-left"></i></a></div>';
+                echo '<div class="prev"><a href="cateShow.php?page=' . ($page - 1) . '"><i class="fa-solid fa-chevron-left"></i></a></div>';
                 echo '<div class="etc">...</div>';
             }
 

@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: userAdd.php?user_name=" . urlencode($fullName));
     exit();
 }
-include("include/header.php");
 include("include/sidebar.php");
+include("include/header.php");
 ?>
 <style>
     form {
@@ -65,6 +65,10 @@ include("include/sidebar.php");
 
     .isAdmin {
         margin-top: 20px;
+    }
+
+    .main-content {
+        margin: 15px;
     }
 </style>
 <link rel="stylesheet" href="./css/user.css">

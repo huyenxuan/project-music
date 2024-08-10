@@ -23,12 +23,9 @@ class LoginAdmin
             $row = $result->fetch_assoc();
             if ($row['role'] === 'admin') {
                 $_SESSION['email'] = $email;
-                $queryName = "SELECT fullName FROM tbl_user WHERE email = '$email' AND password = '$password'";
-                $resultName = $this->db->select($queryName);
-                if ($resultName != false) {
-                    $_SESSION["fullName"] = $row["fullName"];
-                    $_SESSION["user_id"] = $row['user_id'];
-                }
+                $_SESSION["fullName"] = $row["fullName"];
+                $_SESSION["user_id"] = $row['user_id'];
+                $_SESSION["userimage"] = $row['userimage'];
                 header('Location: index.php');
                 exit();
             } else {

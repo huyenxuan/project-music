@@ -39,10 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: userShow.php");
     exit();
 }
-include("include/header.php");
 include("include/sidebar.php");
+include("include/header.php");
 ?>
 <style>
+    .main-content {
+        margin: 15px;
+    }
+
     form {
         margin-bottom: 10px;
     }

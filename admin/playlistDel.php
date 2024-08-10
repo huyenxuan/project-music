@@ -2,10 +2,10 @@
 include("../class/playlistClass.php");
 $playList = new PlayList();
 
-if (!isset($_GET["slug_PlayList"]) || $_GET["slug_PlayList"] == null) {
+if (!isset($_GET["slugPlaylist"]) || $_GET["slugPlaylist"] == null) {
     return;
 } else {
-    $slug_PlayList = $_GET["slug_PlayList"];
+    $slug = $_GET["slugPlaylist"];
 }
-$delete_playList = $playList->delete_playList($slugPlayList);
-header("location: playListShow.php");
+$delete_playlist = $playList->delete_playlist($slug);
+header("location: playlistShow.php");

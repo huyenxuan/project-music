@@ -1,8 +1,8 @@
 <?php
 ob_start();
 include('../class/songClass.php');
-include("include/header.php");
 include("include/sidebar.php");
+include("include/header.php");
 
 $song = new Song();
 
@@ -73,6 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     option {
         height: 30px;
+    }
+
+    .main-content {
+        margin: 15px;
     }
 </style>
 <link rel="stylesheet" href="./css/user.css">

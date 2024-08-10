@@ -1,6 +1,6 @@
 <?php
-include("include/header.php");
 include("include/sidebar.php");
+include("include/header.php");
 ?>
 <div class="main-content">
     <p>Xin chào Admin HHMusic!</p>
