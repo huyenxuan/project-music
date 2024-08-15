@@ -12,8 +12,10 @@ class Song
     }
 
     // slug
-    public function create_slug($string)
+    public function create_slug($song_name, $author)
     {
+        $combined_string = $song_name . ' ' . $author;
+
         $search = array(
             '#(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)#',
             '#(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)#',
@@ -31,6 +33,7 @@ class Song
             '#(Đ)#',
             "/[^a-zA-Z0-9\-\_]/",
         );
+
         $replace = array(
             'a',
             'e',
@@ -48,11 +51,14 @@ class Song
             'D',
             '-',
         );
-        $string = preg_replace($search, $replace, $string);
-        $string = preg_replace('/(-)+/', '-', $string);
-        $string = strtolower($string);
-        return $string;
+
+        $slug = preg_replace($search, $replace, $combined_string);
+        $slug = preg_replace('/(-)+/', '-', $slug);
+        $slug = strtolower($slug);
+
+        return $slug;
     }
+
     // lấy thông tin qua slug
     public function get_category_by_slug($slug)
     {
@@ -63,7 +69,7 @@ class Song
     // insert
     public function insert_song($song_name, $user_id, $category_id, $privacy, $song_image, $file_path)
     {
-        $slug = $this->create_slug($song_name);
+        $slug = $this->create_slug($song_name, $user_id);
         $query = "INSERT INTO tbl_song (
                     song_name,
                     user_id,
@@ -87,7 +93,7 @@ class Song
     // func update song
     public function update_song($song_name, $user_id, $category_id, $privacy, $song_image, $file_path, $song_id)
     {
-        $slug = $this->create_slug($song_name);
+        $slug = $this->create_slug($song_name, $user_id);
         $query = "UPDATE tbl_song
                 SET song_name = '$song_name',
                     user_id = '$user_id',
@@ -149,6 +155,18 @@ class Song
     {
         $query = "SELECT * FROM tbl_song WHERE slug_song = '$slug'";
         $result = $this->db->select($query);
+        return $result;
+    }
+    // func lưu trữ 
+    public function logAdminAction($adminId, $actions, $details)
+    {
+        $adminId = mysqli_real_escape_string($this->db->conn, $adminId);
+        $actions = mysqli_real_escape_string($this->db->conn, $actions);
+        $details = mysqli_real_escape_string($this->db->conn, $details);
+
+        $query = "INSERT INTO tbl_admin_logs (admin_id, actions, details) 
+                VALUES ('$adminId', '$actions', '$details')";
+        $result = $this->db->insert($query);
         return $result;
     }
 }

@@ -11,6 +11,9 @@ if ($get_playlist) {
     echo 'Playlist does not exist';
     exit();
 }
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $playlist_name = $_POST['playlist_name'];
@@ -18,6 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $song_id = $_POST['song_id'];
     if (is_numeric($song_id) && $song_id > 0)
         $add_song = $playlist->add_song_to_playlist($result['playlist_id'], $song_id);
+
+    $adminId = $user_id;
+    $actions = "Sửa Playlist";
+    $details = "Sửa Playlist '$playlist_name'";
+    $playlist->logAdminAction($adminId, $actions, $details);
     header('location: playlistShow.php');
 }
 

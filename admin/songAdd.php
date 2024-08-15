@@ -22,6 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $insert_song = $song->insert_song($song_name, $userSong_id, $category_id, $privacy, $song_image, $file_path);
 
+    $adminId = $user_id;
+    $action = "Thêm bài hát";
+    $details = "Thêm bài hát '$song_name'";
+    $song->logAdminAction($adminId, $action, $details);
+
     header("Location: songAdd.php?song_name=" . urlencode($song_name));
     exit();
 }

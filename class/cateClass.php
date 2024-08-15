@@ -9,6 +9,19 @@ class Category
     {
         $this->db = new Database();
     }
+    // func lưu trữ 
+    public function logAdminAction($adminId, $actions, $details)
+    {
+        $adminId = mysqli_real_escape_string($this->db->conn, $adminId);
+        $actions = mysqli_real_escape_string($this->db->conn, $actions);
+        $details = mysqli_real_escape_string($this->db->conn, $details);
+
+        $query = "INSERT INTO tbl_admin_logs (admin_id, actions, details) 
+                VALUES ('$adminId', '$actions', '$details')";
+        $result = $this->db->insert($query);
+        return $result;
+    }
+
     // func insert
     public function insert_category($category_name)
     {

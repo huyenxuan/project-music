@@ -10,10 +10,17 @@ if ($get_category) {
 } else {
     echo 'Không tồn tại thể loại nhạc này';
 }
-
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_name = $_POST['category_name'];
     $update_category = $category->update_category($category_name, $result['category_id']);
+
+    $adminId = $user_id;
+    $action = "Thêm thể loại";
+    $details = "Thêm thể loại '$category_name'";
+    $category->logAdminAction($adminId, $action, $details);
     header('location: cateShow.php');
     exit();
 }
@@ -37,7 +44,7 @@ include("include/header.php");
         <h2 class="title" style="color:black">Sửa tên thể loại</h2>
         <form action="" method="POST">
             <input type="text" placeholder="Nhập tển thể loại nhạc" name="category_name" value="<?php echo $result['category_name'] ?>"><br>
-            <button>Thêm</button>
+            <button>Cập nhật</button>
         </form>
     </div>
     <?php

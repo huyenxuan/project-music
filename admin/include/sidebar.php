@@ -1,7 +1,9 @@
 <?php
+ob_start();
 session_start();
 if (!isset($_SESSION['email'])) {
     header('location: login.php');
+    exit();
 }
 ?>
 
@@ -94,6 +96,9 @@ if (!isset($_SESSION['email'])) {
                         <a href="userAdd.php" class="sub-item">Thêm người dùng</a>
                         <a href="userShow.php" class="sub-item">Danh sách người dùng</a>
                     </div>
+                </div>
+                <div class="item">
+                    <a href="activities.php">Activities</a>
                 </div>
             </div>
         </div>

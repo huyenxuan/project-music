@@ -24,8 +24,8 @@ class LoginAdmin
             if ($row['role'] === 'admin') {
                 $_SESSION['email'] = $email;
                 $_SESSION["fullName"] = $row["fullName"];
-                $_SESSION["user_id"] = $row['user_id'];
-                $_SESSION["userimage"] = $row['userimage'];
+                $_SESSION["user_id"] = $row["user_id"];
+                $_SESSION["userimage"] = $row["userimage"];
                 header('Location: index.php');
                 exit();
             } else {

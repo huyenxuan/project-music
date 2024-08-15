@@ -19,7 +19,7 @@ if ($get_song) {
     $result = $get_song->fetch_assoc();
     $song_id = $result['song_id'];
 } else {
-    echo 'Không tồn tại người dùng này';
+    echo 'Không tồn tại bài hát này';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -56,6 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $file_path = $result['file_path'];
     }
     $update_song = $song->update_song($song_name, $userSong_id, $category_id, $privacy, $song_image, $file_path, $song_id);
+
+    $adminId = $user_id;
+    $action = "Sửa bài hát";
+    $details = "Sửa bài hát '$song_name'";
+    $song->logAdminAction($adminId, $action, $details);
 
     header("Location: songShow.php");
     exit();
@@ -164,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="">Riêng tư</label>
             <input type="checkbox" name="privacy" <?php if ($result['privacy'] === 'private') echo 'checked' ?>>
         </div>
-        <button>Sửa</button>
+        <button>Cập nhật</button>
     </form>
 </div>
 <?php

@@ -93,7 +93,7 @@ include("include/header.php");
 
     .image img {
         width: 50%;
-        padding: 5px 0 10px 10px;
+        height: 50%;
     }
 
     .isAdmin {
@@ -133,7 +133,7 @@ include("include/header.php");
             <label for="" style="margin-right: 10px">Là admin: </label>
             <input name="role" value="admin" type="checkbox" placeholder="Là admin" <?php if ($result['role'] == 'admin') echo 'checked' ?>><br>
         </div>
-        <button>Sửa</button>
+        <button>Cập nhật</button>
     </form>
 </div>
 <?php

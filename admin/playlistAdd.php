@@ -11,6 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $playlist_name = $_POST['playlist_name'];
     $userPL_id = $user_id;
     $insert_playList = $playList->insert_playList($playlist_name, $userPL_id);
+
+    $adminId = $user_id;
+    $actions = "Thêm Playlist";
+    $details = "Thêm Playlist '$playlist_name'";
+    $playList->logAdminAction($adminId, $actions, $details);
+
     header('location: cateAdd.php?playListName=' . urldecode($playlist_name));
     exit();
 }

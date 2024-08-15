@@ -180,5 +180,17 @@ class PlayList
         $result = $this->db->delete($query);
         return $result;
     }
+    // func lưu trữ 
+    public function logAdminAction($adminId, $actions, $details)
+    {
+        $adminId = mysqli_real_escape_string($this->db->conn, $adminId);
+        $actions = mysqli_real_escape_string($this->db->conn, $actions);
+        $details = mysqli_real_escape_string($this->db->conn, $details);
+
+        $query = "INSERT INTO tbl_admin_logs (admin_id, actions, details) 
+                VALUES ('$adminId', '$actions', '$details')";
+        $result = $this->db->insert($query);
+        return $result;
+    }
 }
 ?>
