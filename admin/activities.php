@@ -16,6 +16,10 @@ include("include/header.php");
     <title>Danh sách Thể loại</title>
     <link rel="stylesheet" href="./css/category.css">
     <style>
+        tbody tr {
+            height: 25px;
+        }
+
         /* pages */
         .pages {
             display: flex;
@@ -110,17 +114,6 @@ include("include/header.php");
 
     </div>
     <script>
-        document.getElementById('searchLogs').addEventListener('input', function() {
-            let query = this.value;
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'adminLogsSearch.php?query=' + query, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('adminLogsTableBody').innerHTML = xhr.responseText;
-                }
-            };
-            xhr.send();
-        });
         document.getElementById('searchLogs').addEventListener('input', function() {
             searchLogs(1);
         });

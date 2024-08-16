@@ -115,7 +115,6 @@ class User
             echo '<h2>Email hoặc Số điện thoại đã tồn tại!</h2>';
         }
     }
-
     // func update
     public function update_user($fullName, $email, $password, $description, $role, $userimage, $user_id)
     {
@@ -141,14 +140,31 @@ class User
         return $result;
     }
     // func search
-    public function search_user($fullName)
+    public function search_user($key, $page, $limit)
     {
-        $query = "SELECT * FROM tbl_user 
-                WHERE fullName LIKE '%$fullName%'
-                OR role LIKE '%$fullName%'";
+        $from = ($page - 1) * $limit;
+
+        $query = "SELECT *
+              FROM tbl_user
+              WHERE fullName LIKE '%$key%'
+              OR role LIKE '%$key%'
+              ORDER BY user_id DESC
+              LIMIT $from, $limit";
+
         $result = $this->db->select($query);
-        return $result;
+
+        $total_query = "SELECT COUNT(*) as total
+                    FROM tbl_user
+                    WHERE fullName LIKE '%$key%'
+                    OR role LIKE '%$key%'";
+
+        $total_result = $this->db->select($total_query);
+        $total_record = $total_result->fetch_assoc()['total'];
+        $total_page = ceil($total_record / $limit);
+
+        return ['result' => $result, 'totalpage' => $total_page, 'page' => $page];
     }
+
     // func đếm số người theo dõi người dùng
     public function count_follow_user($user_id)
     {
@@ -227,6 +243,18 @@ class User
     {
         $query = "SELECT * FROM tbl_user WHERE slug = '$slug'";
         $result = $this->db->select($query);
+        return $result;
+    }
+    // func lưu trữ 
+    public function logAdminAction($adminId, $actions, $details)
+    {
+        $adminId = mysqli_real_escape_string($this->db->conn, $adminId);
+        $actions = mysqli_real_escape_string($this->db->conn, $actions);
+        $details = mysqli_real_escape_string($this->db->conn, $details);
+
+        $query = "INSERT INTO tbl_admin_logs (admin_id, actions, details) 
+                VALUES ('$adminId', '$actions', '$details')";
+        $result = $this->db->insert($query);
         return $result;
     }
 }

@@ -116,16 +116,20 @@ include("include/header.php");
     </div>
     <script>
         document.getElementById('searchPlaylist').addEventListener('input', function() {
-            let query = this.value;
+            searchPlaylist(1);
+        });
+
+        function searchPlaylist(page) {
+            let query = document.getElementById('searchPlaylist').value;
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'playlistSearch.php?query=' + query, true);
+            xhr.open('GET', 'playlistSearch.php?query=' + query + '&page=' + page, true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     document.getElementById('playlistTableBody').innerHTML = xhr.responseText;
                 }
             };
             xhr.send();
-        });
+        }
     </script>
 </body>
 

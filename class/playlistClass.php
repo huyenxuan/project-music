@@ -31,7 +31,7 @@ class PlayList
         return $result;
     }
 
-    // func xóa
+    // func delete
     public function delete_playlist($slug_playlist)
     {
         $query = "DELETE FROM tbl_playlist WHERE slug_playlist = '$slug_playlist'";
@@ -149,13 +149,29 @@ class PlayList
     }
 
     // func search
-    public function search_playlist($playlist_name)
+    public function search_playlist($playlist_name, $page, $limit)
     {
-        $query = "SELECT * FROM tbl_playlist 
-                WHERE playlist_name LIKE '%$playlist_name%'";
+        $from = ($page - 1) * $limit;
+
+        $query = "SELECT *
+              FROM tbl_playlist
+              WHERE playlist_name LIKE '%$playlist_name%'
+              ORDER BY playlist_id DESC
+              LIMIT $from, $limit";
+
         $result = $this->db->select($query);
-        return $result;
+
+        $total_query = "SELECT COUNT(*) as total
+                    FROM tbl_playlist
+                    WHERE playlist_name LIKE '%$playlist_name%'";
+
+        $total_result = $this->db->select($total_query);
+        $total_record = $total_result->fetch_assoc()['total'];
+        $total_page = ceil($total_record / $limit);
+
+        return ['result' => $result, 'totalpage' => $total_page, 'page' => $page];
     }
+
 
     // func đếm số bài hát
     function count_song_playlist($playlist_id)

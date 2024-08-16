@@ -99,7 +99,7 @@ include("include/header.php");
                             <td><?php echo $i ?></td>
                             <td><?php echo $result['fullName'] ?></td>
                             <td><?php echo $result['email'] ?></td>
-                            <td><?php echo $count_follow_user ?></td>
+                            <td style="width:110px;"><?php echo $count_follow_user ?></td>
                             <td><?php echo $count_user_follow ?></td>
                             <td class="image">
                                 <img src="upload/images/imageuser/<?php echo $result['userimage'] ?>" alt="">
@@ -140,16 +140,20 @@ include("include/header.php");
     </div>
     <script>
         document.getElementById('searchUser').addEventListener('input', function() {
-            let query = this.value;
+            searchUser(1);
+        });
+
+        function searchUser(page) {
+            let query = document.getElementById('searchUser').value;
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'userSearch.php?query=' + query, true);
+            xhr.open('GET', 'userSearch.php?query=' + query + '&page=' + page, true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     document.getElementById('userTableBody').innerHTML = xhr.responseText;
                 }
             };
             xhr.send();
-        });
+        }
     </script>
 </body>
 

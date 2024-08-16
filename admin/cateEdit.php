@@ -1,5 +1,7 @@
 <?php
 ob_start();
+include("include/sidebar.php");
+include("include/header.php");
 include("../class/cateClass.php");
 $category = new Category();
 
@@ -21,14 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = "Thêm thể loại";
     $details = "Thêm thể loại '$category_name'";
     $category->logAdminAction($adminId, $action, $details);
+
     header('location: cateShow.php');
     exit();
 }
-?>
-
-<?php
-include("include/sidebar.php");
-include("include/header.php");
 ?>
 <title>Thêm thể loại</title>
 <link rel="stylesheet" href="./css/category.css">

@@ -1,8 +1,8 @@
 <?php
 ob_start();
-include("../class/playListClass.php");
 include("include/sidebar.php");
 include("include/header.php");
+include("../class/playListClass.php");
 $playList = new PlayList();
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $details = "Thêm Playlist '$playlist_name'";
     $playList->logAdminAction($adminId, $actions, $details);
 
-    header('location: cateAdd.php?playListName=' . urldecode($playlist_name));
+    header('location: playlistAdd.php?playListName=' . urldecode($playlist_name));
     exit();
 }
 ?>

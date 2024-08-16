@@ -13,7 +13,8 @@ class Activities
     {
         $limit = 20;
 
-        $queryALl = 'SELECT * FROM tbl_admin_logs';
+        $queryALl = 'SELECT * FROM tbl_admin_logs
+                    WHERE tbl_admin_logs.created_at >= NOW() - INTERVAL 5 DAY';
         $resultAll = $this->db->select($queryALl);
         $totalpage = ceil($resultAll->num_rows / $limit);
 
@@ -23,13 +24,14 @@ class Activities
         $query = "SELECT *
                 FROM tbl_admin_logs 
                 JOIN tbl_user ON tbl_admin_logs.admin_id = tbl_user.user_id
+                WHERE tbl_admin_logs.created_at >= NOW() - INTERVAL 5 DAY
                 ORDER BY id DESC
                 LIMIT $from, $limit";
         $result = $this->db->select($query);
         return ['result' => $result, 'totalpage' => $totalpage, 'page' => $page];
     }
     // func search
-    public function search_admin_logs($key, $page = 1, $limit = 20)
+    public function search_admin_logs($key, $page, $limit)
     {
         $from = ($page - 1) * $limit;
 
@@ -45,7 +47,6 @@ class Activities
 
         $result = $this->db->select($query);
 
-        // Get total records count for pagination
         $total_query = "SELECT COUNT(*) as total
                     FROM tbl_admin_logs
                     JOIN tbl_user ON tbl_admin_logs.admin_id = tbl_user.user_id

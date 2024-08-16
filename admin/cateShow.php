@@ -52,7 +52,7 @@ include("include/header.php");
     <div class="main-content">
         <div class="search">
             <div class="search-ctn">
-                <input type="text" id="searchcategory" placeholder="Nhập tên thể loại">
+                <input type="text" id="searchCategory" placeholder="Nhập tên thể loại">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
         </div>
@@ -111,17 +111,21 @@ include("include/header.php");
 
     </div>
     <script>
-        document.getElementById('searchcategory').addEventListener('input', function() {
-            let query = this.value;
+        document.getElementById('searchCategory').addEventListener('input', function() {
+            searchCategory(1);
+        });
+
+        function searchCategory(page) {
+            let query = document.getElementById('searchCategory').value;
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'cateSearch.php?query=' + query, true);
+            xhr.open('GET', 'cateSearch.php?query=' + query + '&page=' + page, true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     document.getElementById('categoryTableBody').innerHTML = xhr.responseText;
                 }
             };
             xhr.send();
-        });
+        }
     </script>
 </body>
 

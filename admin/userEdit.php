@@ -1,5 +1,7 @@
 <?php
 ob_start();
+include("include/sidebar.php");
+include("include/header.php");
 include('../class/userClass.php');
 $user = new User();
 
@@ -12,6 +14,9 @@ if ($get_user) {
     echo 'Không tồn tại người dùng này';
 }
 
+if (isset($_SESSION['user_id'])) {
+    $userAdminid = $_SESSION['user_id'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullName'];
@@ -36,11 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $update_user = $user->update_user($fullName, $email, $password, $description, $role, $userimage, $user_id);
+
+    $adminId = $userAdminid;
+    $actions = "Sửa thông tin người dùng";
+    $details = "Sửa thông tin người dùng '$fullName'";
+    $user->logAdminAction($adminId, $actions, $details);
+
     header("Location: userShow.php");
     exit();
 }
-include("include/sidebar.php");
-include("include/header.php");
 ?>
 <style>
     .main-content {

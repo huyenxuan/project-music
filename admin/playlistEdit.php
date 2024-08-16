@@ -1,5 +1,7 @@
 <?php
 ob_start();
+include("include/sidebar.php");
+include("include/header.php");
 include("../class/playlistClass.php");
 $playlist = new PlayList();
 
@@ -37,11 +39,6 @@ if ($songs_in_playlist) {
         $songs_in_playlist_ids[] = $song_row['song_id'];
     }
 }
-?>
-
-<?php
-include("include/sidebar.php");
-include("include/header.php");
 ?>
 <title>Sửa Playlist</title>
 <link rel="stylesheet" href="./css/category.css">

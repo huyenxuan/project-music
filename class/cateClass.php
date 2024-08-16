@@ -122,12 +122,27 @@ class Category
         return $result;
     }
     // func search
-    public function search_category($category_name)
+    public function search_category($category_name, $page, $limit)
     {
-        $query = "SELECT * FROM tbl_category 
-                WHERE category_name LIKE '%$category_name%'";
+        $from = ($page - 1) * $limit;
+
+        $query = "SELECT *
+              FROM tbl_category
+              WHERE category_name LIKE '%$category_name%'
+              ORDER BY category_id DESC
+              LIMIT $from, $limit";
+
         $result = $this->db->select($query);
-        return $result;
+
+        $total_query = "SELECT COUNT(*) as total
+                    FROM tbl_category
+                    WHERE category_name LIKE '%$category_name%'";
+
+        $total_result = $this->db->select($total_query);
+        $total_record = $total_result->fetch_assoc()['total'];
+        $total_page = ceil($total_record / $limit);
+
+        return ['result' => $result, 'totalpage' => $total_page, 'page' => $page];
     }
 }
 ?>

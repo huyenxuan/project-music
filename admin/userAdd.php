@@ -1,7 +1,13 @@
 <?php
 ob_start();
+include("include/sidebar.php");
+include("include/header.php");
 include('../class/userClass.php');
 $user = new User();
+
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullName'];
@@ -14,11 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $insert_user = $user->insert_user($fullName, $email, $password, $description, $role, $userimage);
 
+    $adminId = $user_id;
+    $actions = "Thêm người dùng";
+    $details = "Thêm người dùng '$fullName'";
+    $user->logAdminAction($adminId, $actions, $details);
+
     header("Location: userAdd.php?user_name=" . urlencode($fullName));
     exit();
 }
-include("include/sidebar.php");
-include("include/header.php");
 ?>
 <style>
     form {

@@ -1,8 +1,8 @@
 <?php
 ob_start();
-include('../class/songClass.php');
 include("include/sidebar.php");
 include("include/header.php");
+include('../class/songClass.php');
 
 $song = new Song();
 

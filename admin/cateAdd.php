@@ -1,8 +1,8 @@
 <?php
 ob_start();
-include("../class/cateClass.php");
 include("include/sidebar.php");
 include("include/header.php");
+include("../class/cateClass.php");
 
 $category = new Category();
 

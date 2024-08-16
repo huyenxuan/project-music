@@ -139,16 +139,20 @@ include("include/header.php");
     </div>
     <script>
         document.getElementById('searchSong').addEventListener('input', function() {
-            let query = this.value;
+            searchSong(1);
+        });
+
+        function searchSong(page) {
+            let query = document.getElementById('searchSong').value;
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'songSearch.php?query=' + query, true);
+            xhr.open('GET', 'userSearch.php?query=' + query + '&page=' + page, true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('songTableBody').innerHTML = xhr.responseText;
+                    document.getElementById('userTableBody').innerHTML = xhr.responseText;
                 }
             };
             xhr.send();
-        });
+        }
     </script>
 </body>
 

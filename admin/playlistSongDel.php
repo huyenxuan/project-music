@@ -1,4 +1,5 @@
 <?php
+include("include/sidebar.php");
 include("../class/playlistClass.php");
 $playList = new PlayList();
 

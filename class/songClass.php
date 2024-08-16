@@ -115,15 +115,32 @@ class Song
         return $result;
     }
     // search song
-    public function search_song($song_name)
+    public function search_song($key, $page, $limit)
     {
-        $query = "SELECT * 
-                FROM tbl_song s
-                LEFT JOIN tbl_user us on us.user_id = s.user_id
-                WHERE song_name LIKE '%$song_name%'";
+        $from = ($page - 1) * $limit;
+
+        // SQL query to fetch the search results with pagination
+        $query = "SELECT *
+              FROM tbl_song s
+              LEFT JOIN tbl_user us ON us.user_id = s.user_id
+              WHERE song_name LIKE '%$key%'
+              ORDER BY song_id DESC
+              LIMIT $from, $limit";
+
         $result = $this->db->select($query);
-        return $result;
+
+        $total_query = "SELECT COUNT(*) as total
+                    FROM tbl_song s
+                    LEFT JOIN tbl_user us ON us.user_id = s.user_id
+                    WHERE song_name LIKE '%$key%'";
+
+        $total_result = $this->db->select($total_query);
+        $total_record = $total_result->fetch_assoc()['total'];
+        $total_page = ceil($total_record / $limit);
+
+        return ['result' => $result, 'totalpage' => $total_page, 'page' => $page];
     }
+
     // func show song
     public function show_song()
     {

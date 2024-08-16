@@ -1,7 +1,7 @@
 <?php
 include("../class/activitiesClass.php");
 $activities = new Activities();
-$query = $_GET['query'];
+$query = isset($_GET['query']) ? $_GET['query'] : '';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $limit = 20; // Set the limit per page
 
@@ -22,7 +22,7 @@ if ($search_admin_logs['result']) {
 
     // Display pagination
     if ($search_admin_logs['totalpage'] > 1) {
-        echo '<div class="pages">';
+        echo '<div class="pages page2">';
         if ($page > 1) {
             echo '<div class="prev"><a href="#" onclick="searchLogs(' . ($page - 1) . ')"><i class="fa-solid fa-chevron-left"></i></a></div>';
         }
