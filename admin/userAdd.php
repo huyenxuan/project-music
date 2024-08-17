@@ -60,9 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         width: 90% !important;
     }
 
-    .image {
-        width: 200px;
-        /* height: 200px; */
+    form .image {
+        width: 400px;
         overflow: hidden;
     }
 

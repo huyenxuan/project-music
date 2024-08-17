@@ -13,7 +13,7 @@ class PlayList
     // func insert
     public function insert_playList($playlist_name, $user_id)
     {
-        $slug = $this->create_slug($playlist_name);
+        $slug = $this->create_slug($playlist_name, $user_id);
         $query = "INSERT INTO tbl_playlist (playlist_name, user_id, slug_playlist) 
                 VALUES ('$playlist_name','$user_id', '$slug')";
         $result = $this->db->insert($query);
@@ -21,9 +21,9 @@ class PlayList
     }
 
     // func update
-    public function update_playlist($playlist_name, $playlist_id)
+    public function update_playlist($playlist_name, $user_id, $playlist_id)
     {
-        $slug = $this->create_slug($playlist_name);
+        $slug = $this->create_slug($playlist_name, $user_id);
         $query = "UPDATE tbl_playlist 
                 SET playlist_name = '$playlist_name', slug_playlist = '$slug' 
                 WHERE playlist_id = '$playlist_id'";
@@ -51,7 +51,8 @@ class PlayList
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
         $from = ($page - 1) * $limit;
-        $query = "SELECT * FROM tbl_playlist 
+        $query = "SELECT * FROM tbl_playlist pl
+                LEFT JOIN tbl_user us ON pl.user_id = us.user_id
                 LIMIT $from, $limit";
         $result = $this->db->select($query);
         return ['result' => $result, 'totalpage' => $totalpage, 'page' => $page];
@@ -98,8 +99,10 @@ class PlayList
     }
 
     // slug
-    public function create_slug($string)
+    public function create_slug($playlist_name, $author)
     {
+        $combined_string = $playlist_name . ' ' . $author;
+
         $search = array(
             '#(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)#',
             '#(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)#',
@@ -117,6 +120,7 @@ class PlayList
             '#(Đ)#',
             "/[^a-zA-Z0-9\-\_]/",
         );
+
         $replace = array(
             'a',
             'e',
@@ -134,10 +138,12 @@ class PlayList
             'D',
             '-',
         );
-        $string = preg_replace($search, $replace, $string);
-        $string = preg_replace('/(-)+/', '-', $string);
-        $string = strtolower($string);
-        return $string;
+
+        $slug = preg_replace($search, $replace, $combined_string);
+        $slug = preg_replace('/(-)+/', '-', $slug);
+        $slug = strtolower($slug);
+
+        return $slug;
     }
 
     // lấy thông tin qua slug

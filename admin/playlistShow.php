@@ -62,6 +62,7 @@ include("include/header.php");
                 <tr>
                     <th>STT</th>
                     <th>Tên playlist</th>
+                    <th>Tác giả</th>
                     <th>Số lượng bài hát</th>
                     <th>Hành động</th>
                 </tr>
@@ -78,6 +79,7 @@ include("include/header.php");
                         <tr>
                             <td><?php echo $i ?></td>
                             <td><?php echo $result['playlist_name'] ?></td>
+                            <td><?php echo $result['fullName'] ?></td>
                             <td><?php echo $count_song_playlist ?></td>
                             <td class="action">
                                 <a href="playlistEdit.php?slugPlaylist=<?php echo $result['slug_playlist'] ?>">Sửa</a>

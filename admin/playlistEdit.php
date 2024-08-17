@@ -19,7 +19,8 @@ if (isset($_SESSION['user_id'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $playlist_name = $_POST['playlist_name'];
-    $update_playlist = $playlist->update_playlist($playlist_name, $result['playlist_id']);
+    $authorPL = $user_id;
+    $update_playlist = $playlist->update_playlist($playlist_name, $authorPL, $result['playlist_id']);
     $song_id = $_POST['song_id'];
     if (is_numeric($song_id) && $song_id > 0)
         $add_song = $playlist->add_song_to_playlist($result['playlist_id'], $song_id);

@@ -36,24 +36,26 @@ class Activities
         $from = ($page - 1) * $limit;
 
         $query = "SELECT *
-              FROM tbl_admin_logs
-              JOIN tbl_user ON tbl_admin_logs.admin_id = tbl_user.user_id
-              WHERE tbl_user.fullName LIKE '%$key%'
-              OR tbl_admin_logs.actions LIKE '%$key%'
-              OR tbl_admin_logs.details LIKE '%$key%'
-              OR tbl_admin_logs.created_at LIKE '%$key%'
-              ORDER BY id DESC
-              LIMIT $from, $limit";
+                FROM tbl_admin_logs
+                JOIN tbl_user ON tbl_admin_logs.admin_id = tbl_user.user_id
+                WHERE tbl_admin_logs.created_at >= NOW() - INTERVAL 5 DAY
+                AND (tbl_user.fullName LIKE '%$key%'
+                    OR tbl_admin_logs.actions LIKE '%$key%'
+                    OR tbl_admin_logs.details LIKE '%$key%'
+                    OR tbl_admin_logs.created_at LIKE '%$key%')
+                ORDER BY id DESC
+                LIMIT $from, $limit";
 
         $result = $this->db->select($query);
 
         $total_query = "SELECT COUNT(*) as total
                     FROM tbl_admin_logs
                     JOIN tbl_user ON tbl_admin_logs.admin_id = tbl_user.user_id
-                    WHERE tbl_user.fullName LIKE '%$key%'
-                    OR tbl_admin_logs.actions LIKE '%$key%'
-                    OR tbl_admin_logs.details LIKE '%$key%'
-                    OR tbl_admin_logs.created_at LIKE '%$key%'";
+                    WHERE tbl_admin_logs.created_at >= NOW() - INTERVAL 5 DAY
+                    AND (tbl_user.fullName LIKE '%$key%'
+                        OR tbl_admin_logs.actions LIKE '%$key%'
+                        OR tbl_admin_logs.details LIKE '%$key%'
+                        OR tbl_admin_logs.created_at LIKE '%$key%')";
 
         $total_result = $this->db->select($total_query);
         $total_record = $total_result->fetch_assoc()['total'];

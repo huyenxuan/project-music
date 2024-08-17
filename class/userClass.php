@@ -83,7 +83,7 @@ class User
             '$description',
             '$userimage',
             '$role',
-            slug = '$slug')";
+            '$slug')";
         $result = $this->db->insert($query);
         return $result;
     }
