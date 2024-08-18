@@ -22,9 +22,9 @@ if ($search_user['result']) {
         echo "<td>" . $count_user_follow . "</td>";
         echo "<td><img src='upload/images/imageuser/" . $row['userimage'] . "'></td>";
         echo "<td>
-                <a href='userEdit.php?slug=" . $row['slug'] . "'>Sửa</a>
+                <a href='userEdit.php?user_id=" . $row['user_id'] . "'>Sửa</a>
                 <span> | </span>
-                <a onclick=\"return confirm('Bạn muốn xóa người dùng này?')\" href='userDel.php?slug=" . $row['slug'] . "'>Xóa</a>
+                <a onclick=\"return confirm('Bạn muốn xóa người dùng này?')\" href='userDel.php?user_id=" . $row['user_id'] . "'>Xóa</a>
               </td>";
         echo "</tr>";
     }

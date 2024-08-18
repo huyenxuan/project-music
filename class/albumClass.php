@@ -93,10 +93,10 @@ class Album
         return $result;
     }
     // func delete album
-    public function delete_album($album_slug)
+    public function delete_album($album_id)
     {
         $query = "DELETE FROM tbl_album
-                WHERE album_slug = '$album_slug'";
+                WHERE album_id = '$album_id'";
         $result = $this->db->delete($query);
         return $result;
     }
@@ -133,11 +133,11 @@ class Album
             return 0;
         }
     }
-    // func get album by slug
-    public function get_album_by_slug($album_slug)
+    // func get album by id
+    public function get_album_by_id($album_id)
     {
         $query = "SELECT * FROM tbl_album ab
-                WHERE album_slug = '$album_slug'";
+                WHERE album_id = '$album_id'";
         $result = $this->db->select($query);
         return $result;
     }
@@ -176,12 +176,12 @@ class Album
         return $result;
     }
     // func get song
-    public function get_album_songs($album_slug)
+    public function get_album_songs($album_id)
     {
         $query = " SELECT * FROM tbl_song s
                 INNER JOIN tbl_album_song abs ON s.song_id = abs.song_id
                 INNER JOIN tbl_album ab ON abs.album_id = ab.album_id
-                WHERE ab.album_slug = '$album_slug'";
+                WHERE ab.album_id = '$album_id'";
         $result = $this->db->select($query);
         return $result;
     }
@@ -194,6 +194,29 @@ class Album
         $result = $this->db->select($query);
         return $result;
     }
+    // func search
+    public function search_album($album_name, $page, $limit)
+    {
+        $from = ($page - 1) * $limit;
 
+        $query = "SELECT *
+              FROM tbl_album ab
+              JOIN tbl_user us ON ab.user_id = us.user_id
+              WHERE album_name LIKE '%$album_name%'
+              ORDER BY album_id ASC
+              LIMIT $from, $limit";
+
+        $result = $this->db->select($query);
+
+        $total_query = "SELECT COUNT(*) as total
+                    FROM tbl_album
+                    WHERE album_name LIKE '%$album_name%'";
+
+        $total_result = $this->db->select($total_query);
+        $total_record = $total_result->fetch_assoc()['total'];
+        $total_page = ceil($total_record / $limit);
+
+        return ['result' => $result, 'totalpage' => $total_page, 'page' => $page];
+    }
 }
 ?>

@@ -132,9 +132,9 @@ class User
         return $result;
     }
     // func delete
-    public function delete_user($slug)
+    public function delete_user($user_id)
     {
-        $query = "DELETE FROM tbl_user WHERE slug = '$slug'";
+        $query = "DELETE FROM tbl_user WHERE user_id = '$user_id'";
         $result = $this->db->delete($query);
         header('location: userShow.php');
         return $result;
@@ -238,10 +238,10 @@ class User
         $string = strtolower($string);
         return $string;
     }
-    // lấy thông tin qua slug
-    public function get_user_by_slug($slug)
+    // lấy thông tin qua id
+    public function get_user_by_id($user_id)
     {
-        $query = "SELECT * FROM tbl_user WHERE slug = '$slug'";
+        $query = "SELECT * FROM tbl_user WHERE user_id = '$user_id'";
         $result = $this->db->select($query);
         return $result;
     }

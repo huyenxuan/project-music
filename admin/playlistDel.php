@@ -9,19 +9,19 @@ if (!isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 }
 
-if (!isset($_GET["slugPlaylist"]) || $_GET["slugPlaylist"] == null) {
+if (!isset($_GET["playlist_id"]) || $_GET["playlist_id"] == null) {
     return;
 } else {
-    $slug = $_GET["slugPlaylist"];
-    $get_playlist_by_slug = $playList->get_playlist_by_slug($slug);
-    if ($get_playlist_by_slug) {
-        while ($result = $get_playlist_by_slug->fetch_assoc()) {
+    $playlist_id = $_GET["playlist_id"];
+    $get_playlist_by_id = $playList->get_playlist_by_id($playlist_id);
+    if ($get_playlist_by_id) {
+        while ($result = $get_playlist_by_id->fetch_assoc()) {
             $playlist_name = $result['playlist_name'];
         }
     }
 }
 
-$delete_playlist = $playList->delete_playlist($slug);
+$delete_playlist = $playList->delete_playlist($playlist_id);
 
 $adminId = $user_id;
 $action = "Xóa thể loại";

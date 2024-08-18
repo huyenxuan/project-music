@@ -52,7 +52,8 @@ if (!isset($_SESSION['email'])) {
                 <?php if (isset($_SESSION['fullName'])) {
                     $fullName = $_SESSION['fullName'];
                 } ?>
-                <h1 style="font-size:16px; color:white; text-align:center; padding-bottom: 10px;"><?php echo $fullName ?></h1>
+                <h1 style="font-size:16px; color:white; text-align:center; padding-bottom: 10px;">
+                    <?php echo $fullName ?></h1>
             </div>
             <div class="menu">
                 <div class="item">
@@ -91,7 +92,7 @@ if (!isset($_SESSION['email'])) {
                     </div>
                 </div>
                 <div class="item">
-                    <a class="sub-btn">Quản lý người dùng<i class="fas fa-angle-right dropdown"></i></a>
+                    <a class="sub-btn">Quản lý Người dùng<i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
                         <a href="userAdd.php" class="sub-item">Thêm người dùng</a>
                         <a href="userShow.php" class="sub-item">Danh sách người dùng</a>

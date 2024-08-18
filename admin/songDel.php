@@ -10,18 +10,18 @@ if (!isset($_SESSION['user_id'])) {
 
 $song = new Song();
 
-if (!isset($_GET["slugSong"]) || $_GET["slugSong"] == null) {
+if (!isset($_GET["song_id"]) || $_GET["song_id"] == null) {
     return;
 } else {
-    $slugSong = $_GET["slugSong"];
-    $get_song_by_slug = $song->get_song_by_slug($slugSong);
-    if ($get_song_by_slug) {
-        while ($result = $get_song_by_slug->fetch_assoc()) {
+    $song_id = $_GET["song_id"];
+    $get_song_by_id = $song->get_song_by_id($song_id);
+    if ($get_song_by_id) {
+        while ($result = $get_song_by_id->fetch_assoc()) {
             $song_name = $result['song_name'];
         }
     }
 }
-$delete_song = $song->delete_song($slugSong);
+$delete_song = $song->delete_song($song_id);
 
 $adminId = $user_id;
 $action = "Xóa bài hát";

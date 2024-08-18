@@ -5,8 +5,8 @@ include("include/header.php");
 include("../class/albumClass.php");
 $album = new Album();
 
-$album_slug = $_GET['album_slug'];
-$get_album = $album->get_album_by_slug($album_slug);
+$album_id = $_GET['album_id'];
+$get_album = $album->get_album_by_id($album_id);
 if ($get_album) {
     $result = $get_album->fetch_assoc();
 } else {
@@ -173,7 +173,7 @@ if ($songs_in_album) {
                 </thead>
                 <tbody id="albumTableBody">
                     <?php
-                $show_albumSong = $album->get_album_songs($album_slug);
+                $show_albumSong = $album->get_album_songs($album_id);
                 if ($show_albumSong) {
                     $i = 0;
                     while ($result = $show_albumSong->fetch_assoc()) {

@@ -90,7 +90,7 @@ include("include/header.php");
                     while ($result = $show_song->fetch_assoc()) {
                         $i++;
                         $song_id = $result['song_id'];
-                ?>
+                        ?>
                         <tr>
                             <td><?php echo $i ?></td>
                             <td><?php echo $result['song_name'] ?></td>
@@ -104,12 +104,13 @@ include("include/header.php");
                                 <img src="upload/images/imagesong/<?php echo $result['song_image'] ?>" alt="">
                             </td>
                             <td class="action">
-                                <a href="songEdit.php?slugSong=<?php echo $result['slug_song'] ?>">Sửa</a>
+                                <a href="songEdit.php?song_id=<?php echo $result['song_id'] ?>">Sửa</a>
                                 <span> | </span>
-                                <a onclick="return confirm('Bạn muốn xóa bài hát này?')" href="songDel.php?slugSong=<?php echo $result['slug_song'] ?>">Xóa</a>
+                                <a onclick="return confirm('Bạn muốn xóa bài hát này?')"
+                                    href="songDel.php?song_id=<?php echo $result['song_id'] ?>">Xóa</a>
                             </td>
                         </tr>
-                <?php
+                        <?php
                     }
                 }
                 ?>
@@ -138,17 +139,17 @@ include("include/header.php");
 
     </div>
     <script>
-        document.getElementById('searchSong').addEventListener('input', function() {
+        document.getElementById('searchSong').addEventListener('input', function () {
             searchSong(1);
         });
 
         function searchSong(page) {
             let query = document.getElementById('searchSong').value;
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'userSearch.php?query=' + query + '&page=' + page, true);
-            xhr.onreadystatechange = function() {
+            xhr.open('GET', 'songSearch.php?query=' + query + '&page=' + page, true);
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('userTableBody').innerHTML = xhr.responseText;
+                    document.getElementById('songTableBody').innerHTML = xhr.responseText;
                 }
             };
             xhr.send();

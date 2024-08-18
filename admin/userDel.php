@@ -9,18 +9,18 @@ if (!isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 }
 
-if (!isset($_GET["slug"]) || $_GET["slug"] == null) {
+if (!isset($_GET["user_id"]) || $_GET["user_id"] == null) {
     return;
 } else {
-    $slug = $_GET["slug"];
-    $get_user_by_slug = $user->get_user_by_slug($slug);
-    if ($get_user_by_slug) {
-        while ($result = $get_user_by_slug->fetch_assoc()) {
+    $user_id = $_GET["user_id"];
+    $get_user_by_id = $user->get_user_by_id($user_id);
+    if ($get_user_by_id) {
+        while ($result = $get_user_by_id->fetch_assoc()) {
             $user_name = $result['fullName'];
         }
     }
 }
-$delete_user = $user->delete_user($slug);
+$delete_user = $user->delete_user($user_id);
 
 $adminId = $user_id;
 $action = "Xóa người dùng";

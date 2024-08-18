@@ -71,18 +71,19 @@ include("include/header.php");
                     $i = 0;
                     while ($result = $show_category->fetch_assoc()) {
                         $i++;
-                ?>
+                        ?>
                         <tr>
                             <td><?php echo $i ?></td>
                             <td><?php echo $result['category_name'] ?></td>
                             <td class="action">
-                                <a href="cateEdit.php?slug=<?php echo $result['slug'] ?>">Sửa</a>
+                                <a href="cateEdit.php?category_id=<?php echo $result['category_id'] ?>">Sửa</a>
                                 <span> | </span>
-                                <a onclick="return confirm('Bạn muốn xóa tên thể loại này?')" href="cateDel.php?slug=<?php echo $result['slug'] ?>">Xóa</a>
+                                <a onclick="return confirm('Bạn muốn xóa tên thể loại này?')"
+                                    href="cateDel.php?category_id=<?php echo $result['category_id'] ?>">Xóa</a>
                             </td>
 
                         </tr>
-                <?php
+                        <?php
                     }
                 }
                 ?>
@@ -111,7 +112,7 @@ include("include/header.php");
 
     </div>
     <script>
-        document.getElementById('searchCategory').addEventListener('input', function() {
+        document.getElementById('searchCategory').addEventListener('input', function () {
             searchCategory(1);
         });
 
@@ -119,7 +120,7 @@ include("include/header.php");
             let query = document.getElementById('searchCategory').value;
             let xhr = new XMLHttpRequest();
             xhr.open('GET', 'cateSearch.php?query=' + query + '&page=' + page, true);
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     document.getElementById('categoryTableBody').innerHTML = xhr.responseText;
                 }

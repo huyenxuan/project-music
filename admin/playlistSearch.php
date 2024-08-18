@@ -16,11 +16,12 @@ if ($search_playlist['result']) {
         echo "<tr>";
         echo "<td>" . $i . "</td>";
         echo "<td>" . $row['playlist_name'] . "</td>";
+        echo "<td>" . $row['fullName'] . "</td>";
         echo "<td>" . $count_song_playlist . "</td>";
         echo "<td>
-                <a href='playlistEdit.php?slugPlaylist=" . $row['slug_playlist'] . "'>Sửa</a>
+                <a href='playlistEdit.php?playlist_id=" . $row['playlist_id'] . "'>Sửa</a>
                 <span> | </span>
-                <a onclick=\"return confirm('Bạn muốn xóa playlist này?')\" href='playlistDel.php?slugPlaylist=" . $row['slug_playlist'] . "'>Xóa</a>
+                <a onclick=\"return confirm('Bạn muốn xóa playlist này?')\" href='playlistDel.php?playlist_id=" . $row['playlist_id'] . "'>Xóa</a>
               </td>";
         echo "</tr>";
     }

@@ -94,7 +94,7 @@ include("include/header.php");
                         $user_id = $result['user_id'];
                         $count_follow_user = $user->count_follow_user($user_id);
                         $count_user_follow = $user->count_user_follow($user_id);
-                ?>
+                        ?>
                         <tr>
                             <td><?php echo $i ?></td>
                             <td><?php echo $result['fullName'] ?></td>
@@ -105,12 +105,13 @@ include("include/header.php");
                                 <img src="upload/images/imageuser/<?php echo $result['userimage'] ?>" alt="">
                             </td>
                             <td class="action">
-                                <a href="userEdit.php?slug=<?php echo $result['slug'] ?>">Sửa</a>
+                                <a href="userEdit.php?user_id=<?php echo $result['user_id'] ?>">Sửa</a>
                                 <span> | </span>
-                                <a onclick="return confirm('Bạn muốn xóa người dùng này?')" href="userDel.php?slug=<?php echo $result['slug'] ?>">Xóa</a>
+                                <a onclick="return confirm('Bạn muốn xóa người dùng này?')"
+                                    href="userDel.php?user_id=<?php echo $result['user_id'] ?>">Xóa</a>
                             </td>
                         </tr>
-                <?php
+                        <?php
                     }
                 }
                 ?>
@@ -139,7 +140,7 @@ include("include/header.php");
 
     </div>
     <script>
-        document.getElementById('searchUser').addEventListener('input', function() {
+        document.getElementById('searchUser').addEventListener('input', function () {
             searchUser(1);
         });
 
@@ -147,7 +148,7 @@ include("include/header.php");
             let query = document.getElementById('searchUser').value;
             let xhr = new XMLHttpRequest();
             xhr.open('GET', 'userSearch.php?query=' + query + '&page=' + page, true);
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     document.getElementById('userTableBody').innerHTML = xhr.responseText;
                 }

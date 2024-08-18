@@ -5,18 +5,18 @@ $album = new Album();
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 }
-if (!isset($_GET["album_slug"]) || $_GET["album_slug"] == null) {
+if (!isset($_GET["album_id"]) || $_GET["album_id"] == null) {
     return;
 } else {
-    $album_slug = $_GET["album_slug"];
-    $get_album_by_slug = $album->get_album_by_slug($album_slug);
-    if ($get_album_by_slug) {
-        while ($result = $get_album_by_slug->fetch_assoc()) {
+    $album_id = $_GET["album_id"];
+    $get_album_by_id = $album->get_album_by_id($album_id);
+    if ($get_album_by_id) {
+        while ($result = $get_album_by_id->fetch_assoc()) {
             $album_name = $result['album_name'];
         }
     }
 }
-$delete_album = $album->delete_album($album_slug);
+$delete_album = $album->delete_album($album_id);
 
 $adminId = $user_id;
 $actions = "Xóa album";

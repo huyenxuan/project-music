@@ -15,9 +15,9 @@ if ($search_category['result']) {
         echo "<td>" . $i . "</td>";
         echo "<td>" . $row['category_name'] . "</td>";
         echo "<td>
-                <a href='cateEdit.php?slug=" . $row['slug'] . "'>Sửa</a>
+                <a href='cateEdit.php?category_id=" . $row['category_id'] . "'>Sửa</a>
                 <span> | </span>
-                <a onclick=\"return confirm('Bạn muốn xóa tên thể loại này?')\" href='cateDel.php?slug=" . $row['slug'] . "'>Xóa</a>
+                <a onclick=\"return confirm('Bạn muốn xóa tên thể loại này?')\" href='cateDel.php?category_id=" . $row['category_id'] . "'>Xóa</a>
               </td>";
         echo "</tr>";
     }
@@ -41,3 +41,4 @@ if ($search_category['result']) {
 } else {
     echo "<tr><td colspan='3'>Không tìm thấy kết quả</td></tr>";
 }
+?>

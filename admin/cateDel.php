@@ -9,19 +9,19 @@ if (!isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 }
 
-if (!isset($_GET["slug"]) || $_GET["slug"] == null) {
+if (!isset($_GET["category_id"]) || $_GET["category_id"] == null) {
     return;
 } else {
-    $slug = $_GET["slug"];
-    $get_category_by_slug = $category->get_category_by_slug($slug);
-    if ($get_category_by_slug) {
-        while ($result = $get_category_by_slug->fetch_assoc()) {
+    $category_id = $_GET["category_id"];
+    $get_category_by_id = $category->get_category_by_id($category_id);
+    if ($get_category_by__id) {
+        while ($result = $get_category_by__id->fetch_assoc()) {
             $category_name = $result['category_name'];
         }
     }
 }
 
-$delete_category = $category->delete_category($slug);
+$delete_category = $category->delete_category($category_id);
 
 $adminId = $user_id;
 $action = "Xóa thể loại";

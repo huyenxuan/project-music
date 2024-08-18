@@ -6,8 +6,8 @@ include('../class/songClass.php');
 
 $song = new Song();
 
-$song_slug = $_GET['slugSong'];
-$get_song = $song->get_song_by_slug($song_slug);
+$song_id = $_GET['song_id'];
+$get_song = $song->get_song_by_id($song_id);
 
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
@@ -133,7 +133,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="info">
             <div class="name">
                 <label>Tên bài hát <span style="color: red">*</span></label><br>
-                <input required name="song_name" type="text" placeholder="Tên bài hát" value="<?php echo $result['song_name'] ?>"><br>
+                <input required name="song_name" type="text" placeholder="Tên bài hát"
+                    value="<?php echo $result['song_name'] ?>"><br>
             </div>
             <div class="category">
                 <label for="">Thể loại <span style="color: red">*</span></label><br>
@@ -142,9 +143,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $show_category = $song->show_category();
                     if ($show_category) {
                         while ($resultCategory = $show_category->fetch_assoc()) {
-                    ?>
-                            <option <?php if ($result['category_id'] === $resultCategory['category_id']) echo 'selected' ?> value="<?php echo $resultCategory['category_id'] ?>"><?php echo $resultCategory['category_name'] ?></option>
-                    <?php
+                            ?>
+                            <option <?php if ($result['category_id'] === $resultCategory['category_id'])
+                                echo 'selected' ?>
+                                    value="<?php echo $resultCategory['category_id'] ?>">
+                                <?php echo $resultCategory['category_name'] ?></option>
+                            <?php
                         }
                     }
                     ?>
@@ -165,11 +169,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="privacy">
             <label for="">Riêng tư</label>
-            <input type="checkbox" name="privacy" <?php if ($result['privacy'] === 'private') echo 'checked' ?>>
-        </div>
-        <button>Cập nhật</button>
-    </form>
-</div>
-<?php
-include("include/footer.php");
-?>
+            <input type="checkbox" name="privacy" <?php if ($result['privacy'] === 'private')
+                echo 'checked' ?>>
+            </div>
+            <button>Cập nhật</button>
+        </form>
+    </div>
+    <?php
+            include("include/footer.php");
+            ?>

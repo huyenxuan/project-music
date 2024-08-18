@@ -124,7 +124,7 @@ class Song
               FROM tbl_song s
               LEFT JOIN tbl_user us ON us.user_id = s.user_id
               WHERE song_name LIKE '%$key%'
-              ORDER BY song_id DESC
+              ORDER BY song_id ASC
               LIMIT $from, $limit";
 
         $result = $this->db->select($query);
@@ -167,10 +167,10 @@ class Song
         $result = $this->db->select($query);
         return $result;
     }
-    // lấy thông tin qua slug
-    public function get_song_by_slug($slug)
+    // lấy thông tin qua id
+    public function get_song_by_id($song_id)
     {
-        $query = "SELECT * FROM tbl_song WHERE slug_song = '$slug'";
+        $query = "SELECT * FROM tbl_song WHERE song_id = '$song_id'";
         $result = $this->db->select($query);
         return $result;
     }

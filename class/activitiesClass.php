@@ -56,7 +56,6 @@ class Activities
                         OR tbl_admin_logs.actions LIKE '%$key%'
                         OR tbl_admin_logs.details LIKE '%$key%'
                         OR tbl_admin_logs.created_at LIKE '%$key%')";
-
         $total_result = $this->db->select($total_query);
         $total_record = $total_result->fetch_assoc()['total'];
         $total_page = ceil($total_record / $limit);

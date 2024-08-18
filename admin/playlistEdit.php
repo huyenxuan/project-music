@@ -5,8 +5,8 @@ include("include/header.php");
 include("../class/playlistClass.php");
 $playlist = new PlayList();
 
-$playlist_slug = $_GET['slugPlaylist'];
-$get_playlist = $playlist->get_playlist_by_slug($playlist_slug);
+$playlist_id = $_GET['playlist_id'];
+$get_playlist = $playlist->get_playlist_by_id($playlist_id);
 if ($get_playlist) {
     $result = $get_playlist->fetch_assoc();
 } else {
@@ -20,10 +20,10 @@ if (isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $playlist_name = $_POST['playlist_name'];
     $authorPL = $user_id;
-    $update_playlist = $playlist->update_playlist($playlist_name, $authorPL, $result['playlist_id']);
+    $update_playlist = $playlist->update_playlist($playlist_name, $authorPL, $playlist_id);
     $song_id = $_POST['song_id'];
     if (is_numeric($song_id) && $song_id > 0)
-        $add_song = $playlist->add_song_to_playlist($result['playlist_id'], $song_id);
+        $add_song = $playlist->add_song_to_playlist($playlist_id, $song_id);
 
     $adminId = $user_id;
     $actions = "Sửa Playlist";
@@ -79,7 +79,8 @@ if ($songs_in_playlist) {
             <div class="info">
                 <div>
                     <h2 class="title" style="color:black">Sửa Playlist</h2>
-                    <input type="text" placeholder="Enter playlist name" name="playlist_name" value="<?php echo $result['playlist_name'] ?>"><br>
+                    <input type="text" placeholder="Enter playlist name" name="playlist_name"
+                        value="<?php echo $result['playlist_name'] ?>"><br>
                 </div>
                 <div>
                     <h2 class="title" style="color:black;">Thêm bài hát vào Playlist</h2>
@@ -111,12 +112,12 @@ if ($songs_in_playlist) {
             </thead>
             <tbody id="playlistTableBody">
                 <?php
-                $show_playlistSong = $playlist->get_playlist_songs($playlist_slug);
+                $show_playlistSong = $playlist->get_playlist_songs($playlist_id);
                 if ($show_playlistSong) {
                     $i = 0;
                     while ($result = $show_playlistSong->fetch_assoc()) {
                         $i++;
-                ?>
+                        ?>
                         <tr style="height: 70px">
                             <td><?php echo $i ?></td>
                             <td><?php echo $result['song_name'] ?></td>
@@ -126,18 +127,19 @@ if ($songs_in_playlist) {
                                 </audio>
                             </td>
                             <td class="action">
-                                <a onclick="return confirm('Bạn muốn xóa bài hát này khỏi playlist ?')" href="playlistSongDel.php?playlistSongId=<?php echo $result['playlist_song_id'] ?>">Xóa</a>
+                                <a onclick="return confirm('Bạn muốn xóa bài hát này khỏi playlist ?')"
+                                    href="playlistSongDel.php?playlistSongId=<?php echo $result['playlist_song_id'] ?>">Xóa</a>
                             </td>
 
                         </tr>
-                    <?php
+                        <?php
                     }
                 } else {
                     ?>
                     <tr>
                         <td colspan="4">Không có bài hát nào</td>
                     </tr>
-                <?php
+                    <?php
                 }
                 ?>
             </tbody>

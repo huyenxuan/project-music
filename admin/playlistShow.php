@@ -75,20 +75,21 @@ include("include/header.php");
                         $i++;
                         $playlist_id = $result['playlist_id'];
                         $count_song_playlist = $playlist->count_song_playlist($playlist_id);
-                ?>
+                        ?>
                         <tr>
                             <td><?php echo $i ?></td>
                             <td><?php echo $result['playlist_name'] ?></td>
                             <td><?php echo $result['fullName'] ?></td>
                             <td><?php echo $count_song_playlist ?></td>
                             <td class="action">
-                                <a href="playlistEdit.php?slugPlaylist=<?php echo $result['slug_playlist'] ?>">Sửa</a>
+                                <a href="playlistEdit.php?playlist_id=<?php echo $result['playlist_id'] ?>">Sửa</a>
                                 <span> | </span>
-                                <a onclick="return confirm('Bạn muốn xóa playlist này?')" href="playlistDel.php?slugPlaylist=<?php echo $result['slug_playlist'] ?>">Xóa</a>
+                                <a onclick="return confirm('Bạn muốn xóa playlist này?')"
+                                    href="playlistDel.php?playlist_id=<?php echo $result['playlist_id'] ?>">Xóa</a>
                             </td>
 
                         </tr>
-                <?php
+                        <?php
                     }
                 }
                 ?>
@@ -117,7 +118,7 @@ include("include/header.php");
 
     </div>
     <script>
-        document.getElementById('searchPlaylist').addEventListener('input', function() {
+        document.getElementById('searchPlaylist').addEventListener('input', function () {
             searchPlaylist(1);
         });
 
@@ -125,7 +126,7 @@ include("include/header.php");
             let query = document.getElementById('searchPlaylist').value;
             let xhr = new XMLHttpRequest();
             xhr.open('GET', 'playlistSearch.php?query=' + query + '&page=' + page, true);
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     document.getElementById('playlistTableBody').innerHTML = xhr.responseText;
                 }

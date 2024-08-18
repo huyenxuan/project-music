@@ -115,9 +115,9 @@ class Category
         return $string;
     }
     // lấy thông tin qua slug
-    public function get_category_by_slug($slug)
+    public function get_category_by_id($category_id)
     {
-        $query = "SELECT * FROM tbl_category WHERE slug = '$slug'";
+        $query = "SELECT * FROM tbl_category WHERE category_id = '$category_id'";
         $result = $this->db->select($query);
         return $result;
     }

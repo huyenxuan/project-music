@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <h2>Nhập tài khoản và mật khẩu để đăng nhập!</h2>
     <span style="color:red; justify-content:center; display:flex"><?php if (isset($loginCheck)) {
-                                                                        echo $loginCheck;
-                                                                    } ?></span>
+        echo $loginCheck;
+    } ?></span>
     <form action="login.php" method="POST">
         <div>
             <label for="">Nhập tài khoản</label><br>

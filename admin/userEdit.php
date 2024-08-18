@@ -5,8 +5,8 @@ include("include/header.php");
 include('../class/userClass.php');
 $user = new User();
 
-$user_slug = $_GET['slug'];
-$get_user = $user->get_user_by_slug($user_slug);
+$user_id = $_GET['user_id'];
+$get_user = $user->get_user_by_id($user_id);
 if ($get_user) {
     $result = $get_user->fetch_assoc();
     $user_id = $result['user_id'];
@@ -118,15 +118,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="info">
             <div class="name">
                 <label for="fullName">Tên người dùng <span style="color: red">*</span></label><br>
-                <input required name="fullName" type="text" placeholder="Tên người dùng" value="<?php echo $result['fullName'] ?>"><br>
+                <input required name="fullName" type="text" placeholder="Tên người dùng"
+                    value="<?php echo $result['fullName'] ?>"><br>
             </div>
             <div class="email">
                 <label for="">Địa chỉ email <span style="color: red">*</span></label><br>
-                <input required name="email" type="email" placeholder="Địa chỉ email" value="<?php echo $result['email'] ?>"><br>
+                <input required name="email" type="email" placeholder="Địa chỉ email"
+                    value="<?php echo $result['email'] ?>"><br>
             </div>
             <div class="password">
                 <label for="">Mật khẩu <span style="color: red">*</span></label><br>
-                <input required name="password" type="text" placeholder="Mật khẩu" value="<?php echo $result['password'] ?>"><br>
+                <input required name="password" type="text" placeholder="Mật khẩu"
+                    value="<?php echo $result['password'] ?>"><br>
             </div>
         </div>
         <div class="description">
@@ -140,11 +143,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="isAdmin">
             <label for="" style="margin-right: 10px">Là admin: </label>
-            <input name="role" value="admin" type="checkbox" placeholder="Là admin" <?php if ($result['role'] == 'admin') echo 'checked' ?>><br>
-        </div>
-        <button>Cập nhật</button>
-    </form>
-</div>
-<?php
-include("include/footer.php");
-?>
+            <input name="role" value="admin" type="checkbox" placeholder="Là admin" <?php if ($result['role'] == 'admin')
+                echo 'checked' ?>><br>
+            </div>
+            <button>Cập nhật</button>
+        </form>
+    </div>
+    <?php
+            include("include/footer.php");
+            ?>

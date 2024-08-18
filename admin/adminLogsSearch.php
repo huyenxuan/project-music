@@ -3,7 +3,7 @@ include("../class/activitiesClass.php");
 $activities = new Activities();
 $query = isset($_GET['query']) ? $_GET['query'] : '';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-$limit = 20; // Set the limit per page
+$limit = 20;
 
 $search_admin_logs = $activities->search_admin_logs($query, $page, $limit);
 

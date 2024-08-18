@@ -107,10 +107,10 @@ include("include/header.php");
                                 <img src="upload/images/imagesong/<?php echo $result['album_image'] ?>" alt="">
                             </td>
                             <td class="action">
-                                <a href="albumEdit.php?album_slug=<?php echo $result['album_slug'] ?>">Sửa</a>
+                                <a href="albumEdit.php?album_id=<?php echo $result['album_id'] ?>">Sửa</a>
                                 <span> | </span>
                                 <a onclick="return confirm('Bạn muốn xóa album này?')"
-                                    href="albumDel.php?album_slug=<?php echo $result['album_slug'] ?>">Xóa</a>
+                                    href="albumDel.php?album_id=<?php echo $result['album_id'] ?>">Xóa</a>
                             </td>
                         </tr>
                         <?php

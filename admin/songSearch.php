@@ -4,9 +4,8 @@ include("../class/songClass.php");
 $song = new Song();
 $query = $_GET['query'];
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-$limit = 6; // Set the limit per page
+$limit = 6;
 
-// Fetch search results with pagination
 $search_song = $song->search_song($query, $page, $limit);
 
 if ($search_song['result']) {
@@ -23,14 +22,13 @@ if ($search_song['result']) {
                    </audio></td>";
         echo "<td><img src='upload/images/imagesong/" . $row['song_image'] . "'></td>";
         echo "<td>
-                <a href='songEdit.php?slugSong=" . $row['slug_song'] . "'>Sửa</a>
+                <a href='songEdit.php?song_id=" . $row['song_id'] . "'>Sửa</a>
                 <span> | </span>
-                <a onclick=\"return confirm('Bạn muốn xóa bài hát này?')\" href='songDel.php?slugSong=" . $row['slug_song'] . "'>Xóa</a>
+                <a onclick=\"return confirm('Bạn muốn xóa bài hát này?')\" href='songDel.php?song_id=" . $row['song_id'] . "'>Xóa</a>
               </td>";
         echo "</tr>";
     }
 
-    // Display pagination
     if ($search_song['totalpage'] > 1) {
         echo '<div class="pages">';
         if ($page > 1) {

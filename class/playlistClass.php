@@ -32,9 +32,9 @@ class PlayList
     }
 
     // func delete
-    public function delete_playlist($slug_playlist)
+    public function delete_playlist($playlist_id)
     {
-        $query = "DELETE FROM tbl_playlist WHERE slug_playlist = '$slug_playlist'";
+        $query = "DELETE FROM tbl_playlist WHERE playlist_id = '$playlist_id'";
         $result = $this->db->delete($query);
         return $result;
     }
@@ -88,12 +88,12 @@ class PlayList
     }
 
     // func lấy bài hát ở playlist_song
-    public function get_playlist_songs($slug_playlist)
+    public function get_playlist_songs($playlist_id)
     {
         $query = " SELECT * FROM tbl_song s
                 INNER JOIN tbl_playlist_song ps ON s.song_id = ps.song_id
                 INNER JOIN tbl_playlist p ON ps.playlist_id = p.playlist_id
-                WHERE p.slug_playlist = '$slug_playlist'";
+                WHERE p.playlist_id = '$playlist_id'";
         $result = $this->db->select($query);
         return $result;
     }
@@ -146,10 +146,10 @@ class PlayList
         return $slug;
     }
 
-    // lấy thông tin qua slug
-    public function get_playlist_by_slug($slug_playlist)
+    // lấy thông tin qua id
+    public function get_playlist_by_id($playlist_id)
     {
-        $query = "SELECT * FROM tbl_playlist WHERE slug_playlist = '$slug_playlist'";
+        $query = "SELECT * FROM tbl_playlist WHERE playlist_id = '$playlist_id'";
         $result = $this->db->select($query);
         return $result;
     }
@@ -160,9 +160,10 @@ class PlayList
         $from = ($page - 1) * $limit;
 
         $query = "SELECT *
-              FROM tbl_playlist
+              FROM tbl_playlist pl
+              JOIN tbl_user us ON pl.user_id = us.user_id
               WHERE playlist_name LIKE '%$playlist_name%'
-              ORDER BY playlist_id DESC
+              ORDER BY playlist_id ASC
               LIMIT $from, $limit";
 
         $result = $this->db->select($query);
@@ -212,6 +213,13 @@ class PlayList
         $query = "INSERT INTO tbl_admin_logs (admin_id, actions, details) 
                 VALUES ('$adminId', '$actions', '$details')";
         $result = $this->db->insert($query);
+        return $result;
+    }
+    // func show user
+    public function show_user()
+    {
+        $query = "SELECT * FROM tbl_user";
+        $result = $this->db->select($query);
         return $result;
     }
 }
