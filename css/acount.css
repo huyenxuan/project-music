@@ -6,7 +6,6 @@
 
 body {
     min-height: 100vh;
-    background-color: #dfdfdf;
 }
 
 .login-box,
@@ -14,9 +13,10 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 400px;
+    width: 500px;
     height: 480px;
     padding: 30px;
+    background-color: rgb(114, 84, 84);
 }
 
 .login-header,

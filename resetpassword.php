@@ -8,19 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password = $_POST['new_password'];
 
     if (isset($_SESSION['reset_code']) && $reset_code == $_SESSION['reset_code']) {
-        if ($new_password === $confirm_password) {
-            $email = $_SESSION['reset_email'];
-            $query = "UPDATE tbl_user SET password = '$new_password' WHERE email = '$email'";
-            $frontend->db->update($query);
+        $email = $_SESSION['reset_email'];
+        $update_password = $frontend->update_password($email, $new_password);
 
-            unset($_SESSION['reset_code']);
-            unset($_SESSION['reset_email']);
+        unset($_SESSION['reset_code']);
+        unset($_SESSION['reset_email']);
 
-            header("Location: index.php");
-            exit();
-        } else {
-            $error = "Passwords do not match.";
-        }
+        header("Location: login.php");
+        exit();
+
     } else {
         $error = "Invalid or expired code.";
     }
@@ -45,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="login-header">
             <div class="tilte">Đặt lại mật khẩu</div>
         </div>
-        <form action="" class="form-resetpw" method="post">
+        <form action="" class="form-resetpw" method="POST">
             <input type="text" name="reset_code" maxlength="6" placeholder="Nhập mã gửi về gmail">
             <div class="pw">
                 <input required type="password" name="new_password" class="password" placeholder="Mật khẩu mới">

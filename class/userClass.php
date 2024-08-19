@@ -10,11 +10,10 @@ class User
         $this->db = new Database();
     }
     // func check email, sđt
-    public function check_user($email, $phoneNumber)
+    public function check_user($email)
     {
         $query = "SELECT * FROM tbl_user
-                WHERE email = '$email' 
-                OR phoneNumber = '$phoneNumber'";
+                WHERE email = '$email'";
         $result = $this->db->select($query);
         if ($result)
             return true;
@@ -22,7 +21,7 @@ class User
             return false;
     }
     // func login
-    public function login($email, $password)
+    public function login_user($email, $password)
     {
         // Escape inputs to prevent SQL injection
         $email = mysqli_real_escape_string($this->db->conn, $email);
@@ -40,8 +39,6 @@ class User
                 $_SESSION['user_id'] = $row['user_id'];
                 header('Location: index.php');
                 exit();
-            } else {
-                echo '<h1 style="color:red; text-align: center">Bạn không có quyền truy cập!</h1>';
             }
         } else {
             echo '<h1 style="color:red; text-align: center">Tài khoản hoặc mật khẩu không chính xác</h1>';
@@ -67,8 +64,9 @@ class User
     // func insert
     public function insert_user($fullName, $email, $password, $description, $role, $userimage)
     {
-        $slug = $this->create_slug($fullName);
-        $query = "INSERT INTO tbl_user (
+        if (!$this->check_user($email)) {
+            $slug = $this->create_slug($fullName);
+            $query = "INSERT INTO tbl_user (
             fullName,
             email,
             password,
@@ -84,24 +82,25 @@ class User
             '$userimage',
             '$role',
             '$slug')";
-        $result = $this->db->insert($query);
-        return $result;
+            $result = $this->db->insert($query);
+            return $result;
+        } else {
+            echo '<h2>Email hoặc Số điện thoại đã tồn tại!</h2>';
+        }
     }
     // func register
-    public function register($fullName, $email, $phoneNumber, $password)
+    public function register($fullName, $email, $password)
     {
-        if (!$this->check_user($email, $phoneNumber)) {
+        if (!$this->check_user($email)) {
             $slug = $this->create_slug($fullName);
             $query = "INSERT INTO tbl_user (
                     fullName,
                     email,
-                    phoneNumber,
                     password,
                     slug) 
                 VALUES (
                     '$fullName',
                     '$email',
-                    '$phoneNumber',
                     '$password',
                     '$slug')";
             $result = $this->db->insert($query);

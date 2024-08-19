@@ -72,8 +72,8 @@ class FrontEnd
                 $mail->Host = 'smtp.gmail.com'; // Máy chủ SMTP
                 $mail->SMTPAuth = true;
                 $mail->Username = 'huyen107203@gmail.com'; // Địa chỉ email của bạn
-                $mail->Password = 'Huyen203107@'; // Mật khẩu email của bạn
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Password = 'cbmngdwcdisvsdjs'; // Mật khẩu email của bạn
+                $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
                 //Recipients
@@ -93,6 +93,15 @@ class FrontEnd
         } else {
             return false;
         }
+    }
+    // func upd password
+    public function update_password($email, $password)
+    {
+        $query = "UPDATE tbl_user
+                SET password = '$password'
+                WHERE email = '$email'";
+        $result = $this->db->update($query);
+        return $result;
     }
 }
 ?>

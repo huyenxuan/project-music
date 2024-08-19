@@ -7,10 +7,9 @@ $user = new user();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullName'];
     $email = $_POST['email'];
-    $phoneNumber = $_POST['phoneNumber'];
     $password = $_POST['password'];
 
-    $insert_user = $user->register($fullName, $email, $phoneNumber, $password);
+    $insert_user = $user->register($fullName, $email, $password);
 
     // exit;
 }
@@ -21,16 +20,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Đăng ký</title>
     <link rel="stylesheet" href="./css/acount.css">
     <style>
         body {
-            display: block !important;
+            background-image: url(./asset/img/colorful-wave.gif);
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: white;
+            align-content: center;
         }
 
         .register-box {
             margin: auto;
+            background-color: rgba(205, 205, 205, 0.95);
+            border-radius: 10px
         }
 
         h2 {
@@ -53,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form action="" class="form-signup" method="POST">
                 <input required type="name" name="fullName" id="" placeholder="Họ và tên">
                 <input required type="email" name="email" id="" placeholder="Email">
-                <input type="text" name="phoneNumber" id="" placeholder="Số điện thoại">
                 <div class="pw">
                     <input required type="password" name="password" class="password" placeholder="Mật khẩu">
                     <i class="toggle-password fa-solid fa-eye"></i>

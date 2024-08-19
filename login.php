@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $pass = $_POST['pass'];
 
-    $loginCheck = $loginUser->login($email, $pass);
+    $loginUser->login_user($email, $pass);
 }
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -17,28 +17,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="./css/acount.css">
 <title>Đăng nhập</title>
+<style>
+    body {
+        background-image: url(./asset/img/colorful-wave.gif);
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: white;
+        align-content: center;
+    }
+
+    .login-box {
+        margin: auto;
+        background-color: rgba(205, 205, 205, 0.95);
+        border-radius: 10px
+    }
+</style>
 
 <body>
     <div class="login-box">
         <div class="login-header">
             <div class="tilte">Đăng nhập</div>
         </div>
-        <form action="login.php" class="form-signin" method="POST">
-            <input required type="email" name="email" id="email" placeholder="Email">
-            <div class="pw">
-                <input required type="password" name="pass" class="password" placeholder="Mật khẩu">
-                <i class="toggle-password fa-solid fa-eye"></i>
+        <div class="form-ctn">
+            <form action="login.php" class="form-signin" method="POST">
+                <input required type="email" name="email" id="email" placeholder="Email">
+                <div class="pw">
+                    <input required type="password" name="pass" class="password" placeholder="Mật khẩu">
+                    <i class="toggle-password fa-solid fa-eye"></i>
+                </div>
+                <div class="forgot">
+                    <a href="forgotpassword.php">Quên mật khẩu</a>
+                </div>
+                <button type="submit">Đăng nhập</button>
+            </form>
+            <span style="text-align:center"><?php if (isset($loginCheck)) {
+                echo $loginCheck;
+            } ?></span>
+            <div class="register-link">
+                <p>Bạn chưa có tài khoản? <a href="register.php">Đăng ký ngay</a></p>
             </div>
-            <div class="forgot">
-                <a href="forgotpassword.php">Quên mật khẩu</a>
-            </div>
-            <button type="submit">Đăng nhập</button>
-        </form>
-        <span style="text-align:center"><?php if (isset($loginCheck)) {
-            echo $loginCheck;
-        } ?></span>
-        <div class="register-link">
-            <p>Bạn chưa có tài khoản? <a href="register.php">Đăng ký ngay</a></p>
         </div>
     </div>
 

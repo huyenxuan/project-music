@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
 
     $sendPasswordResetCode = $frontend->sendPasswordResetCode($email);
-    if ($frontend->sendPasswordResetCode($email)) {
+    if ($sendPasswordResetCode) {
         header('location: resetpassword.php');
         exit();
     } else {
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="login-header">
             <div class="tilte">Quên mật khẩu</div>
         </div>
-        <form action="" class="form-forgot" method="post">
+        <form action="" class="form-forgot" method="POST">
             <input required type="email" name="email" id="email" placeholder="Nhập email của bạn">
             <button type="submit">Gửi mã</button>
         </form>
