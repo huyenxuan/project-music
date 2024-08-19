@@ -12,7 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $loginCheck = $loginUser->login($email, $pass);
 }
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="./css/acount.css">
 <title>Đăng nhập</title>
 
@@ -28,13 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <i class="toggle-password fa-solid fa-eye"></i>
             </div>
             <div class="forgot">
-                <a href="forgotpassword.html">Quên mật khẩu</a>
+                <a href="forgotpassword.php">Quên mật khẩu</a>
             </div>
             <button type="submit">Đăng nhập</button>
         </form>
         <span style="text-align:center"><?php if (isset($loginCheck)) {
-                                            echo $loginCheck;
-                                        } ?></span>
+            echo $loginCheck;
+        } ?></span>
         <div class="register-link">
             <p>Bạn chưa có tài khoản? <a href="register.php">Đăng ký ngay</a></p>
         </div>

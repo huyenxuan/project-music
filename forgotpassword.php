@@ -1,5 +1,23 @@
+<?php
+session_start();
+include('class/frontendClass.php');
+$frontend = new FrontEnd;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+
+    $sendPasswordResetCode = $frontend->sendPasswordResetCode($email);
+    if ($frontend->sendPasswordResetCode($email)) {
+        header('location: resetpassword.php');
+        exit();
+    } else {
+        echo 'lỗi';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +27,7 @@
     <title>Quên mật khẩu</title>
     <link rel="stylesheet" href="./css/acount.css">
 </head>
+
 <body>
     <div class="login-box">
         <div class="login-header">
@@ -20,4 +39,5 @@
         </form>
     </div>
 </body>
+
 </html>

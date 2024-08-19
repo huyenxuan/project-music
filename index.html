@@ -60,9 +60,9 @@
             <!-- account -->
             <div class="account">
                 <i class="fa-solid fa-user"></i>
-                <a href="register.html" class="nav-link" data-url="register.html">Đăng ký</a>
+                <a href="register.php" class="nav-link">Đăng ký</a>
                 <span style="margin: 0 5px;"> / </span>
-                <a href="login.html" class="nav-link" data-url="login.html">Đăng nhập</a>
+                <a href="login.php" class="nav-link">Đăng nhập</a>
             </div>
         </div>
     </header>
@@ -72,36 +72,84 @@
         <div class="main-ctn" id="content">
             <!-- banner -->
             <div class="banner">
-                <div class="baner-ctn">
-                    <div>Đây là banner</div>
-                </div>
-            </div>
-
-            <!-- may like -->
-            <div class="likely">
-                <div class="likely-ctn">
-                    <div>Đây là phần có thể bạn thích</div>
+                <div class="slider">
+                    <!-- item ảnh -->
+                    <div class="list-banner">
+                        <div class="item-banner">
+                            <a href="">
+                                <img src="https://content.thechillinghome.com/wp-content/uploads/2023/02/Ngoc-Website.jpg"
+                                    alt="" title="Nhạc Jazz Việt"></a>
+                        </div>
+                        <div class="item-banner">
+                            <a href="">
+                                <img src="https://avatar-ex-swe.nixcdn.com/playlist/share/2023/05/24/d/1/e/8/1684901772068.jpg"
+                                    alt="" title="Nhạc Bolero"></a>
+                        </div>
+                        <div class="item-banner">
+                            <a href=""><img
+                                    src="https://johnsonfitness.com.vn/wp-content/uploads/2022/11/Playlist-20-Bai-Nhac-Chay-Bo-Giup-Ban-Tang-Hieu-Qua-Luyen-Tap.jpg"
+                                    alt="" title="Nhạc Buổi Sáng"></a>
+                        </div>
+                        <div class="item-banner">
+                            <a href=""><img
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiIwCiIMZC69BdBpP4-WcTyDaN7IVzmH76oQ&s"
+                                    alt="" title="Nhạc Trữ Tình"></a>
+                        </div>
+                    </div>
+                    <!-- buttons -->
+                    <div class="buttons-banner">
+                        <button id="prev">
+                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/936254/assets/icon-prev-danhmuc.svg"
+                                style="width: 30px;" alt="">
+                        </button>
+                        <button id="next">
+                            <img src="https://bizweb.dktcdn.net/100/438/408/themes/936254/assets/icon-next-danhmuc.svg"
+                                style="width: 30px;" alt="">
+                        </button>
+                    </div>
+                    <!-- dots -->
+                    <div class="dots-banner">
+                        <li class="active"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </div>
                 </div>
             </div>
 
             <!-- suggest -->
             <div class="suggest">
                 <div class="suggest-ctn">
-                    <div>Đây là phần đề xuất</div>
+                    <h1>Đây là phần đề xuất</h1>
+                    <div>Những bài hát có lượt nghe cao nhất trong 1 khoảng thời gian</div>
+                    <div>Những album có lượt nghe cao nhất trong 1 khoảng thời gian</div>
+                    <div>Những playlist có lượt nghe cao nhất trong 1 khoảng thời gian</div>
+                </div>
+            </div>
+
+            <!-- may like -->
+            <div class="likely">
+                <div class="likely-ctn">
+                    <h1>Đây là phần có thể bạn thích</h1>
+                    <div>Danh sách những bài hát được yêu thích nhiều nhất</div>
                 </div>
             </div>
 
             <!-- album -->
             <div class="album">
                 <div class="album-ctn">
-                    <div>Đây là phần album</div>
+                    <h1>Đây là phần album</h1>
+                    <div>Những album có lượt nghe cao nhất</div>
+                    <div>Những album mới ra mắt</div>
                 </div>
             </div>
 
             <!-- playlist -->
             <div class="playlist">
                 <div class="playlist-ctn">
-                    <div>Đây là phần playlist</div>
+                    <h1>Đây là phần playlist</h1>
+                    <div>Những playlist có lượt nghe cao nhất</div>
+                    <div>Những playlist mới ra mắt</div>
                 </div>
             </div>
 
@@ -316,6 +364,7 @@
     <!-- javascript -->
     <script src="./js/main.js"></script>
     <script src="./js/funcFullScreen.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
