@@ -48,11 +48,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             top: 75px;
             left: 35%;
         }
+
+        .pw i {
+            color: black;
+        }
     </style>
 </head>
 
 <body>
     <div class="register-box">
+        <audio autoplay hidden controls>
+            <source src="asset/music/songs/Faded (Kygo Remix).mp3" type="audio/mp3">
+        </audio>
         <div class="register-header">
             <div class="tilte">Đăng ký</div>
         </div>

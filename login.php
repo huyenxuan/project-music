@@ -31,9 +31,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         background-color: rgba(205, 205, 205, 0.95);
         border-radius: 10px
     }
+
+    .pw i {
+        color: black;
+    }
 </style>
 
 <body>
+    <audio autoplay hidden controls>
+        <source src="asset/music/songs/Faded (Kygo Remix).mp3" type="audio/mp3">
+    </audio>
+    <audio src="asset/music/songs/Faded (Kygo Remix).mp3" autoplay></audio>
     <div class="login-box">
         <div class="login-header">
             <div class="tilte">Đăng nhập</div>
@@ -50,9 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <button type="submit">Đăng nhập</button>
             </form>
-            <span style="text-align:center"><?php if (isset($loginCheck)) {
-                echo $loginCheck;
-            } ?></span>
+            <span style="text-align:center">
+                <?php if (isset($loginCheck)) {
+                    echo $loginCheck;
+                } ?>
+            </span>
             <div class="register-link">
                 <p>Bạn chưa có tài khoản? <a href="register.php">Đăng ký ngay</a></p>
             </div>

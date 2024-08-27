@@ -54,6 +54,13 @@ class FrontEnd
                 ORDER BY listen_count DESC
                 LIMIT 20";
     }
+    // func check email
+    public function check_email($email)
+    {
+        $query = "SELECT * FROM tbl_user WHERE email = '$email'";
+        $result = $this->db->select($query);
+        return $result;
+    }
     // func send code forget pass
     public function sendPasswordResetCode($email)
     {
@@ -82,8 +89,8 @@ class FrontEnd
 
                 // Content
                 $mail->isHTML(true);
-                $mail->Subject = 'Mã quên mật khẩu';
-                $mail->Body = 'Mã của bạn là: ' . $reset_code;
+                $mail->Subject = 'Reset password';
+                $mail->Body = 'Mã đặt lại mật khẩu của bạn là: ' . $reset_code;
 
                 $mail->send();
                 return true;
@@ -101,6 +108,69 @@ class FrontEnd
                 SET password = '$password'
                 WHERE email = '$email'";
         $result = $this->db->update($query);
+        return $result;
+    }
+    // func search song
+    public function search_song($keyword)
+    {
+        $query = "SELECT * tbl_song
+                WHERE song_name = '$keyword'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func search user
+    public function search_user($keyword)
+    {
+        $query = "SELECT * tbl_user
+                WHERE fullName = '$keyword'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func search album
+    public function search_album($keyword)
+    {
+        $query = "SELECT * tbl_album
+                WHERE album_name = '$keyword'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func search playlist
+    public function search_playlist($keyword)
+    {
+        $query = "SELECT * tbl_playlist
+                WHERE playlist_name = '$keyword'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    // func show follower
+    public function show_follower($user_id)
+    {
+        $query = "SELECT *, COUNT(fl.follower_id) AS followers_count
+                FROM tbl_follow fl
+                LEFT JOIN tbl_user us ON fl.following_id = us.user_id
+                WHERE us.user_id = '$user_id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show song by user_id
+    public function show_song_of_user($user_id)
+    {
+        $query = "SELECT *, COUNT(s.song_id) AS song_count
+                FROM tbl_song s
+                LEFT JOIN tbl_user us ON s.song_id = us.user_id
+                WHERE us.user_id = '$user_id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show playlist by user_id
+    public function show_playlist_of_user($user_id)
+    {
+        $query = "SELECT *, COUNT(s.song_id) AS song_count
+                FROM tbl_song s
+                LEFT JOIN tbl_user us ON s.song_id = us.user_id
+                WHERE us.user_id = '$user_id'";
+        $result = $this->db->select($query);
         return $result;
     }
 }

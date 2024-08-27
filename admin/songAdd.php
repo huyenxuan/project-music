@@ -14,13 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $song_name = $_POST['song_name'];
     $userSong_id = $user_id;
     $category_id = $_POST['category_id'];
+    $lyrics = $_POST['lyrics'];
     $privacy = isset($_POST['privacy']) ? 'private' : 'public';
     $song_image = $_FILES['song_image']['name'];
     move_uploaded_file($_FILES['song_image']['tmp_name'], "upload/images/imagesong/" . $_FILES['song_image']['name']);
     $file_path = $_FILES['file_path']['name'];
     move_uploaded_file($_FILES['file_path']['tmp_name'], "upload/song/" . $file_path);
 
-    $insert_song = $song->insert_song($song_name, $userSong_id, $category_id, $privacy, $song_image, $file_path);
+    $insert_song = $song->insert_song($song_name, $userSong_id, $category_id, $lyrics, $privacy, $song_image, $file_path);
 
     $adminId = $user_id;
     $action = "Thêm bài hát";
@@ -83,6 +84,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .main-content {
         margin: 15px;
     }
+
+    .lyrics textarea {
+        width: 95%;
+        margin-left: 15px;
+        height: 200px;
+        margin-top: 10px;
+        border-radius: 14px;
+        padding: 20px;
+    }
 </style>
 <link rel="stylesheet" href="./css/user.css">
 <title>Thêm bài hát</title>
@@ -103,9 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $show_category = $song->show_category();
                     if ($show_category) {
                         while ($result = $show_category->fetch_assoc()) {
-                    ?>
+                            ?>
                             <option value="<?php echo $result['category_id'] ?>"><?php echo $result['category_name'] ?></option>
-                    <?php
+                            <?php
                         }
                     }
                     ?>
@@ -119,6 +129,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="">Ảnh bìa</label>
                 <input type="file" name="song_image" accept="image/*">
             </div>
+        </div>
+        <div class="lyrics">
+            <label for="">Lời bài hát</label><br>
+            <textarea name="lyrics" id=""></textarea>
         </div>
         <div class="privacy">
             <label for="">Riêng tư</label>

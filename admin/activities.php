@@ -77,7 +77,7 @@ include("include/header.php");
                     $i = 0;
                     while ($result = $show_activities->fetch_assoc()) {
                         $i++;
-                ?>
+                        ?>
                         <tr>
                             <td><?php echo $i ?></td>
                             <td><?php echo $result['fullName'] ?></td>
@@ -85,8 +85,10 @@ include("include/header.php");
                             <td><?php echo $result['details'] ?></td>
                             <td><?php echo $result['created_at'] ?></td>
                         </tr>
-                <?php
+                        <?php
                     }
+                } else {
+                    echo "<tr><td colspan='5'>Không có hoạt động gần đây</td></tr>";
                 }
                 ?>
             </tbody>
@@ -114,7 +116,7 @@ include("include/header.php");
 
     </div>
     <script>
-        document.getElementById('searchLogs').addEventListener('input', function() {
+        document.getElementById('searchLogs').addEventListener('input', function () {
             searchLogs(1);
         });
 
@@ -122,7 +124,7 @@ include("include/header.php");
             let query = document.getElementById('searchLogs').value;
             let xhr = new XMLHttpRequest();
             xhr.open('GET', 'adminLogsSearch.php?query=' + query + '&page=' + page, true);
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     document.getElementById('adminLogsTableBody').innerHTML = xhr.responseText;
                 }

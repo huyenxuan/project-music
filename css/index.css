@@ -1,7 +1,18 @@
+:root {
+    /* --primary-color: #2DA63F; */
+    --primary-color: #21324a;
+    --primary-color-text: white;
+    --color-text-secondary: gray;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
+    color: var(--primary-color-text);
 }
 
 /* banner */
@@ -10,6 +21,7 @@
     height: 400px;
     max-width: 1240px;
     overflow: hidden;
+    margin: auto;
 }
 
 .slider {
@@ -72,7 +84,7 @@ button {
 .dots-banner {
     position: absolute;
     bottom: 25px;
-    color: #fff;
+    color: var(--primary-color-text);
     left: 0;
     width: 100%;
     padding: 0;
@@ -84,16 +96,16 @@ button {
 .dots-banner li {
     cursor: pointer;
     list-style: none;
-    width: 7px;
-    height: 7px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background-color: #fff;
-    margin-right: 5px;
+    background-color: var(--primary-color-text);
+    margin-right: 10px;
     transition: 1s;
 }
 
 .dots-banner .active {
-    background-color: #fcaf17;
+    background-color: var(--primary-color);
 }
 
 .likely,

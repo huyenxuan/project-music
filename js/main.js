@@ -172,8 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // xử lý nút play / pause khi ấn space
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
-            event.preventDefault();
-            playPause();
+            const searchInput = document.getElementById('searchInput');
+
+            if (!searchInput.contains(event.target)) {
+                event.preventDefault();
+                playPause();
+            }
         }
     });
 

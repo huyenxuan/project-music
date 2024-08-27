@@ -67,13 +67,14 @@ class Song
         return $result;
     }
     // insert
-    public function insert_song($song_name, $user_id, $category_id, $privacy, $song_image, $file_path)
+    public function insert_song($song_name, $user_id, $category_id, $lyrics, $privacy, $song_image, $file_path)
     {
         $slug = $this->create_slug($song_name, $user_id);
         $query = "INSERT INTO tbl_song (
                     song_name,
                     user_id,
                     category_id,
+                    lyrics,
                     privacy,
                     song_image,
                     file_path,
@@ -82,6 +83,7 @@ class Song
                     '$song_name',
                     '$user_id',
                     '$category_id',
+                    '$lyrics',
                     '$privacy',
                     '$song_image',
                     '$file_path',
@@ -91,13 +93,14 @@ class Song
         return $result;
     }
     // func update song
-    public function update_song($song_name, $user_id, $category_id, $privacy, $song_image, $file_path, $song_id)
+    public function update_song($song_name, $user_id, $category_id, $lyrics, $privacy, $song_image, $file_path, $song_id)
     {
         $slug = $this->create_slug($song_name, $user_id);
         $query = "UPDATE tbl_song
                 SET song_name = '$song_name',
                     user_id = '$user_id',
                     category_id = '$category_id',
+                    lyrics = '$lyrics',
                     privacy = '$privacy',
                     song_image = '$song_image',
                     file_path = '$file_path',

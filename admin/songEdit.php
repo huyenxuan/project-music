@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $song_name = $_POST['song_name'];
     $userSong_id = $user_id;
     $category_id = $_POST['category_id'];
+    $lyrics = $_POST['lyrics'];
     $privacy = isset($_POST['privacy']) ? 'private' : 'public';
 
     if (!empty($_FILES['song_image']['name'])) {
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $file_path = $result['file_path'];
     }
-    $update_song = $song->update_song($song_name, $userSong_id, $category_id, $privacy, $song_image, $file_path, $song_id);
+    $update_song = $song->update_song($song_name, $userSong_id, $category_id, $lyrics, $privacy, $song_image, $file_path, $song_id);
 
     $adminId = $user_id;
     $action = "Sửa bài hát";
@@ -123,6 +124,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .main-content {
         margin: 15px;
     }
+
+    form img {
+        margin: 0;
+        border: none
+    }
+
+    .lyrics textarea {
+        width: 95%;
+        margin-left: 15px;
+        height: 200px;
+        margin-top: 10px;
+        border-radius: 14px;
+        padding: 20px;
+    }
 </style>
 <link rel="stylesheet" href="./css/user.css">
 <title>Thêm bài hát</title>
@@ -147,7 +162,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <option <?php if ($result['category_id'] === $resultCategory['category_id'])
                                 echo 'selected' ?>
                                     value="<?php echo $resultCategory['category_id'] ?>">
-                                <?php echo $resultCategory['category_name'] ?></option>
+                                <?php echo $resultCategory['category_name'] ?>
+                            </option>
                             <?php
                         }
                     }
@@ -166,6 +182,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img src="upload/images/imagesong/<?php echo $result['song_image'] ?>" alt="">
                 <input type="file" name="song_image" accept="image/*">
             </div>
+        </div>
+        <div class="lyrics">
+            <label for="">Lời bài hát</label><br>
+            <textarea name="lyrics" id=""><?php echo $result['lyrics'] ?></textarea>
         </div>
         <div class="privacy">
             <label for="">Riêng tư</label>

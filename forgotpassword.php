@@ -2,16 +2,24 @@
 session_start();
 include('class/frontendClass.php');
 $frontend = new FrontEnd;
-
+$erroEmail = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
-
-    $sendPasswordResetCode = $frontend->sendPasswordResetCode($email);
-    if ($sendPasswordResetCode) {
-        header('location: resetpassword.php');
-        exit();
+    // kiểm tra trường email có trống hay không
+    if ($email === "") {
+        $erroEmail = "Vui lòng nhập vào email!";
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erroEmail = "Định dạng không phải email. Vui lòng nhập đúng email.";
+    } else if (!($frontend->check_email($email))) {
+        $erroEmail = "Email không tồn tại trong hệ thống.";
     } else {
-        echo 'lỗi';
+        $sendPasswordResetCode = $frontend->sendPasswordResetCode($email);
+        if ($sendPasswordResetCode) {
+            header('location: resetpassword.php');
+            exit();
+        } else {
+            echo 'lỗi';
+        }
     }
 }
 ?>
@@ -27,6 +35,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Quên mật khẩu</title>
     <link rel="stylesheet" href="./css/acount.css">
 </head>
+<style>
+    body {
+        background-image: url(./asset/img/colorful-wave.gif);
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: white;
+        align-content: center;
+    }
+
+    .login-box {
+        margin: auto;
+        background-color: rgba(205, 205, 205, 0.95);
+        border-radius: 10px
+    }
+
+    form input {
+        margin-bottom: 0;
+    }
+</style>
 
 <body>
     <div class="login-box">
@@ -34,7 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="tilte">Quên mật khẩu</div>
         </div>
         <form action="" class="form-forgot" method="POST">
-            <input required type="email" name="email" id="email" placeholder="Nhập email của bạn">
+            <input type="text" name="email" id="email" placeholder="Nhập email của bạn">
+            <?php if ($erroEmail !== "") {
+                echo "<p style='color: red; font-size: 17px; margin-left: 10px'>" . $erroEmail . "</p>";
+            } ?>
             <button type="submit">Gửi mã</button>
         </form>
     </div>

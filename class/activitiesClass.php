@@ -14,22 +14,29 @@ class Activities
         $limit = 20;
 
         $queryALl = 'SELECT * FROM tbl_admin_logs
-                    WHERE tbl_admin_logs.created_at >= NOW() - INTERVAL 5 DAY';
+                WHERE tbl_admin_logs.created_at >= NOW() - INTERVAL 5 DAY';
         $resultAll = $this->db->select($queryALl);
-        $totalpage = ceil($resultAll->num_rows / $limit);
+
+        if ($resultAll) {
+            $totalpage = ceil($resultAll->num_rows / $limit);
+        } else {
+            $totalpage = 0; // Nếu không có kết quả, số trang sẽ là 0
+        }
 
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $from = ($page - 1) * $limit;
 
         $query = "SELECT *
-                FROM tbl_admin_logs 
-                JOIN tbl_user ON tbl_admin_logs.admin_id = tbl_user.user_id
-                WHERE tbl_admin_logs.created_at >= NOW() - INTERVAL 5 DAY
-                ORDER BY id DESC
-                LIMIT $from, $limit";
+            FROM tbl_admin_logs 
+            JOIN tbl_user ON tbl_admin_logs.admin_id = tbl_user.user_id
+            WHERE tbl_admin_logs.created_at >= NOW() - INTERVAL 5 DAY
+            ORDER BY id DESC
+            LIMIT $from, $limit";
         $result = $this->db->select($query);
+
         return ['result' => $result, 'totalpage' => $totalpage, 'page' => $page];
     }
+
     // func search
     public function search_admin_logs($key, $page, $limit)
     {
