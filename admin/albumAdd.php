@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .main-content {
         margin: 15px;
     }
+
     select {
         height: 40px;
         border-radius: 10px;
@@ -58,15 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
             <div class="author">
-                <label for="">Tác giả</label>
+                <label for="">Tác giả <span style="color: red">*</span></label>
                 <select required name="authorAB" id="">
                     <option value="">--- Chọn tác giả ---</option>
                     <?php
-                        if ($show_user) {
-                            while($result = $show_user->fetch_assoc()) {
-                                echo "<option value='" . $result['user_id'] . "'>" . $result['fullName'] . "</option>";
-                            }
+                    if ($show_user) {
+                        while ($result = $show_user->fetch_assoc()) {
+                            echo "<option value='" . $result['user_id'] . "'>" . $result['fullName'] . "</option>";
                         }
+                    }
                     ?>
                 </select>
             </div>

@@ -41,6 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         font-size: 17px;
         margin: 0 0 10px 10px;
     }
+
+    form button {
+        width: 140px;
+        height: 40px;
+    }
 </style>
 
 <body>
@@ -58,10 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
             <div class="">
-                <label for="">Đường dẫn</label>
+                <label for="">Đường dẫn <span style="color: red">*</span></label><br>
                 <input required type="text" name="pathway" placeholder="Nhập đường dẫn">
             </div>
-            <button>Thêm</button>
+            <button>Thêm banner</button>
         </form>
     </div>
     <?php

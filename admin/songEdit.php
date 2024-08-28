@@ -170,6 +170,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ?>
                 </select>
             </div>
+            <div class="author">
+                <label for="">Tên tác giả <span style="color: red">*</span></label><br>
+                <select required name="category_id" id="">
+                    <?php
+                    $show_category = $song->show_category();
+                    if ($show_category) {
+                        while ($resultCategory = $show_category->fetch_assoc()) {
+                            ?>
+                            <option <?php if ($result['category_id'] === $resultCategory['category_id'])
+                                echo 'selected' ?>
+                                    value="<?php echo $resultCategory['category_id'] ?>">
+                                <?php echo $resultCategory['category_name'] ?>
+                            </option>
+                            <?php
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
             <div class="file-song">
                 <label for="">File nhạc <span style="color: red">*</span></label><br>
                 <audio controls required>
@@ -178,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="file" name="file_path" accept="audio/*">
             </div>
             <div class="image">
-                <label for="">Ảnh bìa</label><br>
+                <label for="">Ảnh bìa <span style="color: red">*</span></label><br>
                 <img src="upload/images/imagesong/<?php echo $result['song_image'] ?>" alt="">
                 <input type="file" name="song_image" accept="image/*">
             </div>

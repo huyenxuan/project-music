@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="main-content">
-        <h2 class="title" style="color:black">Thêm banner</h2>
+        <h2 class="title" style="color:black">Chỉnh sửa banner</h2>
         <form action="" method="POST" enctype="multipart/form-data">
             <div class="info">
                 <div class="name">
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input id="image" type="file" name="banner_image" accept="image/*">
                 </div>
                 <div class="pathway">
-                    <label for="">Đường dẫn</label>
+                    <label for="">Đường dẫn <span style="color: red">*</span></label>
                     <input required type="text" name="pathway" placeholder="Nhập đường dẫn"
                         value="<?php echo $result['pathway'] ?>">
                 </div>

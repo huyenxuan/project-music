@@ -62,7 +62,7 @@ if ($songs_in_album) {
 }
 
 ?>
-<title>Sửa Playlist</title>
+<title>Cập nhật album</title>
 <link rel="stylesheet" href="./css/album.css">
 <style>
     form {
@@ -119,7 +119,7 @@ if ($songs_in_album) {
 <body>
     <div class="main-content">
         <form action="" method="POST">
-            <h2 class="title" style="color:black">Sửa Album</h2>
+            <h2 class="title" style="color:black; margin-bottom: 10px">Cập nhật Album</h2>
             <div class="info">
                 <div class="name">
                     <label for="">Tên album <span style="color: red">*</span></label><br>

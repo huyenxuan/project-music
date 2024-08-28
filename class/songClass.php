@@ -170,6 +170,13 @@ class Song
         $result = $this->db->select($query);
         return $result;
     }
+    // show user
+    public function show_user()
+    {
+        $query = "SELECT * FROM tbl_user";
+        $result = $this->db->select($query);
+        return $result;
+    }
     // lấy thông tin qua id
     public function get_song_by_id($song_id)
     {

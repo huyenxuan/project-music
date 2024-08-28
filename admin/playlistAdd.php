@@ -54,11 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form action="" method="POST">
             <div class="info">
                 <div class="name">
-                    <label for="">Nhập tên Playlist</label>
+                    <label for="">Nhập tên Playlist <span style="color: red">*</span></label>
                     <input type="text" placeholder="Nhập playlist nhạc" name="playlist_name"><br>
                 </div>
                 <div class="user">
-                    <label for="">Tác giả</label><br>
+                    <label for="">Tác giả <span style="color: red">*</span></label><br>
                     <select name="authorPL" id="">
                         <option value="">--- Chọn tác giả Playlist ---</option>
                         <?php

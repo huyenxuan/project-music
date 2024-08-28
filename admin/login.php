@@ -8,11 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $pass = $_POST['password'];
 
-    $loginCheck = $loginAdmin->login($email, $pass);
+    $loginAdmin->login($email, $pass);
 }
 ?>
 <title>Login - Admin</title>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css' rel='stylesheet'>
+<link rel="shortcut icon" type="image/png" href="../asset/img/logo.jpg">
 <link rel="stylesheet" href="./css/loginadmin.css">
 
 <body>

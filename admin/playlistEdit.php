@@ -41,7 +41,7 @@ if ($songs_in_playlist) {
     }
 }
 ?>
-<title>Sửa Playlist</title>
+<title>Cập nhật Playlist</title>
 <link rel="stylesheet" href="./css/category.css">
 <style>
     select {
@@ -71,19 +71,25 @@ if ($songs_in_playlist) {
     .info div {
         margin-right: 150px;
     }
+
+    label {
+        font-weight: 600;
+    }
 </style>
 
 <body>
     <div class="main-content">
+        <h2 class="title" style="color:black; margin-bottom: 10px">Cập nhật Playlist</h2>
         <form action="" method="POST">
             <div class="info">
                 <div>
-                    <h2 class="title" style="color:black">Sửa Playlist</h2>
+                    <h3 class="title" style="color:black;">Tên Playlist <span style="color: red">*</span>
+                    </h3>
                     <input type="text" placeholder="Enter playlist name" name="playlist_name"
                         value="<?php echo $result['playlist_name'] ?>"><br>
                 </div>
                 <div>
-                    <h2 class="title" style="color:black;">Thêm bài hát vào Playlist</h2>
+                    <h3 class="title" style="color:black;">Thêm bài hát vào Playlist</h3>
                     <select name="song_id">
                         <option value="">--- Chọn bài hát ---</option>
                         <?php

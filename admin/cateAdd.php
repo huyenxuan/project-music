@@ -30,12 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .main-content {
         margin: 15px;
     }
+
+    label {
+        font-weight: 600;
+    }
 </style>
 
 <body>
     <div class="main-content">
-        <h2 class="title" style="color:black">Thêm thể loại</h2>
+        <h2 class="title" style="color:black; margin-bottom: 10px">Thêm thể loại</h2>
         <form action="" method="POST">
+            <label for="">Tên thể loại <span style="color: red">*</span></label><br>
             <input type="text" placeholder="Nhập thể loại nhạc" name="category_name"><br>
             <button>Thêm</button>
         </form>

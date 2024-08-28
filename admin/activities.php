@@ -13,7 +13,7 @@ include("include/header.php");
 ?>
 
 <head>
-    <title>Danh sách Thể loại</title>
+    <title>Danh sách Hoạt động admin</title>
     <link rel="stylesheet" href="./css/category.css">
     <style>
         tbody tr {
@@ -60,7 +60,7 @@ include("include/header.php");
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
         </div>
-        <h2 class="title" style="color:black">Danh sách thể loại</h2>
+        <h2 class="title" style="color:black">Danh sách Hoạt động admin</h2>
         <table border="1">
             <thead>
                 <tr>
