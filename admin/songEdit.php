@@ -22,7 +22,7 @@ if ($get_song) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $song_name = $_POST['song_name'];
-    $userSong_id = $user_id;
+    $userSong_id = $_POST['user_id'];
     $category_id = $_POST['category_id'];
     $lyrics = $_POST['lyrics'];
     $privacy = isset($_POST['privacy']) ? 'private' : 'public';
@@ -172,16 +172,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="author">
                 <label for="">Tên tác giả <span style="color: red">*</span></label><br>
-                <select required name="category_id" id="">
+                <select required name="user_id" id="">
                     <?php
-                    $show_category = $song->show_category();
-                    if ($show_category) {
-                        while ($resultCategory = $show_category->fetch_assoc()) {
+                    $show_user = $song->show_user();
+                    if ($show_user) {
+                        while ($resultUser = $show_user->fetch_assoc()) {
                             ?>
-                            <option <?php if ($result['category_id'] === $resultCategory['category_id'])
+                            <option <?php if ($result['user_id'] === $resultUser['user_id'])
                                 echo 'selected' ?>
-                                    value="<?php echo $resultCategory['category_id'] ?>">
-                                <?php echo $resultCategory['category_name'] ?>
+                                    value="<?php echo $resultUser['user_id'] ?>">
+                                <?php echo $resultUser['fullName'] ?>
                             </option>
                             <?php
                         }

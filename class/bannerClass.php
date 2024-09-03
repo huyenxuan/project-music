@@ -23,20 +23,21 @@ class Banner
         return $result;
     }
     // func insert
-    public function insert_banner($banner_name, $banner_image, $pathway)
+    public function insert_banner($banner_name, $banner_image, $pathway, $display)
     {
-        $query = "INSERT INTO tbl_banner (banner_name, banner_image, pathway)
-                VALUES ('$banner_name', '$banner_image', '$pathway')";
+        $query = "INSERT INTO tbl_banner (banner_name, banner_image, pathway, display)
+                VALUES ('$banner_name', '$banner_image', '$pathway', '$display')";
         $result = $this->db->insert($query);
         return $result;
     }
     // func update
-    public function update_banner($banner_name, $banner_image, $pathway, $banner_id)
+    public function update_banner($banner_name, $banner_image, $pathway, $display, $banner_id)
     {
         $query = "UPDATE tbl_banner
                 SET banner_image = '$banner_image',
                     pathway = '$pathway',
-                    banner_name = '$banner_name'
+                    banner_name = '$banner_name',
+                    display = '$display'
                 WHERE banner_id = '$banner_id'";
         $result = $this->db->update($query);
         return $result;

@@ -20,16 +20,21 @@ if (isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $playlist_name = $_POST['playlist_name'];
     $authorPL = $user_id;
-    $update_playlist = $playlist->update_playlist($playlist_name, $authorPL, $playlist_id);
     $song_id = $_POST['song_id'];
-    if (is_numeric($song_id) && $song_id > 0)
-        $add_song = $playlist->add_song_to_playlist($playlist_id, $song_id);
-
-    $adminId = $user_id;
-    $actions = "Sửa Playlist";
-    $details = "Sửa Playlist '$playlist_name'";
-    $playlist->logAdminAction($adminId, $actions, $details);
-    header('location: playlistShow.php');
+    if (isset($_POST['upd_playlistsong'])) {
+        if (is_numeric($song_id) && $song_id > 0) {
+            $add_song = $playlist->add_song_to_playlist($playlist_id, $song_id);
+            // header('location: ')
+        }
+    }
+    if (isset($_POST['upd_playlist'])) {
+        $update_playlist = $playlist->update_playlist($playlist_name, $authorPL, $playlist_id);
+        $adminId = $user_id;
+        $actions = "Sửa Playlist";
+        $details = "Sửa Playlist '$playlist_name'";
+        $playlist->logAdminAction($adminId, $actions, $details);
+        header('location: playlistShow.php');
+    }
 }
 
 $all_songs = $playlist->show_song();
@@ -102,9 +107,10 @@ if ($songs_in_playlist) {
                         }
                         ?>
                     </select>
+                    <button name="upd_playlistsong">Thêm bài hát</button>
                 </div>
             </div>
-            <button>Cập nhật</button>
+            <button name="upd_playlist">Cập nhật</button>
         </form><br>
         <h2>Danh sách bài hát</h2>
         <table border="1">

@@ -13,9 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $banner_name = $_POST['banner_name'];
     $pathway = $_POST['pathway'];
     $banner_image = $_FILES['banner_image']['name'];
+    $display = isset($_POST['display']) ? 'show' : 'hidden';
     move_uploaded_file($_FILES['banner_image']['tmp_name'], "upload/banner/" . $banner_image);
 
-    $insert_banner = $banner->insert_banner($banner_name, $banner_image, $pathway);
+    $insert_banner = $banner->insert_banner($banner_name, $banner_image, $pathway, $display);
 
     $adminId = $user_id;
     $actions = "Thêm banner";
@@ -65,6 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="">
                 <label for="">Đường dẫn <span style="color: red">*</span></label><br>
                 <input required type="text" name="pathway" placeholder="Nhập đường dẫn">
+            </div>
+            <div class="privacy display">
+                <label for="">Hiện banner</label>
+                <input type="checkbox" name="display">
             </div>
             <button>Thêm banner</button>
         </form>

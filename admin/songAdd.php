@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // kiểm tra các trường có rỗng hãy không
     if (empty($song_name)) {
         $song_name_error = $erroEmpty;
-    } else if (!preg_match('/^[^a-zA-Z]/', $song_name)) {
+    } else if (preg_match('/^[^a-zA-Z]/', $song_name)) {
         $song_name_error = $erroNameFormat;
     }
     if (empty($category_id)) {
@@ -193,14 +193,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="file-song">
                 <label for="">File nhạc <span style="color: red">*</span></label>
-                <input type="file" name="file_path">
+                <input type="file" name="file_path" accept="audio/*">
                 <?php if (!empty($file_path_error)) {
                     echo "<span style='color: red; font-size: 14px; margin-left: 20px'>" . $file_path_error . "</span>";
                 } ?>
             </div>
             <div class="image">
                 <label for="">Ảnh bìa <span style="color: red">*</span></label>
-                <input type="file" name="song_image">
+                <input type="file" name="song_image" accept="image/*">
                 <?php if (!empty($song_image_error)) {
                     echo "<span style='color: red; font-size: 14px; margin-left: 20px'>" . $song_image_error . "</span>";
                 } ?>

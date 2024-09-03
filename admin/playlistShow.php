@@ -91,6 +91,12 @@ include("include/header.php");
                         </tr>
                         <?php
                     }
+                } else {
+                    ?>
+                    <tr>
+                        <td colspan="5">Không có playlist</td>
+                    </tr>
+                    <?php
                 }
                 ?>
             </tbody>

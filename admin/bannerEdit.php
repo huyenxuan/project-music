@@ -21,6 +21,7 @@ if (isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $banner_name = $_POST['banner_name'];
     $pathway = $_POST['pathway'];
+    $display = isset($_POST['display']) ? 'show' : 'hidden';
 
     if (!empty($_FILES['banner_image']['name'])) {
         $banner_image = $_FILES['banner_image']['name'];
@@ -36,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $banner_image = $result['banner_image'];
     }
 
-    $update_banner = $banner->update_banner($banner_name, $banner_image, $pathway, $banner_id);
+    $update_banner = $banner->update_banner($banner_name, $banner_image, $pathway, $display, $banner_id);
 
     $adminId = $user_id;
     $actions = "Cập nhật banner";
@@ -94,6 +95,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         value="<?php echo $result['pathway'] ?>">
                 </div>
                 <img src="upload/banner/<?php echo $result['banner_image'] ?>" alt="">
+            </div>
+            <div class="privacy display">
+                <label for="">Hiện banner</label>
+                <input type="checkbox" name="display">
             </div>
             <button>Cập nhật</button>
         </form>

@@ -15,14 +15,6 @@ class FrontEnd
     {
         $this->db = new Database();
     }
-
-    // func show banner 
-    public function show_banner()
-    {
-        $query = "SELECT * FROM tbl_banner";
-        $result = $this->db->select($query);
-        return $result;
-    }
     // show các bài có lượt yêu thích nhiều nhất
     public function show_most_favorite_songs()
     {
@@ -142,7 +134,119 @@ class FrontEnd
         $result = $this->db->select($query);
         return $result;
     }
+    // show banner
+    public function show_banner()
+    {
+        $query = "SELECT * FROM tbl_banner
+                WHERE display = 'show'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show songs with highest listen
+    public function show_song_hot()
+    {
+        $query = "SELECT *, us.fullName AS authorSong
+                FROM tbl_song s
+                JOIN tbl_user us ON s.user_id = us.user_id
+                WHERE s.privacy = 'public'
+                ORDER BY s.listen_count DESC
+                LIMIT 12";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show album width hightest listen 
+    public function show_album_hot()
+    {
+        $query = "SELECT *, us.fullName AS authorAlbum
+                FROM tbl_album ab
+                JOIN tbl_user us ON ab.user_id = us.user_id
+                WHERE ab.privacy = 'public'
+                ORDER BY ab.listen_count DESC
+                LIMIT 12";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show playlist width hightest listen 
+    public function show_playlist_hot()
+    {
+        $query = "SELECT *, us.fullName AS authorPlaylist
+                FROM tbl_playlist pl
+                JOIN tbl_user us ON pl.user_id = us.user_id
+                WHERE pl.privacy = 'public'
+                ORDER BY pl.listen_count DESC
+                LIMIT 12";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show 4 image playlist
+    public function show_image_playlist($playlist_id)
+    {
+        $query = "SELECT s.song_image AS songImage 
+                FROM tbl_playlist pl
+                JOIN tbl_playlist_song pls ON pl.playlist_id = pls.playlist_id
+                JOIN tbl_song s ON pls.song_id = s.song_id
+                WHERE pl.playlist_id = '$playlist_id'
+                LIMIT 4";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show new
+    public function show_song_new()
+    {
+        $query = "SELECT *, us.fullName AS authorSong
+                FROM tbl_song s
+                JOIN tbl_user us ON s.user_id = us.user_id
+                WHERE s.privacy = 'public'
+                ORDER BY s.song_id DESC
+                LIMIT 12";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show new album
+    public function show_album_new()
+    {
+        $query = "SELECT *, us.fullName AS authorAlbum
+                FROM tbl_album ab
+                JOIN tbl_user us ON ab.user_id = us.user_id
+                WHERE ab.privacy = 'public'
+                ORDER BY ab.album_id DESC
+                LIMIT 12";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show new playlist 
+    public function show_playlist_new()
+    {
+        $query = "SELECT *, us.fullName AS authorPlaylist
+                FROM tbl_playlist pl
+                JOIN tbl_user us ON pl.user_id = us.user_id
+                WHERE pl.privacy = 'public'
+                ORDER BY pl.playlist_id DESC
+                LIMIT 12";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func maylike
+    public function show_maylike($user_id)
+    {
+        $queryFavorite = "SELECT song_id 
+                        FROM tbl_favorite 
+                        WHERE user_id = '$user_id'";
+        $resultFavorite = $this->db->select($queryFavorite);
+        if ($resultFavorite) {
+            $liked_songs = array();
+            while ($row = $resultFavorite->fetch_assoc()) {
+                $liked_songs[] = $row['song_id'];
+            }
 
+            $queryMayLike = "SELECT * FROM tbl_song WHERE genre IN (
+                        SELECT genre FROM tbl_song WHERE song_id IN (" . implode(',', $liked_songs) . "))";
+            $resultMayLike = $this->db->select($queryMayLike);
+            return $resultMayLike;
+        } else {
+            return;
+        }
+    }
     // func show follower
     public function show_follower($user_id)
     {
@@ -166,9 +270,9 @@ class FrontEnd
     // func show playlist by user_id
     public function show_playlist_of_user($user_id)
     {
-        $query = "SELECT *, COUNT(s.song_id) AS song_count
-                FROM tbl_song s
-                LEFT JOIN tbl_user us ON s.song_id = us.user_id
+        $query = "SELECT *
+                FROM tbl_playlist pl
+                LEFT JOIN tbl_user us ON pl.user_id = us.user_id
                 WHERE us.user_id = '$user_id'";
         $result = $this->db->select($query);
         return $result;

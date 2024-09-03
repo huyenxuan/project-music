@@ -14,5 +14,6 @@
     },
     "[php]": {
         "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
-    }
+    },
+    "liveServer.settings.port": 5502
 }

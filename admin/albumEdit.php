@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $album_image = $result['album_image'];
     }
 
-    $update_album = $album->update_album($album_name, $authorAB, $album_image, $description, $privacy, $$result['album_id']);
+    $update_album = $album->update_album($album_name, $authorAB, $album_image, $description, $privacy, $album_id);
     $song_id = $_POST['song_id'];
     if (is_numeric($song_id) && $song_id > 0)
         $add_song = $album->add_song_to_album($result['album_id'], $song_id);
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-$all_songs = $album->show_song_of_userId($user_id);
+$all_songs = $album->show_song_of_userId($result['user_id']);
 $songs_in_album = $album->get_songs_in_album($result['album_id']);
 $songs_in_album_ids = [];
 if ($songs_in_album) {
