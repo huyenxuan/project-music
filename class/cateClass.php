@@ -42,9 +42,9 @@ class Category
         return $result;
     }
     // func xóa
-    public function delete_category($slug)
+    public function delete_category($category_id)
     {
-        $query = "DELETE FROM tbl_category WHERE slug = '$slug'";
+        $query = "DELETE FROM tbl_category WHERE category_id = '$category_id'";
         $result = $this->db->delete($query);
         return $result;
     }

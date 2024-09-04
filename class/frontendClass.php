@@ -247,6 +247,25 @@ class FrontEnd
             return;
         }
     }
+    // func show songs same category
+    public function show_song_same_category($song_id)
+    {
+        // $query = "SELECT s.*, us.fullName AS authorSong
+        //       FROM tbl_song s
+        //       JOIN tbl_category ct ON s.category_id = ct.category_id
+        //       JOIN tbl_user us ON s.user_id = us.user_id
+        //       WHERE s.category_id = (SELECT category_id FROM tbl_song WHERE song_id = '$song_id')
+        //       AND s.song_id != '$song_id'
+        //       LIMIT 20";
+        $query = "SELECT *, us.fullName AS authorSong
+                FROM tbl_song s
+                JOIN tbl_user us ON s.user_id = us.user_id
+                WHERE s.song_id = '$song_id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+
     // func show follower
     public function show_follower($user_id)
     {

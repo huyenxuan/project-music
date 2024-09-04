@@ -4,7 +4,10 @@ const sidebar = document.querySelector('.sidebar');
 
 btnPlays.forEach(btnPlay => {
     btnPlay.addEventListener('click', () => {
-        sidebar.style.right = '0';
+        if (!sidebar.classList.contains('is-open')) {
+            sidebar.classList.add('is-open');
+            sidebar.style.right = '0';
+        }
     });
 });
 btnList.addEventListener('click', () => {
@@ -18,4 +21,4 @@ btnList.addEventListener('click', () => {
         sidebar.style.right = '-320px';
     }
     console.log(btnList);
-})
+});

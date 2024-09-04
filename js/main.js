@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log(123);
     const audio = document.getElementById('myAudio');
     const audioSrc = audio.querySelector('source');
     const repeatButtons = document.querySelectorAll('.btn-repeat');
-    const playPauseButtons = document.querySelectorAll('.btn-toggle-play');
+    const playPauseButtons = document.querySelectorAll('.toggle-playPause');
     const progressBars = document.querySelectorAll('.progress');
     const timeElements = {
         left: document.querySelectorAll('.time.left'),
@@ -15,47 +16,96 @@ document.addEventListener('DOMContentLoaded', () => {
     let isSeeking = false;
     let isRepeating = false;
 
-    var songNameControl = document.querySelector('.player-control .song-name');
-    var authorControl = document.querySelector('.player-control .artists');
+    var playerControl = document.querySelector('.player-control');
+    var songNameControl = playerControl.querySelector('.song-name');
+    var authorControl = playerControl.querySelector('.artists');
     var songImgFullScreen = document.querySelector('.fullscreen img');
     var songNameFullScreen = document.querySelector('.fullscreen .name-song');
     var songArtistsFullScreen = document.querySelector('.fullscreen .artists');
     var lyricsFullScreen = document.querySelector('.fullscreen .lyrics');
     var btnPlays = document.querySelectorAll('.recommend-song .btn-play');
 
+    var songSidebar = document.querySelector('.recommend-song1');
+    var songNameSidebar = songSidebar.querySelector('.song-name');
+    var authorNameSidebar = songSidebar.querySelector('.author-name');
+    var songImgSidebar = songSidebar.querySelector('img');
+    var songSrcSidebar = songSidebar.querySelector('audio source');
+
     btnPlays.forEach(btnPlay => {
         btnPlay.addEventListener('click', () => {
+            playerControl.style.bottom = '0';
             const songItem = btnPlay.closest('.recommend-song');
+
+            const dataId = songItem.getAttribute('data-id');
+            songSidebar.setAttribute('data-id', dataId);
+
+            console.log(dataId);
 
             const songSrc = songItem.querySelector('audio source');
             const newSongSrc = songSrc.getAttribute('src');
             audioSrc.setAttribute('src', newSongSrc);
+            songSrcSidebar.setAttribute('src', newSongSrc);
+            audio.load();
             console.log(audioSrc);
 
             const newImg = songItem.querySelector('.recommend-song img');
             const newImgSrc = newImg.getAttribute('src');
             playerControlImg.setAttribute('src', newImgSrc);
             songImgFullScreen.setAttribute('src', newImgSrc);
+            songImgSidebar.setAttribute('src', newImgSrc);
 
             const newSongName = songItem.querySelector('.recommend-song .song-name');
             songNameControl.innerText = newSongName.textContent;
             songNameFullScreen.innerText = newSongName.textContent;
+            songNameSidebar.innerText = newSongName.textContent;
 
             const newAuthor = songItem.querySelector('.recommend-song .author-name');
             authorControl.innerText = newAuthor.textContent;
             songArtistsFullScreen.innerText = newAuthor.textContent;
+            authorNameSidebar.innerText = newAuthor.textContent;
 
-            const newLyrics = songItem.querySelector('.recommend-song .song-lyrics');
-            lyricsFullScreen.innerText = newLyrics.textContent;
+            // const newLyrics = songItem.querySelector('.recommend-song .song-lyrics');
+            // lyricsFullScreen.innerText = newLyrics.textContent;
 
-            audio.addEventListener('canplaythrough', () => {
-                if (!isPlaying) {
-                    playPause();
-                }
-            });
-
-            audio.load();
+            audio.currentTime = 0;
             audio.play();
+            audio.addEventListener('canplaythrough', () => {
+                isPlaying = true;
+                playPauseButtons.forEach(button => {
+                    if (isPlaying === false) {
+                        button.classList.remove('fa-pause');
+                        button.classList.add('fa-play');
+                    } else {
+                        button.classList.remove('fa-play');
+                        button.classList.add('fa-pause');
+                    }
+                });
+            });
+            isPlaying = !isPlaying;
+
+            // Gọi hàm AJAX để truyền songId đến PHP
+            if (!dataId) {
+                console.error('No data-id found on the song item.');
+                return;
+            }
+
+            // Send song_id to PHP via AJAX
+            fetch('index.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'song_id': dataId
+                })
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log('Sending song_id:', dataId);
+
+                    //console.log(data); // Check what data PHP returns
+                })
+                .catch(error => console.error('Error:', error));
         })
     })
 
@@ -64,15 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function playPause() {
-        if (isPlaying) {
+        if (isPlaying !== false) {
             audio.pause();
-            playPauseButtons.forEach(button => toggleIcon(button.querySelector('i'), 'fa-play', 'fa-pause'));
+            playPauseButtons.forEach(button => toggleIcon(button, 'fa-play', 'fa-pause'));
         } else {
             audio.play();
-            playPauseButtons.forEach(button => toggleIcon(button.querySelector('i'), 'fa-pause', 'fa-play'));
+            playPauseButtons.forEach(button => toggleIcon(button, 'fa-pause', 'fa-play'));
         }
         isPlaying = !isPlaying;
-        localStorage.setItem('audioIsPlaying', isPlaying);
     }
 
 
@@ -93,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
             progressBars.forEach(bar => bar.value = progress);
             updateDisplayTime();
         }
-        localStorage.setItem('audioCurrentTime', audio.currentTime);
     });
 
     function updateDisplayTime() {
@@ -125,7 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
             audio.play();
         } else {
             isPlaying = false;
-            playPauseButtons.forEach(button => toggleIcon(button.querySelector('i'), 'fa-pause', 'fa-play'));
+            // playPause();
+            playPauseButtons.forEach(button => toggleIcon(button, 'fa-pause', 'fa-play'));
         }
     });
 
@@ -137,25 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (event) => {
         const searchInput = document.getElementById('searchInput');
-
         if (event.code === 'Space' && searchInput && !searchInput.contains(event.target)) {
-            event.preventDefault(); // Ngăn chặn hành vi mặc định (cuộn trang)
+            event.preventDefault();
             playPause();
         }
     });
-
-    const savedCurrentTime = localStorage.getItem('audioCurrentTime');
-    const savedIsPlaying = localStorage.getItem('audioIsPlaying') === 'true';
-
-    if (savedCurrentTime !== null) {
-        audio.currentTime = parseFloat(savedCurrentTime);
-    }
-
-    if (savedIsPlaying) {
-        audio.play();
-        isPlaying = true;
-        togglePlayPauseIcons();
-    }
 
     progressBars.forEach(bar => {
         bar.addEventListener('mousedown', () => isSeeking = true);
@@ -163,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isSeeking = false;
             const newTime = (e.target.value / 100) * audio.duration;
             audio.currentTime = newTime;
-            localStorage.setItem('audioCurrentTime', newTime);
+            console.log(isSeeking);
         });
     });
 });

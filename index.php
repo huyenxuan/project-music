@@ -7,6 +7,11 @@ include("./config/format.php");
 $frontend = new FrontEnd();
 $format = new Format();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['song_id'])) {
+  $song_id = $_POST['song_id'];
+  $show_song_same_category = $frontend->show_song_same_category($song_id);
+}
+var_dump($_POST);
 if (isset($_SESSION['user_id'])) {
   $user_id = $_SESSION['user_id'];
   $show_playlist_of_user = $frontend->show_playlist_of_user($user_id);
@@ -83,7 +88,7 @@ $show_maylike = $frontend->show_maylike($user_id);
           while ($resultSongHot = $show_song_hot->fetch_assoc()) {
             ?>
             <!-- song item -->
-            <div class="recommend-song" data-id="song-<?php echo $resultSongHot['song_id'] ?>">
+            <div class="recommend-song" data-id="<?php echo $resultSongHot['song_id'] ?>">
               <audio hidden>
                 <source src="admin/upload/song/<?php echo $resultSongHot['file_path'] ?>" type="audio/mp3">
               </audio>
@@ -204,7 +209,7 @@ $show_maylike = $frontend->show_maylike($user_id);
           while ($resultSongNew = $show_song_new->fetch_assoc()) {
             ?>
             <!-- song item -->
-            <div class="recommend-song" data-id="song-<?php echo $resultSongNew['song_id'] ?>">
+            <div class="recommend-song" data-id="<?php echo $resultSongNew['song_id'] ?>">
               <audio hidden>
                 <source src="admin/upload/song/<?php echo $resultSongNew['file_path'] ?>" type="audio/mp3">
               </audio>
@@ -559,7 +564,7 @@ $show_maylike = $frontend->show_maylike($user_id);
   <div class="sidebar">
     <div class="sidebar-container">
       <!-- item -->
-      <div class="recommend-song playing">
+      <div class="recommend-song recommend-song1 playing" data-id="">
         <audio hidden>
           <source src="">
         </audio>
@@ -585,705 +590,42 @@ $show_maylike = $frontend->show_maylike($user_id);
           </ul>
         </div>
       </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="" type="audio/mp3">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <div class="recommend-song">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
-          <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
+      <?php
+      if ($show_song_same_category) {
+        while ($resultSongSameCategory = $show_song_same_category->fetch_assoc()) {
+          ?>
+          <div class="recommend-song" data-id="<?php echo $resultSongSameCategory['song_id'] ?>">
+            <audio hidden>
+              <source src="./admin/upload/song/<?php echo $resultSongSameCategory['file_path'] ?>" type="audio/mp3">
+            </audio>
+            <div class="recommend-cover">
+              <img src="./admin/upload/images/imagesong/<?php echo $resultSongSameCategory['song_image'] ?>" alt="">
+              <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
+            </div>
+            <div class="recommend-name">
+              <div class="song-name"><?php echo $format->textShorten($resultSongSameCategory['song_name'], 20) ?></div>
+              <div class="author-name"><a href=""><?php echo $resultSongSameCategory['authorSong'] ?></a></div>
+            </div>
+            <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
+            <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
+            <!-- submenu -->
+            <div class="add-playlist">
+              <p>Thêm vào playlist:</p>
+              <ul>
+                <li>Playlist 1</li>
+                <li>Playlist 2</li>
+                <li>Playlist 3</li>
+              </ul>
+            </div>
+          </div>
+          <?php
+        }
+      } else {
+        echo $song_id;
+      }
+      ?>
     </div>
   </div>
-
 </div>
 <!-- custom right-click menu -->
 <div id="custom-menu" class="custom-menu">
@@ -1390,9 +732,7 @@ $show_maylike = $frontend->show_maylike($user_id);
     </div>
   </div>
   <!-- lyrics -->
-  <div class="lyrics">
-
-  </div>
+  <div class="lyrics"></div>
   <div class="player-control-bar">
     <!-- action song -->
     <div class="action-ctn">
