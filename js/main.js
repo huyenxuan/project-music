@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     var songImgFullScreen = document.querySelector('.fullscreen img');
     var songNameFullScreen = document.querySelector('.fullscreen .name-song');
     var songArtistsFullScreen = document.querySelector('.fullscreen .artists');
-    var lyricsFullScreen = document.querySelector('.fullscreen .lyrics');
     var btnPlays = document.querySelectorAll('.recommend-song .btn-play');
 
     var songSidebar = document.querySelector('.recommend-song1');
@@ -38,8 +37,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const dataId = songItem.getAttribute('data-id');
             songSidebar.setAttribute('data-id', dataId);
-
             console.log(dataId);
+            function fetchRelatedSongs(songId) {
+                fetch(`get_related_songs.php?song_id=${songId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Error fetching related songs: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const relatedSongsContainer = document.getElementById('related-songs-container'); // Element to append related songs
+                        relatedSongsContainer.innerHTML = ''; // Clear any existing songs
+
+                        data.forEach(song => {
+                            const songItem = `
+                                <div class="recommend-song" data-id="${song.song_id}">
+                                    <audio hidden>
+                                      <source src="./admin/upload/song/${song.filePath}">
+                                    </audio>
+                                    <div class="recommend-cover">
+                                      <img src="./admin/upload/images/imagesong/${song.song_image}" alt="${song.song_name}">
+                                      <div class="cover-overlay">
+                                        <button class="btn-play"><i class="fa-solid fa-play"></i></button>
+                                      </div>
+                                    </div>
+                                    <div class="recommend-name">
+                                      <div class="song-name"><?php echo $format->textShorten(${song.song_name}, 25) ?></div>
+                                      <div class="author-name"><a href="">${song.author_name}</a></div>
+                                    </div>
+                                    <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
+                                    <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
+                                    <!-- submenu -->
+                                    <div class="add-playlist">
+                                      <p>Thêm vào playlist:</p>
+                                      <ul>
+                                        <li>Playlist 1</li>
+                                        <li>Playlist 2</li>
+                                        <li>Playlist 3</li>
+                                      </ul>
+                                    </div>
+                                </div>`;
+                            relatedSongsContainer.insertAdjacentHTML('beforeend', songItem);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching related songs:', error);
+                        // Handle the error gracefully (e.g., display an error message)
+                    });
+            }
+            fetchRelatedSongs(dataId);
+
 
             const songSrc = songItem.querySelector('audio source');
             const newSongSrc = songSrc.getAttribute('src');
@@ -64,9 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
             songArtistsFullScreen.innerText = newAuthor.textContent;
             authorNameSidebar.innerText = newAuthor.textContent;
 
-            // const newLyrics = songItem.querySelector('.recommend-song .song-lyrics');
-            // lyricsFullScreen.innerText = newLyrics.textContent;
-
             audio.currentTime = 0;
             audio.play();
             audio.addEventListener('canplaythrough', () => {
@@ -82,30 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
             isPlaying = !isPlaying;
-
-            // Gọi hàm AJAX để truyền songId đến PHP
-            if (!dataId) {
-                console.error('No data-id found on the song item.');
-                return;
-            }
-
-            // Send song_id to PHP via AJAX
-            fetch('index.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    'song_id': dataId
-                })
-            })
-                .then(response => response.text())
-                .then(data => {
-                    console.log('Sending song_id:', dataId);
-
-                    //console.log(data); // Check what data PHP returns
-                })
-                .catch(error => console.error('Error:', error));
         })
     })
 

@@ -7,14 +7,10 @@ include("./config/format.php");
 $frontend = new FrontEnd();
 $format = new Format();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['song_id'])) {
-  $song_id = $_POST['song_id'];
-  $show_song_same_category = $frontend->show_song_same_category($song_id);
-}
-var_dump($_POST);
 if (isset($_SESSION['user_id'])) {
   $user_id = $_SESSION['user_id'];
   $show_playlist_of_user = $frontend->show_playlist_of_user($user_id);
+  $show_maylike = $frontend->show_maylike($user_id);
 } else {
   $show_playlist_of_user = 0;
 }
@@ -26,8 +22,6 @@ $show_playlist_hot = $frontend->show_playlist_hot();
 $show_song_new = $frontend->show_song_new();
 $show_album_new = $frontend->show_album_new();
 $show_playlist_new = $frontend->show_playlist_new();
-$show_maylike = $frontend->show_maylike($user_id);
-
 ?>
 
 <title>HHMusic</title>
@@ -37,6 +31,7 @@ $show_maylike = $frontend->show_maylike($user_id);
     width: 50px;
   }
 </style>
+
 <div class="mainBox">
   <!-- banner -->
   <div class="banner">
@@ -569,14 +564,14 @@ $show_maylike = $frontend->show_maylike($user_id);
           <source src="">
         </audio>
         <div class="recommend-cover">
-          <img src="assets/images/recommend-1.jpg" alt="">
+          <img src="" alt="">
           <div class="cover-overlay">
-            <button><i class="fa-solid fa-play"></i></button>
+            <button class="btn-play"><i class="fa-solid fa-play"></i></button>
           </div>
         </div>
         <div class="recommend-name">
-          <div class="song-name">PAIN</div>
-          <div class="author-name"><a href="">Ryan Jones</a></div>
+          <div class="song-name"></div>
+          <div class="author-name"><a href=""></a></div>
         </div>
         <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
         <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
@@ -590,40 +585,10 @@ $show_maylike = $frontend->show_maylike($user_id);
           </ul>
         </div>
       </div>
-      <?php
-      if ($show_song_same_category) {
-        while ($resultSongSameCategory = $show_song_same_category->fetch_assoc()) {
-          ?>
-          <div class="recommend-song" data-id="<?php echo $resultSongSameCategory['song_id'] ?>">
-            <audio hidden>
-              <source src="./admin/upload/song/<?php echo $resultSongSameCategory['file_path'] ?>" type="audio/mp3">
-            </audio>
-            <div class="recommend-cover">
-              <img src="./admin/upload/images/imagesong/<?php echo $resultSongSameCategory['song_image'] ?>" alt="">
-              <div class="cover-overlay"><button><i class="fa-solid fa-play"></i></button></div>
-            </div>
-            <div class="recommend-name">
-              <div class="song-name"><?php echo $format->textShorten($resultSongSameCategory['song_name'], 20) ?></div>
-              <div class="author-name"><a href=""><?php echo $resultSongSameCategory['authorSong'] ?></a></div>
-            </div>
-            <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-            <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-            <!-- submenu -->
-            <div class="add-playlist">
-              <p>Thêm vào playlist:</p>
-              <ul>
-                <li>Playlist 1</li>
-                <li>Playlist 2</li>
-                <li>Playlist 3</li>
-              </ul>
-            </div>
-          </div>
-          <?php
-        }
-      } else {
-        echo $song_id;
-      }
-      ?>
+      <!-- other item -->
+      <div id="related-songs-container">
+
+      </div>
     </div>
   </div>
 </div>
