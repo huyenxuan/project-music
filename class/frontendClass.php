@@ -253,12 +253,53 @@ class FrontEnd
         $query = "SELECT *, us.fullName AS authorSong
                 FROM tbl_song s
                 JOIN tbl_user us ON s.user_id = us.user_id
-                WHERE s.category_id = (SELECT category_id  FROM tbl_song WHERE song_id = '$song_id')";
+                WHERE s.category_id = (
+                        SELECT category_id 
+                        FROM tbl_song 
+                        WHERE song_id = '$song_id')
+                ORDER BY CASE 
+                WHEN song_id = '$song_id' THEN 0
+                ELSE 1 END
+                LIMIT 30";
         $result = $this->db->select($query);
         return $result;
     }
-
-
+    // show song in album 
+    public function show_song_in_album($album_id)
+    {
+        $query = "SELECT *, us.fullName AS authorSong
+                FROM tbl_album ab
+                JOIN tbl_album_song abs ON ab.album_id = abs.album_id
+                JOIN tbl_song s ON abs.song_id = s.song_id
+                JOIN tbl_user us on s.user_id = us.user_id
+                WHERE ab.album_id = '$album_id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // show song in playlist
+    public function show_song_in_playlist($playlist_id)
+    {
+        $query = "SELECT *, us.fullName AS authorSong
+                FROM tbl_playlist pl
+                JOIN tbl_playlist_song pls ON pl.playlist_id = pls.playlist_id
+                JOIN tbl_song s ON pls.song_id = s.song_id
+                JOIN tbl_user us on s.user_id = us.user_id
+                WHERE pl.playlist_id = '$playlist_id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    // func show other user 
+    public function show_user()
+    {
+        $query = "SELECT us.*, COUNT(fl.follower_id) AS followers_count
+                FROM tbl_user us
+                LEFT JOIN tbl_follow fl ON us.user_id = fl.follower_id
+                GROUP BY us.user_id
+                ORDER BY followers_count DESC
+                LIMIT 12";
+        $result = $this->db->select($query);
+        return $result;
+    }
     // func show follower
     public function show_follower($user_id)
     {

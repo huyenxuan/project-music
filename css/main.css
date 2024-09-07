@@ -2,6 +2,7 @@
     --header-color: rgba(34, 53, 78, 0.9);
     --body-color: rgb(22, 42, 69);
     --sidebar-color: rgb(34, 53, 78);
+    --btn-activeColor: rgb(66, 158, 255);
 }
 
 * {
@@ -235,6 +236,45 @@
 /* user */
 .user {
     align-content: center;
+    min-width: 115px;
+    position: relative;
+}
+
+.user ul {
+    width: 140px;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    display: none;
+}
+
+.user ul li {
+    list-style: none;
+    padding: 10px 7px;
+    background-color: rgb(57, 74, 96, 0.9);
+}
+
+.user li a {
+    text-decoration: none;
+    color: white;
+}
+
+.user:hover ul {
+    display: block;
+}
+
+.user div {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    text-align: -webkit-center;
+}
+
+.user div img {
+    height: 80%;
+    display: flex;
+    border-radius: 50%;
 }
 
 .user .login {
@@ -286,6 +326,10 @@
 
 .playing {
     background-color: var(--hoverSong-color);
+}
+
+.sidebar .btn-play i {
+    pointer-events: none;
 }
 
 /* control player */
@@ -399,8 +443,9 @@ main input,
     color: gray;
 }
 
-.btn:hover {
-    color: rgb(66, 158, 255);
+.btn:hover,
+.btnActive {
+    color: var(--btn-activeColor);
 }
 
 .item-time {
@@ -417,6 +462,7 @@ main input,
 .item-time .duration-bar input {
     width: 100%;
     height: 7px;
+    outline: none;
 }
 
 /* player-control-right */

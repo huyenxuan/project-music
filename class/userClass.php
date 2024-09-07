@@ -34,12 +34,11 @@ class User
 
         if ($result != false) {
             $row = $result->fetch_assoc();
-            if ($row['role'] == 'admin') {
-                $_SESSION['email'] = $email;
-                $_SESSION['user_id'] = $row['user_id'];
-                header('Location: index.php');
-                exit();
-            }
+            $_SESSION['email'] = $email;
+            $_SESSION['user_id'] = $row['user_id'];
+            $_SESSION['userimage'] = $row['userimage'];
+            header('Location: index.php');
+            exit();
         } else {
             echo '<h1 style="color:red; text-align: center">Tài khoản hoặc mật khẩu không chính xác</h1>';
         }

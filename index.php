@@ -1,11 +1,5 @@
 <?php
-session_start();
 include("./inc/header.php");
-include("./class/frontendClass.php");
-include("./config/format.php");
-
-$frontend = new FrontEnd();
-$format = new Format();
 
 if (isset($_SESSION['user_id'])) {
   $user_id = $_SESSION['user_id'];
@@ -22,6 +16,7 @@ $show_playlist_hot = $frontend->show_playlist_hot();
 $show_song_new = $frontend->show_song_new();
 $show_album_new = $frontend->show_album_new();
 $show_playlist_new = $frontend->show_playlist_new();
+$show_user = $frontend->show_user();
 ?>
 
 <title>HHMusic</title>
@@ -29,6 +24,14 @@ $show_playlist_new = $frontend->show_playlist_new();
 <style>
   .recommend-cover {
     width: 50px;
+  }
+
+  .sidebar .btn-play i {
+    pointer-events: none;
+  }
+
+  .btnActive {
+    color: rgb(66, 158, 255);
   }
 </style>
 
@@ -131,18 +134,17 @@ $show_playlist_new = $frontend->show_playlist_new();
       <!-- hot album -->
       <h3>Album nổi bật</h3>
       <div class="album-container">
-        <!-- album item -->
         <?php
         if ($show_album_hot) {
           while ($resultAlbumHot = $show_album_hot->fetch_assoc()) {
             ?>
-            <div class="album-box" data-id="album-<?php echo $resultAlbumHot['album_id'] ?>">
+            <div class="album-box" data-id="<?php echo $resultAlbumHot['album_id'] ?>">
               <div class="boxtest">
                 <div class="album-cover">
                   <img src="./admin/upload/images/imagesong/<?php echo $resultAlbumHot['album_image'] ?>" alt="">
                 </div>
                 <div class="boxtestMenu">
-                  <button class="boxtestMenuBtn"><i class="fa-regular fa-circle-play"></i></button>
+                  <button class="boxtestMenuBtn btnAbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
                 </div>
               </div>
               <div class="album-name"><?php echo $resultAlbumHot['album_name'] ?></div>
@@ -161,7 +163,7 @@ $show_playlist_new = $frontend->show_playlist_new();
         if ($show_playlist_hot) {
           while ($resultPlaylistHot = $show_playlist_hot->fetch_assoc()) {
             ?>
-            <div class="playlist-box" data-id="playlist-<?php echo $resultPlaylistHot['playlist_id'] ?>">
+            <div class="playlist-box" data-id="<?php echo $resultPlaylistHot['playlist_id'] ?>">
               <div class="boxtest">
                 <div class="playlist-cover">
                   <?php
@@ -176,7 +178,7 @@ $show_playlist_new = $frontend->show_playlist_new();
                   ?>
                 </div>
                 <div class="boxtestMenu">
-                  <button class="boxtestMenuBtn btn-play"><i class="fa-regular fa-circle-play"></i></button>
+                  <button class="boxtestMenuBtn btnAbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
                 </div>
               </div>
               <div class="playlist-name"><?php echo $resultPlaylistHot['playlist_name'] ?></div>
@@ -257,13 +259,13 @@ $show_playlist_new = $frontend->show_playlist_new();
         if ($show_album_new) {
           while ($resultAlbumNew = $show_album_new->fetch_assoc()) {
             ?>
-            <div class="album-box" data-id="album-<?php echo $resultAlbumNew['album_id'] ?>">
+            <div class="album-box" data-id="<?php echo $resultAlbumNew['album_id'] ?>">
               <div class="boxtest">
                 <div class="album-cover">
                   <img src="./admin/upload/images/imagesong/<?php echo $resultAlbumNew['album_image'] ?>" alt="">
                 </div>
                 <div class="boxtestMenu">
-                  <button class="boxtestMenuBtn"><i class="fa-regular fa-circle-play"></i></button>
+                  <button class="boxtestMenuBtn btnAbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
                 </div>
               </div>
               <div class="album-name"><?php echo $resultAlbumNew['album_name'] ?></div>
@@ -282,7 +284,7 @@ $show_playlist_new = $frontend->show_playlist_new();
         if ($show_playlist_new) {
           while ($resultPlaylistNew = $show_playlist_new->fetch_assoc()) {
             ?>
-            <div class="playlist-box" data-id="playlist-<?php echo $resultPlaylistNew['playlist_id'] ?>">
+            <div class="playlist-box" data-id="<?php echo $resultPlaylistNew['playlist_id'] ?>">
               <div class="boxtest">
                 <div class="playlist-cover">
                   <?php
@@ -297,7 +299,7 @@ $show_playlist_new = $frontend->show_playlist_new();
                   ?>
                 </div>
                 <div class="boxtestMenu">
-                  <button class="boxtestMenuBtn btn-play"><i class="fa-regular fa-circle-play"></i></button>
+                  <button class="boxtestMenuBtn btnAbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
                 </div>
               </div>
               <div class="playlist-name"><?php echo $resultPlaylistNew['playlist_name'] ?></div>
@@ -371,186 +373,23 @@ $show_playlist_new = $frontend->show_playlist_new();
       <!-- maylike song -->
       <div class="fl-ctn">
         <!-- song item -->
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
-        <a href="Other-profile.html" class="follower-container">
-          <div class="follower-image">
-            <img src="assets/images/user-profile.jpg" alt="">
-          </div>
-          <div class="follower-name-container">
-            <div class="follower-name">USER 1</div>
-            <div class="count-follower">100K theo dõi</div>
-          </div>
-        </a>
+        <?php
+        if ($show_user) {
+          while ($resultUser = $show_user->fetch_assoc()) {
+            ?>
+            <a href="Other-profile.html" class="follower-container">
+              <div class="follower-image">
+                <img src="./admin/upload/images/imageuser/<?php echo $resultUser['userimage'] ?>" alt="">
+              </div>
+              <div class="follower-name-container">
+                <div class="follower-name"><?php echo $resultUser['fullName'] ?></div>
+                <div class="count-follower"><?php echo $format->number($resultUser['followers_count']) . 'theo dõi' ?></div>
+              </div>
+            </a>
+            <?php
+          }
+        }
+        ?>
       </div>
     </div>
   </div>
@@ -559,36 +398,6 @@ $show_playlist_new = $frontend->show_playlist_new();
   <div class="sidebar">
     <div class="sidebar-container">
       <!-- item -->
-      <div class="recommend-song recommend-song1 playing" data-id="">
-        <audio hidden>
-          <source src="">
-        </audio>
-        <div class="recommend-cover">
-          <img src="" alt="">
-          <div class="cover-overlay">
-            <button class="btn-play"><i class="fa-solid fa-play"></i></button>
-          </div>
-        </div>
-        <div class="recommend-name">
-          <div class="song-name"></div>
-          <div class="author-name"><a href=""></a></div>
-        </div>
-        <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
-        <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
-        <!-- submenu -->
-        <div class="add-playlist">
-          <p>Thêm vào playlist:</p>
-          <ul>
-            <li>Playlist 1</li>
-            <li>Playlist 2</li>
-            <li>Playlist 3</li>
-          </ul>
-        </div>
-      </div>
-      <!-- other item -->
-      <div id="related-songs-container">
-
-      </div>
     </div>
   </div>
 </div>

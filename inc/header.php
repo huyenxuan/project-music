@@ -1,3 +1,11 @@
+<?php
+session_start();
+include("./class/frontendClass.php");
+include("./config/format.php");
+
+$frontend = new FrontEnd();
+$format = new Format();
+?>
 <html lang="en">
 
 <head>
@@ -7,6 +15,52 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="shortcut icon" href="./asset/img/logo.png">
 </head>
+<style>
+    .user {
+        align-content: center;
+        min-width: 115px;
+        position: relative;
+    }
+
+    .user ul {
+        width: 140px;
+        position: absolute;
+        right: 0;
+        top: 60px;
+        display: none;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .user ul li {
+        list-style: none;
+        padding: 10px 7px;
+        background-color: rgb(57, 74, 96, 0.9);
+    }
+
+    .user li a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .user:hover ul {
+        display: block;
+    }
+
+    .user div {
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        align-content: center;
+        text-align: -webkit-center;
+    }
+
+    .user div img {
+        height: 80%;
+        display: flex;
+        border-radius: 50%;
+    }
+</style>
 
 <body>
     <div class="mainBody">
@@ -52,7 +106,7 @@
                 </label>
                 <ul class="nav_mobile_list">
                     <li>
-                        <a href="" class="nav_mobile_link">Trang chủ</a>
+                        <a href="index.php" class="nav_mobile_link">Trang chủ</a>
                     </li>
                     <li>
                         <a href="" class="nav_mobile_link">Nhạc Việt</a>
@@ -70,7 +124,32 @@
             </div>
             <!-- user -->
             <div class="user">
-                <div class="login"><a href="Login.html">Đăng nhập</a></div>
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    $fullName = $_SESSION['fullName'];
+                    $userimage = $_SESSION['userimage'];
+                    ?>
+                    <div><img <?php if (isset($userimage)) {
+                        echo 'src="./admin/upload/images/imageuser/' . $userimage . '"';
+                    } else {
+                        echo 'src="./asset/img/user-default.png"';
+                    } ?> alt="<?php echo $fullName ?>"
+                            title="<?php echo $fullName ?>">
+                    </div>
+                    <!-- submenu -->
+                    <ul>
+                        <li><a href="user.php">Thông tin cá nhân</a></li>
+                        <li><a href="logout.php" style="color: red; font-weight: bold">Đăng xuất</a></li>
+                    </ul>
+                    <?php
+                } else {
+                    ?>
+                    <div class="login">
+                        <a href="Login.php">Đăng nhập</a>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
         </div>
 

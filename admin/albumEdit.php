@@ -34,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Failed to upload image.";
         }
     } else {
-        // Nếu không có ảnh mới, giữ nguyên ảnh cũ
         $album_image = $result['album_image'];
     }
 
