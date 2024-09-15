@@ -1,0 +1,53 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.title_search {
+    text-align: center;
+    color: white;
+}
+
+.new-release-container {
+    width: 100%;
+}
+
+.new-release-tab {
+    width: 80%;
+    margin: 20px auto 10px auto;
+    display: flex;
+
+}
+
+.new-release-tab button {
+    background-color: transparent;
+    border: 1px solid rgb(46, 64, 88);
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 15px;
+    color: white;
+    width: 100px;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+.new-release-tab button.active {
+    background-color: rgb(59, 104, 239);
+    border: none;
+}
+
+.tab-content {
+    margin: auto;
+    width: 80%;
+    border: 1px solid white;
+}
+
+.tab-flex {
+    padding: 7px !important;
+}
+
+.fl-ctn {
+    padding: 5px;
+}

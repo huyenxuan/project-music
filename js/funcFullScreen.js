@@ -1,4 +1,4 @@
-// Fullscreen functionality
+// Full màn hình
 const fullscreenButton = document.getElementById('fullscreenButton');
 const fullscreenContent = document.querySelector('.fullscreen');
 
@@ -16,6 +16,7 @@ function enterFullscreen() {
     fullscreenButton.style.display = 'none';
 }
 
+// thoát full màn hình
 function exitFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();

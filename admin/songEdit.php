@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 </style>
 <link rel="stylesheet" href="./css/user.css">
-<title>Thêm bài hát</title>
+<title>Chỉnh sửa bài hát</title>
 <!-- main content -->
 <div class="main-content">
     <h2 class="title">Sửa bài hát</h2>
@@ -190,14 +190,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
             </div>
             <div class="file-song">
-                <label for="">File nhạc <span style="color: red">*</span></label><br>
+                <label for="">File nhạc</label><br>
                 <audio controls required>
                     <source src="upload/song/<?php echo $result['file_path'] ?>">
                 </audio>
                 <input type="file" name="file_path" accept="audio/*">
             </div>
             <div class="image">
-                <label for="">Ảnh bìa <span style="color: red">*</span></label><br>
+                <label for="">Ảnh bìa</label><br>
                 <img src="upload/images/imagesong/<?php echo $result['song_image'] ?>" alt="">
                 <input type="file" name="song_image" accept="image/*">
             </div>

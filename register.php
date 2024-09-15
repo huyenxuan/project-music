@@ -1,17 +1,52 @@
 <?php
-ob_start();
 session_start();
 include("./class/userClass.php");
 $user = new user();
+
+$erroFullName = '';
+$erroEmail = '';
+$erroPass = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullName'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    // kiểm tra tên
+    if ($fullName === '') {
+        $erroFullName = 'Không được để trống trường';
+    } else if (preg_match('/^[^a-zA-Z]/', $fullName)) {
+        $erroFullName = 'Tên phải bắt đầu bằng chữ';
+    }
+    // kiểm tra email
+    if ($email === '') {
+        $erroEmail = 'Không được để trống trường';
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erroEmail = 'Định dạng email không đúng';
+    }
+    // kiểm tra mật khẩu
+    if ($password === '') {
+        $erroPass = 'Không được để trống trường';
+    } else if (strlen($password) < 8 || strlen($password) > 20) {
+        $erroPass = 'Mật khẩu phải có độ dài tối thiểu 15 ký tự';
+    } else if (!preg_match('/[A-Z]/', $password)) {
+        $erroPass = 'Mật khẩu phải chứa ký tự in hoa';
+    } else if (!preg_match('/[a-z]/', $password)) {
+        $erroPass = 'Mật khẩu phải chứa ký tự in thường';
+    } else if (!preg_match('/[!@$%^&*()]/', $password)) {
+        $erroPass = 'Mật khẩu phải chứa ký tự đặc biệt';
+    }
 
-    $insert_user = $user->register($fullName, $email, $password);
-
-    // exit;
+    // mọi thứ đều đúng
+    if ($erroFullName === '' && $erroEmail === '' && $erroPass === '') {
+        $register = $user->register($fullName, $email, $password);
+        if ($register) {
+            ?>
+            <script>alert('Đăng ký thành công')</script>
+            <?php
+            // header('location:login.php');
+            // exit();
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -37,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .register-box {
             margin: auto;
             background-color: rgba(205, 205, 205, 0.95);
-            border-radius: 10px
+            border-radius: 10px;
+            width: 370px;
         }
 
         h2 {
@@ -52,6 +88,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .pw i {
             color: black;
         }
+
+        form div {
+            margin-bottom: 10px;
+        }
+
+        form div input {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -65,11 +109,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="form-ctn">
             <form action="" class="form-signup" method="POST">
-                <input required type="name" name="fullName" id="" placeholder="Họ và tên">
-                <input required type="email" name="email" id="" placeholder="Email">
+                <div class="fullName">
+                    <input type="name" name="fullName" id="" placeholder="Họ và tên">
+                    <?php if ($erroFullName !== "") {
+                        echo "<p style='color: red; font-size: 15px; margin-left: 10px'>" . $erroFullName . "</p>";
+                    } ?>
+                </div>
+                <div class="email">
+                    <input type="text" name="email" id="" placeholder="Email">
+                    <?php if ($erroEmail !== "") {
+                        echo "<p style='color: red; font-size: 15px; margin-left: 10px'>" . $erroEmail . "</p>";
+                    } ?>
+                </div>
                 <div class="pw">
-                    <input required type="password" name="password" class="password" placeholder="Mật khẩu">
+                    <input type="password" name="password" class="password" placeholder="Mật khẩu">
                     <i class="toggle-password fa-solid fa-eye"></i>
+                    <?php if ($erroPass !== "") {
+                        echo "<p style='color: red; font-size: 15px; margin-left: 10px'>" . $erroPass . "</p>";
+                    } ?>
                 </div>
                 <button type="submit">Đăng ký</button>
             </form>

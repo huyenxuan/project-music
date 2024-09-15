@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['upd_playlistsong'])) {
         if (is_numeric($song_id) && $song_id > 0) {
             $add_song = $playlist->add_song_to_playlist($playlist_id, $song_id);
-            // header('location: ')
         }
     }
     if (isset($_POST['upd_playlist'])) {
@@ -109,6 +108,10 @@ if ($songs_in_playlist) {
                     </select>
                     <button name="upd_playlistsong">Thêm bài hát</button>
                 </div>
+            </div>
+            <div class="privacy">
+                <label for="" style="margin-right: 10px">Riêng tư: </label>
+                <input name="privacy" type="checkbox"><br>
             </div>
             <button name="upd_playlist">Cập nhật</button>
         </form><br>

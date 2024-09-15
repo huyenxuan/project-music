@@ -8,6 +8,6 @@ if (!isset($_GET["albumSongId"]) || $_GET["albumSongId"] == null) {
 } else {
     $albumSongId = $_GET["albumSongId"];
 }
-$delete_albumSongId = $album->delete_albumSongId($albumSongId);
+$delete_albumSongId = $album->delete_albumSongId($album_id, $albumSongId);
 header("Location: " . $_SERVER['HTTP_REFERER']);
 exit();

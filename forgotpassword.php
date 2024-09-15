@@ -5,13 +5,13 @@ $frontend = new FrontEnd;
 $erroEmail = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
-    // kiểm tra trường email có trống hay không
+    // kiểm tra trường email
     if ($email === "") {
         $erroEmail = "Vui lòng nhập vào email!";
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $erroEmail = "Định dạng không phải email. Vui lòng nhập đúng email.";
+        $erroEmail = "Định dạng email sai!";
     } else if (!($frontend->check_email($email))) {
-        $erroEmail = "Email không tồn tại trong hệ thống.";
+        $erroEmail = "Email không tồn tại.";
     } else {
         $sendPasswordResetCode = $frontend->sendPasswordResetCode($email);
         if ($sendPasswordResetCode) {
@@ -47,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .login-box {
         margin: auto;
         background-color: rgba(205, 205, 205, 0.95);
-        border-radius: 10px
+        border-radius: 10px;
+        width: 370px;
     }
 
     form input {
@@ -63,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form action="" class="form-forgot" method="POST">
             <input type="text" name="email" id="email" placeholder="Nhập email của bạn">
             <?php if ($erroEmail !== "") {
-                echo "<p style='color: red; font-size: 17px; margin-left: 10px'>" . $erroEmail . "</p>";
+                echo "<p style='color: red; font-size: 15px; margin-left: 10px'>" . $erroEmail . "</p>";
             } ?>
             <button type="submit">Gửi mã</button>
         </form>

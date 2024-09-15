@@ -1,0 +1,99 @@
+:root {
+    --header-color: rgba(34, 53, 78, 0.9);
+    --body-color: rgb(22, 42, 69);
+    --sidebar-color: rgb(34, 53, 78);
+    --btn-activeColor: rgb(66, 158, 255);
+    --hoverSong-color: rgb(69, 90, 116);
+}
+
+.title {
+    width: 100%;
+    padding-top: 50px !important;
+}
+
+.search-bar-container {
+    width: 100%;
+    height: 50px;
+    margin: 30px auto 0 auto;
+    display: flex;
+}
+
+.search-bar-container #searchInput {
+    border: none;
+    outline: none;
+    width: 50%;
+    height: 40px;
+    border-radius: 20px;
+    padding: 10px 15px;
+    background-color: rgb(57, 74, 96, 0.9);
+    caret-color: white;
+    color: white;
+    margin: auto;
+}
+
+.search-bar-container #searchInput::placeholder {
+    color: white;
+}
+
+.search-item {
+    height: auto;
+    display: flex;
+    padding-bottom: 30px;
+}
+
+.item-container {
+    margin: auto;
+    border-radius: 5px;
+    background-color: rgb(42, 75, 110);
+    height: auto;
+    width: 80%;
+    padding: 20px 10px;
+    margin-top: 20px;
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+    row-gap: 35px;
+}
+
+
+.filter-side-bar {
+    border-radius: 5px;
+    background-color: rgba(77, 108, 141, 0.786);
+    height: 300px;
+    width: 15%;
+    position: fixed;
+    right: 1;
+}
+
+.filter-side-bar input {
+    cursor: pointer;
+}
+
+/* list song */
+.recommend-song {
+    position: relative;
+    height: 80px;
+    width: 318px;
+    border-radius: 5px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+}
+
+@media (min-width: 1250px) {
+    .recommend-song {
+        width: 300px;
+        /* margin: 10px 36px 10px 0; */
+    }
+}
+
+.recommend-cover {
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 50px;
+}
+
+.recommend-cover img {
+    height: 80%;
+}

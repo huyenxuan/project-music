@@ -12,14 +12,17 @@ class Format
     }
     public function number($number)
     {
-        if ($number <= 0) {
+        if (empty($number)) {
             $number = 0;
-        } elseif ($number > 1000) {
+        } elseif ($number < 1000) {
+            $number = $number * 1;
+        } elseif ($number >= 1000) {
             $number = $number / 1000 . 'N';
-        } elseif ($number > 1000000) {
+        } elseif ($number >= 1000000) {
             $number = $number / 1000000 . 'Tr';
-        } elseif ($number > 1000000000) {
+        } elseif ($number >= 1000000000) {
             $number = $number / 1000000000 . 'T';
         }
+        return $number;
     }
 }

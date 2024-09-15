@@ -8,23 +8,51 @@ $show_user = $album->show_user();
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 }
+
+$erroAlbumName = '';
+$erroAlbumImg = '';
+$erroAuthorAB = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $album_name = $_POST['album_name'];
     $authorAB = $_POST['authorAB'];
     $description = $_POST['description'];
     $privacy = isset($_POST['privacy']) ? 'private' : 'public';
     $album_image = $_FILES['album_image']['name'];
-    move_uploaded_file($_FILES['album_image']['tmp_name'], "upload/images/imagesong/" . $album_image);
 
-    $insert_album = $album->insert_album($album_name, $authorAB, $album_image, $description, $privacy);
+    // kiểm tra các trường có rỗng hãy không
+    if (empty($album_name)) {
+        $erroAlbumName = "Vui lòng nhập trường này";
+    } else if (preg_match('/^[^a-zA-Z]/', $albumname)) {
+        $erroAlbumName = "Tên bài hát phải bắt đầu bằng chữ";
+    }
+    if (empty($authorAB)) {
+        $erroAuthorAB = "Vui lòng nhập trường này";
+    }
+    if (empty($album_image)) {
+        $erroAlbumImg = "Vui lòng nhập trường này";
+    } else {
+        $album_image_temp = $_FILES['album_image']['tmp_name'];
+        $album_image_type = mime_content_type($album_image_temp);
+        if (!in_array($album_image_type, ['image/jpeg', 'image/png', 'image/gif'])) {
+            $erroSongImg = "Chọn file có định dạng file ảnh";
+        }
+    }
 
-    $adminId = $user_id;
-    $actions = "Thêm album";
-    $details = "Thêm album '$album_name'";
-    $album->logAdminAction($adminId, $actions, $details);
+    if (empty($erroAlbumName) && empty($erroAlbumImg) && empty($erroAlbumAB)) {
+        move_uploaded_file($_FILES['album_image']['tmp_name'], "upload/images/imagesong/" . $album_image);
 
-    header('location: albumAdd.php?albumName=' . urldecode($album_name));
-    exit();
+        $insert_album = $album->insert_album($album_name, $authorAB, $album_image, $description, $privacy);
+
+        $adminId = $user_id;
+        $actions = "Thêm album";
+        $details = "Thêm album '$album_name'";
+        $album->logAdminAction($adminId, $actions, $details);
+
+        header('location: albumAdd.php?albumName=' . urldecode($album_name));
+        exit();
+    }
+
 }
 ?>
 <title>Thêm Album</title>
@@ -42,6 +70,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         font-size: 17px;
         margin: 0 0 10px 10px;
     }
+
+    form div {
+        margin-bottom: 10px;
+    }
+
+    form input {
+        margin: 0 !important;
+    }
+
+    select {
+        margin-bottom: 0;
+    }
 </style>
 
 <body>
@@ -51,16 +91,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="info">
                 <div class="name">
                     <label for="">Tên album <span style="color: red">*</span></label><br>
-                    <input required name="album_name" type="text" placeholder="Tên album">
+                    <input name="album_name" type="text" placeholder="Tên album">
+                    <?php if (!empty($erroAlbumName)) {
+                        echo "<span style='color: red; font-size: 14px; margin-left: 20px'>" . $erroAlbumName . "</span>";
+                    } ?>
                 </div>
                 <div class="image">
                     <label for="image">Ảnh đại diện <span style="color: red">*</span></label>
-                    <input required id="image" type="file" name="album_image" accept="image/*">
+                    <input id="image" type="file" name="album_image" accept="image/*">
+                    <?php if (!empty($erroAlbumImg)) {
+                        echo "<span style='color: red; font-size: 14px; margin-left: 20px'>" . $erroAlbumImg . "</span>";
+                    } ?>
                 </div>
             </div>
             <div class="author">
                 <label for="">Tác giả <span style="color: red">*</span></label>
-                <select required name="authorAB" id="">
+                <select name="authorAB" id="">
                     <option value="">--- Chọn tác giả ---</option>
                     <?php
                     if ($show_user) {
@@ -69,7 +115,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     }
                     ?>
-                </select>
+                </select><br>
+                <?php if (!empty($erroAuthorAB)) {
+                    echo "<span style='color: red; font-size: 14px; margin-left: 20px'>" . $erroAuthorAB . "</span>";
+                } ?>
             </div>
             <div class="description">
                 <label for="">Mô tả </label><br>

@@ -57,6 +57,15 @@ class PlayList
         $result = $this->db->select($query);
         return ['result' => $result, 'totalpage' => $totalpage, 'page' => $page];
     }
+    // check song_id && playlist_id
+    public function check_song_in_playlist($playlist_id, $song_id)
+    {
+        $query = "SELECT * FROM tbl_playlist_song 
+              WHERE playlist_id = '$playlist_id' 
+              AND song_id = '$song_id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
 
     // func add song to playlist
     function add_song_to_playlist($playlist_id, $song_id)
@@ -82,6 +91,7 @@ class PlayList
     {
         $query = "SELECT * 
                 FROM tbl_song 
+                WHERE privacy = 'public'
                 ORDER BY song_name DESC";
         $result = $this->db->select($query);
         return $result;
@@ -179,7 +189,6 @@ class PlayList
         return ['result' => $result, 'totalpage' => $total_page, 'page' => $page];
     }
 
-
     // func đếm số bài hát
     function count_song_playlist($playlist_id)
     {
@@ -195,11 +204,12 @@ class PlayList
             return 0;
         }
     }
-
     // func xóa bài hát khỏi playlist
-    public function delete_playlistSongId($playlistSongId)
+    public function delete_playlistSongId($playlist_id, $playlistSongId)
     {
-        $query = "DELETE FROM tbl_playlist_song WHERE playlist_song_id = '$playlistSongId'";
+        $query = "DELETE FROM tbl_playlist_song 
+                WHERE playlist_song_id = '$playlistSongId'
+                    AND playlist_id = '$playlist_id'";
         $result = $this->db->delete($query);
         return $result;
     }

@@ -57,7 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .login-box {
         margin: auto;
         background-color: rgba(205, 205, 205, 0.95);
-        border-radius: 10px
+        border-radius: 10px;
+        width: 370px;
     }
 
     .reset_code input {
@@ -85,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" name="new_password" class="password" placeholder="Mật khẩu mới"><br>
                 <i class="toggle-password fa-solid fa-eye"></i>
                 <?php if ($erroPassword !== "") {
-                    echo "<p style='color: red; font-size: 17px; margin-left: 10px'>" . $erroPassword . "</p>";
+                    echo "<p style='color: red; font-size: 15px; margin-left: 10px'>" . $erroPassword . "</p>";
                 } ?>
             </div>
             <button type="submit">Đổi mật khẩu</button>

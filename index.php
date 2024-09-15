@@ -1,14 +1,6 @@
 <?php
 include("./inc/header.php");
 
-if (isset($_SESSION['user_id'])) {
-  $user_id = $_SESSION['user_id'];
-  $show_playlist_of_user = $frontend->show_playlist_of_user($user_id);
-  $show_maylike = $frontend->show_maylike($user_id);
-} else {
-  $show_playlist_of_user = 0;
-}
-
 $show_banner = $frontend->show_banner();
 $show_song_hot = $frontend->show_song_hot();
 $show_album_hot = $frontend->show_album_hot();
@@ -16,16 +8,13 @@ $show_playlist_hot = $frontend->show_playlist_hot();
 $show_song_new = $frontend->show_song_new();
 $show_album_new = $frontend->show_album_new();
 $show_playlist_new = $frontend->show_playlist_new();
+$show_random_song = $frontend->show_random_songs();
 $show_user = $frontend->show_user();
 ?>
 
 <title>HHMusic</title>
 <link rel="stylesheet" href="./css/home.css">
 <style>
-  .recommend-cover {
-    width: 50px;
-  }
-
   .sidebar .btn-play i {
     pointer-events: none;
   }
@@ -43,7 +32,7 @@ $show_user = $frontend->show_user();
         <!-- item banner -->
         <?php
         if ($show_banner) {
-          $bannerCount = 0; // Initialize a counter to track the number of banners
+          $bannerCount = 0;
           while ($resultBanner = $show_banner->fetch_assoc()) {
             $bannerCount++;
             ?>
@@ -84,6 +73,7 @@ $show_user = $frontend->show_user();
         <?php
         if ($show_song_hot) {
           while ($resultSongHot = $show_song_hot->fetch_assoc()) {
+            $isFavorite = isset($_SESSION['user_id']) ? $frontend->check_song_in_favorite($_SESSION['user_id'], $resultSongHot['song_id']) : false;
             ?>
             <!-- song item -->
             <div class="recommend-song" data-id="<?php echo $resultSongHot['song_id'] ?>">
@@ -98,25 +88,34 @@ $show_user = $frontend->show_user();
               </div>
               <div class="recommend-name">
                 <div class="song-name"><?php echo $format->textShorten($resultSongHot['song_name'], 25) ?></div>
-                <div class="author-name"><a href=""><?php echo $resultSongHot['authorSong'] ?></a></div>
+                <div class="author-name"><a
+                    href="otheruser.php?user_id=<?php echo $resultSongHot['user_id'] ?>"><?php echo $resultSongHot['authorSong'] ?></a>
+                </div>
               </div>
-              <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
+              <button class="boxtestMenuBtn btn-heart">
+                <i class="<?php echo $isFavorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart' ?>"></i>
+              </button>
               <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
               <!-- submenu -->
               <div class="add-playlist">
                 <p>Thêm vào playlist:</p>
                 <ul>
                   <?php
-                  if ($show_playlist_of_user) {
-                    while ($resultPlaylistUser = $show_playlist_of_user->fetch_assoc()) {
-                      ?>
-                      <li><?php echo $resultPlaylistUser['playlist_name'] ?></li>
-                      <?php
+                  if (isset($_SESSION['user_id'])) {
+                    $show_playlist_of_user = $frontend->show_playlist_of_user($_SESSION['user_id']);
+                    if ($show_playlist_of_user) {
+                      while ($resultPlaylist = $show_playlist_of_user->fetch_assoc()) {
+                        ?>
+                        <li data-id="<?php echo $resultPlaylist['playlist_id']; ?>" class="add-to-playlist">
+                          <?php echo $resultPlaylist['playlist_name']; ?>
+                        </li>
+                        <?php
+                      }
+                    } else {
+                      echo '<li></li>';
                     }
                   } else {
-                    ?>
-                    <li>Bạn cần đăng nhập trước</li>
-                    <?php
+                    echo '<li>Bạn cần <a href="login.php">đăng nhập</a> trước</li>';
                   }
                   ?>
                 </ul>
@@ -144,11 +143,13 @@ $show_user = $frontend->show_user();
                   <img src="./admin/upload/images/imagesong/<?php echo $resultAlbumHot['album_image'] ?>" alt="">
                 </div>
                 <div class="boxtestMenu">
-                  <button class="boxtestMenuBtn btnAbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
+                  <button class="boxtestMenuBtn btnAlbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
                 </div>
               </div>
               <div class="album-name"><?php echo $resultAlbumHot['album_name'] ?></div>
-              <div class="album-user"><a href=""><?php echo $resultAlbumHot['authorAlbum'] ?></a></div>
+              <div class="album-user"><a
+                  href="otheruser.php?user_id=<?php echo $resultAlbumHot['user_id'] ?>"><?php echo $resultAlbumHot['authorAlbum'] ?></a>
+              </div>
             </div>
             <?php
           }
@@ -171,18 +172,20 @@ $show_user = $frontend->show_user();
                   if ($show_image_playlist) {
                     while ($resultImagePlaylist = $show_image_playlist->fetch_assoc()) {
                       ?>
-                      <img src="./admin/upload//images/imagesong/<?php echo $resultImagePlaylist['songImage'] ?>" alt="">
+                      <img src="./admin/upload/images/imagesong/<?php echo $resultImagePlaylist['songImage'] ?>" alt="">
                       <?php
                     }
                   }
                   ?>
                 </div>
                 <div class="boxtestMenu">
-                  <button class="boxtestMenuBtn btnAbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
+                  <button class="boxtestMenuBtn btnAlbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
                 </div>
               </div>
               <div class="playlist-name"><?php echo $resultPlaylistHot['playlist_name'] ?></div>
-              <div class="playlist-user"><a href=""><?php echo $resultPlaylistHot['authorPlaylist'] ?></a></div>
+              <div class="playlist-user"><a
+                  href="otheruser.php?user_id=<?php echo $resultPlaylistHot['user_id'] ?>"><?php echo $resultPlaylistHot['authorPlaylist'] ?></a>
+              </div>
             </div>
             <?php
           }
@@ -204,6 +207,7 @@ $show_user = $frontend->show_user();
         <?php
         if ($show_song_new) {
           while ($resultSongNew = $show_song_new->fetch_assoc()) {
+            $isFavorite = isset($_SESSION['user_id']) ? $frontend->check_song_in_favorite($_SESSION['user_id'], $resultSongNew['song_id']) : false;
             ?>
             <!-- song item -->
             <div class="recommend-song" data-id="<?php echo $resultSongNew['song_id'] ?>">
@@ -218,36 +222,47 @@ $show_user = $frontend->show_user();
               </div>
               <div class="recommend-name">
                 <div class="song-name"><?php echo $format->textShorten($resultSongNew['song_name'], 25) ?></div>
-                <div class="author-name"><a href=""><?php echo $resultSongNew['authorSong'] ?></a></div>
+                <div class="author-name"><a
+                    href="otheruser.php?user_id=<?php echo $resultSongNew['user_id'] ?>"><?php echo $resultSongNew['authorSong'] ?></a>
+                </div>
               </div>
-              <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
+              <button class="boxtestMenuBtn btn-heart">
+                <i class="<?php echo $isFavorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart' ?>"></i>
+              </button>
               <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
               <!-- submenu -->
               <div class="add-playlist">
                 <p>Thêm vào playlist:</p>
                 <ul>
                   <?php
-                  if ($show_playlist_of_user) {
-                    while ($resultPlaylistUser = $show_playlist_of_user->fetch_assoc()) {
-                      ?>
-                      <li><?php echo $resultPlaylistUser['playlist_name'] ?></li>
-                      <?php
+                  if (isset($_SESSION['user_id'])) {
+                    $show_playlist_of_user = $frontend->show_playlist_of_user($_SESSION['user_id']);
+                    if ($show_playlist_of_user) {
+                      while ($resultPlaylist = $show_playlist_of_user->fetch_assoc()) {
+                        ?>
+                        <li data-id="<?php echo $resultPlaylist['playlist_id']; ?>" class="add-to-playlist">
+                          <?php echo $resultPlaylist['playlist_name']; ?>
+                        </li>
+                        <?php
+                      }
+                    } else {
+                      echo '<li></li>';
                     }
                   } else {
-                    ?>
-                    <li>Bạn cần đăng nhập trước</li>
-                    <?php
+                    echo '<li>Bạn cần <a href="login.php">đăng nhập</a> trước</li>';
                   }
                   ?>
                 </ul>
               </div>
               <!-- lyrics -->
               <div class="song-lyrics" hidden>
-                <?php echo $resultSongHot['lyrics'] ?>
+                <?php echo $resultSongNew['lyrics'] ?>
               </div>
             </div>
             <?php
           }
+        } else {
+          echo '<div>Không có thông tin</div>';
         }
         ?>
       </div>
@@ -265,11 +280,13 @@ $show_user = $frontend->show_user();
                   <img src="./admin/upload/images/imagesong/<?php echo $resultAlbumNew['album_image'] ?>" alt="">
                 </div>
                 <div class="boxtestMenu">
-                  <button class="boxtestMenuBtn btnAbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
+                  <button class="boxtestMenuBtn btnAlbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
                 </div>
               </div>
               <div class="album-name"><?php echo $resultAlbumNew['album_name'] ?></div>
-              <div class="album-user"><a href=""><?php echo $resultAlbumNew['authorAlbum'] ?></a></div>
+              <div class="album-user"><a
+                  href="otheruser.php?user_id=<?php echo $resultAlbumNew['user_id'] ?>"><?php echo $resultAlbumNew['authorAlbum'] ?></a>
+              </div>
             </div>
             <?php
           }
@@ -299,11 +316,13 @@ $show_user = $frontend->show_user();
                   ?>
                 </div>
                 <div class="boxtestMenu">
-                  <button class="boxtestMenuBtn btnAbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
+                  <button class="boxtestMenuBtn btnAlbumPlaylist"><i class="fa-regular fa-circle-play"></i></button>
                 </div>
               </div>
               <div class="playlist-name"><?php echo $resultPlaylistNew['playlist_name'] ?></div>
-              <div class="playlist-user"><a href=""><?php echo $resultPlaylistNew['authorPlaylist'] ?></a></div>
+              <div class="playlist-user"><a
+                  href="otheruser.php?user_id=<?php echo $resultPlaylistNew['user_id'] ?>"><?php echo $resultPlaylistNew['authorPlaylist'] ?></a>
+              </div>
             </div>
             <?php
           }
@@ -314,55 +333,75 @@ $show_user = $frontend->show_user();
   </div>
 
   <!-- may like -->
-  <?php
-  if ($show_maylike) {
-    ?>
-    <div class="home-recommend">
-      <div class="home-recommend-title">
-        <h1>Có thể bạn thích</h1>
-      </div>
-      <div class="home-recommend-container">
-        <!-- maylike song -->
-        <div class="song-container">
-          <?php
-          while ($resultMayLike = $show_maylike->fetch_assoc()) {
+  <div class="home-recommend">
+    <div class="home-recommend-title">
+      <h1>Có thể bạn thích</h1>
+    </div>
+    <div class="home-recommend-container">
+      <!-- maylike song -->
+      <div class="song-container">
+        <?php
+        if ($show_random_song) {
+          while ($resultSongRandom = $show_random_song->fetch_assoc()) {
+            $isFavorite = isset($_SESSION['user_id']) ? $frontend->check_song_in_favorite($_SESSION['user_id'], $resultSongRandom['song_id']) : false;
             ?>
             <!-- song item -->
-            <div class="recommend-song">
+            <div class="recommend-song" data-id="<?php echo $resultSongRandom['song_id'] ?>">
               <audio hidden>
-                <source src="">
+                <source src="admin/upload/song/<?php echo $resultSongRandom['file_path'] ?>" type="audio/mp3">
               </audio>
               <div class="recommend-cover">
-                <img src="assets/images/recommend-1.jpg" alt="">
+                <img src="./admin/upload/images/imagesong/<?php echo $resultSongRandom['song_image'] ?>" alt="">
                 <div class="cover-overlay">
                   <button class="btn-play"><i class="fa-solid fa-play"></i></button>
                 </div>
               </div>
               <div class="recommend-name">
-                <div class="song-name">PAIN</div>
-                <div class="author-name"><a href="">Ryan Jones</a></div>
+                <div class="song-name"><?php echo $format->textShorten($resultSongRandom['song_name'], 25) ?></div>
+                <div class="author-name"><a
+                    href="otheruser.php?user_id=<?php echo $resultSongRandom['user_id'] ?>"><?php echo $resultSongRandom['authorSong'] ?></a>
+                </div>
               </div>
-              <button class="boxtestMenuBtn btn-heart"><i class="fa-regular fa-heart"></i></button>
+              <button class="boxtestMenuBtn btn-heart">
+                <i class="<?php echo $isFavorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart' ?>"></i>
+              </button>
               <button class="boxtestMenuBtn btn_menu"><i class="fa-solid fa-ellipsis"></i></button>
               <!-- submenu -->
               <div class="add-playlist">
                 <p>Thêm vào playlist:</p>
                 <ul>
-                  <li>Playlist 1</li>
-                  <li>Playlist 2</li>
-                  <li>Playlist 3</li>
+                  <?php
+                  if (isset($_SESSION['user_id'])) {
+                    $show_playlist_of_user = $frontend->show_playlist_of_user($_SESSION['user_id']);
+                    if ($show_playlist_of_user) {
+                      while ($resultPlaylist = $show_playlist_of_user->fetch_assoc()) {
+                        ?>
+                        <li data-id="<?php echo $resultPlaylist['playlist_id']; ?>" class="add-to-playlist">
+                          <?php echo $resultPlaylist['playlist_name']; ?>
+                        </li>
+                        <?php
+                      }
+                    } else {
+                      echo '<li></li>';
+                    }
+                  } else {
+                    echo '<li>Bạn cần <a href="login.php">đăng nhập</a> trước</li>';
+                  }
+                  ?>
                 </ul>
+              </div>
+              <!-- lyrics -->
+              <div class="song-lyrics" hidden>
+                <?php echo $resultSongRandom['lyrics'] ?>
               </div>
             </div>
             <?php
           }
-          ?>
-        </div>
+        }
+        ?>
       </div>
     </div>
-    <?php
-  }
-  ?>
+  </div>
 
   <!-- users -->
   <div class="other-user home-recommend">
@@ -377,13 +416,21 @@ $show_user = $frontend->show_user();
         if ($show_user) {
           while ($resultUser = $show_user->fetch_assoc()) {
             ?>
-            <a href="Other-profile.html" class="follower-container">
+            <a href="otheruser.php?user_id=<?php echo $resultUser['user_id'] ?>" class="follower-container">
               <div class="follower-image">
-                <img src="./admin/upload/images/imageuser/<?php echo $resultUser['userimage'] ?>" alt="">
+                <?php
+                if (!empty($resultUser['userimage'])) {
+                  echo '<img src="./admin/upload/images/imageuser/' . $resultUser['userimage'] . '" alt="User Image">';
+                } else {
+                  echo '<img src="./asset/img/user-default.png" alt="User Image">';
+                }
+                ?>
               </div>
               <div class="follower-name-container">
                 <div class="follower-name"><?php echo $resultUser['fullName'] ?></div>
-                <div class="count-follower"><?php echo $format->number($resultUser['followers_count']) . 'theo dõi' ?></div>
+                <div class="count-follower">
+                  <?php echo $format->number($resultUser['followers_count']) . ' người theo dõi' ?>
+                </div>
               </div>
             </a>
             <?php
@@ -393,156 +440,54 @@ $show_user = $frontend->show_user();
       </div>
     </div>
   </div>
+</div>
+<?php
+include('./inc/footer.php');
+?>
+</div>
+<script>
+  const btnPlayss = document.querySelectorAll('.btn-play');
+  btnPlayss.forEach(btnPlay => {
+    btnPlay.addEventListener('click', () => {
+      const songItem = btnPlay.closest('.recommend-song');
+      if (!songItem) {
+        console.log('Không tìm thấy songItem');
+        return;
+      }
+      const dataId = songItem.getAttribute('data-id');
+      console.log(dataId);
 
-  <!-- sidebar -->
-  <div class="sidebar">
-    <div class="sidebar-container">
-      <!-- item -->
-    </div>
-  </div>
-</div>
-<!-- custom right-click menu -->
-<div id="custom-menu" class="custom-menu">
-  <ul>
-    <li onclick="menuAction('Action 1')"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;&nbsp; Quay lại</li>
-    <li onclick="menuAction('Action 2')"><i class="fa-solid fa-arrow-right"></i>&nbsp;&nbsp; Tiếp theo</li>
-    <li onclick="menuAction('Action 3')"><i class="fa-solid fa-rotate-right"></i>&nbsp;&nbsp; Tải lại trang</li>
-    <li onclick="menuAction('Action 4')"><i class="fa-regular fa-circle-dot"></i>&nbsp;&nbsp; Khám phá</li>
-    <li onclick="menuAction('Action 5')"><i class="fa-regular fa-circle-user"></i>&nbsp;&nbsp; Nhạc cá nhân</li>
-  </ul>
-</div>
+      function updateListenCount(songId) {
+        return fetch(`update_listen_count.php?song_id=${songId}`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Lỗi: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (data.success) {
+              console.log('Lượt nghe đã được cập nhật');
+            } else {
+              console.log('Cập nhật lượt nghe không thành công');
+            }
+          })
+          .catch(error => {
+            console.error('Lỗi:', error);
+          });
+      }
+      updateListenCount(dataId);
+    });
+  });
+</script>
+<script src="js/songfavorite.js"></script>
+<script src="js/banner.js"></script>
+<script src="js/handleplaysong.js"></script>
+<script src="js/callsong.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/rightmenu.js"></script>
+<script src="js/funcFullScreen.js"></script>
 
-<!-- audio -->
-<audio hidden id="myAudio">
-  <source src="" type="audio/mp3">
-</audio>
-<!-- player control -->
-<div class="player-control">
-  <div class="player-control-ctn">
-    <!-- control left -->
-    <div class="player-control-left">
-      <div class="item">
-        <div class="media">
-          <div class="media-left">
-            <div class="song-img">
-              <img src="asset/music/img/Trống Cơm.jpg" alt="">
-            </div>
-          </div>
-          <!-- name song, artists -->
-          <div class="media-content">
-            <div class="song-name">Trống cơm</div>
-            <div class="artists">Cường Seven, Soobin, Tự Long</div>
-          </div>
-          <!-- action add list -->
-          <div class="media-right">
-            <!-- favorite song -->
-            <div class="btn heart">
-              <i class="toggle-heart fa-regular fa-heart"></i>
-            </div>
-            <!-- playlist add -->
-            <div class="btn playlist-add">
-              <i class="fa-solid fa-plus"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- control bar -->
-    <div class="player-control-bar">
-      <!-- action song -->
-      <div class="action-ctn">
-        <div class="action">
-          <div class="btn btn-repeat">
-            <i class="fas fa-redo"></i>
-          </div>
-          <div class="btn btn-prev">
-            <i class="fas fa-step-backward"></i>
-          </div>
-          <div class="btn btn-toggle-play">
-            <i class="toggle-playPause fas fa-play"></i>
-          </div>
-          <div class="btn btn-next">
-            <i class="fas fa-step-forward"></i>
-          </div>
-          <div class="btn btn-random">
-            <i class="fas fa-random"></i>
-          </div>
-        </div>
-      </div>
-      <!-- time -->
-      <div class="item-time">
-        <div class="time left">00:00</div>
-        <div class="duration-bar">
-          <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
-        </div>
-        <div class="time right">00:00</div>
-      </div>
-    </div>
-    <!-- control right -->
-    <div class="player-control-right">
-      <div class="container">
-        <button class="btn-list"><i class="fa-solid fa-list"></i></button>
-        <div class="btn btn-volume">
-          <i class="fa-solid fa-volume-high"></i>
-          <input id="volume" class="volume" type="range" value="100" step="1" min="0" max="100">
-        </div>
-        <div class="btn btn-zoom" id="fullscreenButton" onclick="enterFullscreen()">
-          <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- fullcreen -->
-<div class="fullscreen">
-  <div class="song-title">
-    <div class="image-song">
-      <img src="asset/music/img/Trống Cơm.jpg" alt="">
-    </div>
-    <div class="title">
-      <div class="name-song">Trống cơm</div>
-      <div class="artists">Cường Seven, Soobin, Tự Long</div>
-    </div>
-  </div>
-  <!-- lyrics -->
-  <div class="lyrics"></div>
-  <div class="player-control-bar">
-    <!-- action song -->
-    <div class="action-ctn">
-      <div class="action">
-        <div class="btn btn-repeat">
-          <i class="fas fa-redo"></i>
-        </div>
-        <div class="btn btn-prev">
-          <i class="fas fa-step-backward"></i>
-        </div>
-        <div class="btn btn-toggle-play">
-          <i class="toggle-playPause fas fa-play"></i>
-        </div>
-        <div class="btn btn-next">
-          <i class="fas fa-step-forward"></i>
-        </div>
-        <div class="btn btn-random">
-          <i class="fas fa-random"></i>
-        </div>
-      </div>
-    </div>
-    <!-- time -->
-    <div class="item-time">
-      <div class="time left">00:00</div>
-      <div class="duration-bar">
-        <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
-      </div>
-      <div class="time right">00:00</div>
-    </div>
-  </div>
-</div>
-</div>
-<script src="./js/main.js"></script>
-<script src="./js/funcFullScreen.js"></script>
-<script src="./js/index.js"></script>
-<script src="./js/sidebar.js"></script>
 </body>
 
 </html>

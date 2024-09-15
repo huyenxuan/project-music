@@ -150,10 +150,11 @@ class Album
         return $result;
     }
     // func del song in album
-    public function delete_albumSongId($albumSongId)
+    public function delete_albumSongId($album_id, $albumSongId)
     {
         $query = "DELETE FROM tbl_album_song
-                WHERE album_song_id = '$albumSongId'";
+                WHERE album_song_id = '$albumSongId'
+                    AND album_id = '$album_id'";
         $result = $this->db->delete($query);
         return $result;
     }

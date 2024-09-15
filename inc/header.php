@@ -14,51 +14,24 @@ $format = new Format();
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="shortcut icon" href="./asset/img/logo.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-    .user {
-        align-content: center;
-        min-width: 115px;
-        position: relative;
-    }
-
-    .user ul {
-        width: 140px;
-        position: absolute;
-        right: 0;
-        top: 60px;
-        display: none;
-        border-radius: 5px;
-        overflow: hidden;
-    }
-
-    .user ul li {
-        list-style: none;
-        padding: 10px 7px;
+    .login {
         background-color: rgb(57, 74, 96, 0.9);
-    }
-
-    .user li a {
-        text-decoration: none;
-        color: white;
-    }
-
-    .user:hover ul {
-        display: block;
-    }
-
-    .user div {
-        border-radius: 10px;
-        width: 100%;
-        height: 100%;
-        align-content: center;
-        text-align: -webkit-center;
-    }
-
-    .user div img {
-        height: 80%;
+        padding: 5px;
         display: flex;
-        border-radius: 50%;
+        justify-content: space-around;
+        height: 40px !important;
+    }
+
+    .login a {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    span {
+        color: white;
     }
 </style>
 
@@ -66,7 +39,7 @@ $format = new Format();
     <div class="mainBody">
 
         <div class="header">
-            <div class="logo"><a href="Home.html">
+            <div class="logo"><a href="index.php">
                     <img src="./asset/img/logo.png" alt=""></a>
             </div>
 
@@ -76,25 +49,26 @@ $format = new Format();
             <div class="menu">
                 <!-- menu -->
                 <div class="headerMenu">
-                    <div class="menuTab"><a href="Home.html">Trang chủ</a></div>
-                    <div class="menuTab"><a href="VNsong.html">Nhạc Việt</a></div>
-                    <div class="menuTab"><a href="USUKsong.html">Nhạc Âu - Mĩ</a></div>
-                    <div class="menuTab"><a href="Discovery.html">Khám phá</a></div>
-                    <div class="menuTab"><a href="Library.html">Thư viện</a></div>
+                    <div class="menuTab"><a href="index.php">Trang chủ</a></div>
+                    <div class="menuTab"><a href="vnsong.php">Nhạc Việt</a></div>
+                    <div class="menuTab"><a href="usuksong.php">Nhạc Âu - Mĩ</a></div>
+                    <div class="menuTab"><a href="discovery.php">Khám phá</a></div>
+                    <div class="menuTab"><a href="library.php">Thư viện</a></div>
                 </div>
                 <!-- timer -->
                 <div class="timer">
                     <i class="fa-regular fa-clock"></i><br>
                     <div class="minute">
-                        <label for="time">Hẹn giờ: </label>
-                        <input type="text" name="" id="time" placeholder="...phút">
+                        <input type="number" id="time" placeholder="...phút">
+                        <button id="start-timer">Bắt đầu</button>
                     </div>
                 </div>
                 <!-- search box -->
                 <div class="searchBox">
-                    <form action="search.html" method="GET">
+                    <form action="search.php" method="GET">
                         <button><i class="fa-solid fa-magnifying-glass"></i></button>
-                        <input id="searchInput" type="search" placeholder="Tìm kiếm bài hát...">
+                        <input id="searchInput" type="search" placeholder="Tìm kiếm bài hát..." name="keysearch"
+                            value="<?php echo (isset($_GET['keysearch'])) ? $_GET['keysearch'] : '' ?>">
                     </form>
                 </div>
             </div>
@@ -109,16 +83,16 @@ $format = new Format();
                         <a href="index.php" class="nav_mobile_link">Trang chủ</a>
                     </li>
                     <li>
-                        <a href="" class="nav_mobile_link">Nhạc Việt</a>
+                        <a href="vnsong.php" class="nav_mobile_link">Nhạc Việt</a>
                     </li>
                     <li>
-                        <a href="" class="nav_mobile_link">Nhạc Âu - Mĩ</a>
+                        <a href="usuksong.php" class="nav_mobile_link">Nhạc Âu - Mĩ</a>
                     </li>
                     <li>
-                        <a href="Discover.html" class="nav_mobile_link">Khám phá</a>
+                        <a href="discover.php" class="nav_mobile_link">Khám phá</a>
                     </li>
                     <li>
-                        <a href="Library.html" class="nav_mobile_link">Thư viện</a>
+                        <a href="library.php" class="nav_mobile_link">Thư viện</a>
                     </li>
                 </ul>
             </div>
@@ -126,26 +100,26 @@ $format = new Format();
             <div class="user">
                 <?php
                 if (isset($_SESSION['user_id'])) {
-                    $fullName = $_SESSION['fullName'];
                     $userimage = $_SESSION['userimage'];
                     ?>
                     <div><img <?php if (isset($userimage)) {
                         echo 'src="./admin/upload/images/imageuser/' . $userimage . '"';
                     } else {
                         echo 'src="./asset/img/user-default.png"';
-                    } ?> alt="<?php echo $fullName ?>"
-                            title="<?php echo $fullName ?>">
+                    } ?> alt="">
                     </div>
                     <!-- submenu -->
                     <ul>
-                        <li><a href="user.php">Thông tin cá nhân</a></li>
+                        <li><a href="user.php?user_id=<?php echo $_SESSION['user_id'] ?>">Thông tin cá nhân</a></li>
                         <li><a href="logout.php" style="color: red; font-weight: bold">Đăng xuất</a></li>
                     </ul>
                     <?php
                 } else {
                     ?>
                     <div class="login">
-                        <a href="Login.php">Đăng nhập</a>
+                        <a href="login.php">ĐNhập</a>
+                        <span>/</span>
+                        <a href="register.php">ĐKý</a>
                     </div>
                     <?php
                 }

@@ -20,6 +20,7 @@ class User
         else
             return false;
     }
+    // check login
     // func login
     public function login_user($email, $password)
     {
@@ -32,15 +33,16 @@ class User
                 AND password = '$password'";
         $result = $this->db->select($query);
 
-        if ($result != false) {
+        if ($result) {
             $row = $result->fetch_assoc();
             $_SESSION['email'] = $email;
+            $_SESSION['fullName'] = $row['fullName'];
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['userimage'] = $row['userimage'];
             header('Location: index.php');
             exit();
         } else {
-            echo '<h1 style="color:red; text-align: center">Tài khoản hoặc mật khẩu không chính xác</h1>';
+            return false;
         }
     }
     // func show user
@@ -90,6 +92,10 @@ class User
     // func register
     public function register($fullName, $email, $password)
     {
+        $fullName = mysqli_real_escape_string($this->db->conn, $fullName);
+        $email = mysqli_real_escape_string($this->db->conn, $email);
+        $password = mysqli_real_escape_string($this->db->conn, $password);
+
         if (!$this->check_user($email)) {
             $slug = $this->create_slug($fullName);
             $query = "INSERT INTO tbl_user (
@@ -103,11 +109,6 @@ class User
                     '$password',
                     '$slug')";
             $result = $this->db->insert($query);
-
-            $_SESSION['email'] = $email;
-            $_SESSION['fullName'] = $fullName;
-
-            header('Location: index.php');
             return $result;
         } else {
             echo '<h2>Email hoặc Số điện thoại đã tồn tại!</h2>';

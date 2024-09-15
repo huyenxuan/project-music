@@ -10,7 +10,7 @@ $get_album = $album->get_album_by_id($album_id);
 if ($get_album) {
     $result = $get_album->fetch_assoc();
 } else {
-    echo 'Album does not exist';
+    echo 'Album không tồn tại';
     exit();
 }
 if (isset($_SESSION['user_id'])) {
@@ -24,14 +24,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $privacy = isset($_POST['privacy']) ? 'private' : 'public';
 
     if (!empty($_FILES['album_image']['name'])) {
+        $old_image = $result['album_image'];
         $album_image = $_FILES['album_image']['name'];
         $uploadDir = "upload/images/imagesong/";
         $uploadFile = $uploadDir . basename($album_image);
 
         if (move_uploaded_file($_FILES['album_image']['tmp_name'], $uploadFile)) {
             echo 'Upload thành công';
+            // Delete the old image file
+            if (file_exists($uploadDir . $old_image)) {
+                unlink($uploadDir . $old_image);
+            }
         } else {
-            echo "Failed to upload image.";
+            echo "Lỗi upload ảnh.";
         }
     } else {
         $album_image = $result['album_image'];
@@ -117,7 +122,7 @@ if ($songs_in_album) {
 
 <body>
     <div class="main-content">
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             <h2 class="title" style="color:black; margin-bottom: 10px">Cập nhật Album</h2>
             <div class="info">
                 <div class="name">

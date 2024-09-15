@@ -70,188 +70,7 @@
 }
 
 /* hot song */
-.home-recommend {
-    width: 80%;
-    margin: auto;
-    padding-bottom: 30px;
-}
 
-.home-recommend-title h1 {
-    color: white;
-    text-align: center;
-}
-
-.home-recommend-container h3 {
-    color: white;
-    padding: 15px 0 0 15px;
-    border-bottom: 1px solid white;
-    width: 150px;
-    margin-left: 0;
-    padding: 0;
-}
-
-.song-container,
-.album-container,
-.playlist-container,
-.boxtest-container {
-    display: flex;
-    flex-flow: row wrap;
-    padding: 10px 0 10px 15px;
-}
-
-.recommend-song {
-    position: relative;
-    height: 80px;
-    width: 320px;
-    border-radius: 5px;
-    display: flex;
-    padding: 10px;
-    align-items: center;
-}
-
-.recommend-song:hover {
-    background-color: var(--hoverSong-color);
-}
-
-@media (min-width: 1300px) {
-    .recommend-song {
-        width: 300px;
-    }
-
-    .album-box:nth-child(6n),
-    .playlist-box:nth-child(6n),
-    .new-album:nth-child(6n) {
-        margin: 0;
-    }
-
-    .album-box,
-    .playlist-box {
-        margin: 0 36px 10px 0;
-    }
-
-}
-
-.recommend-cover {
-    position: relative;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.recommend-cover img {
-    height: 80%;
-}
-
-.cover-overlay {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    opacity: 0;
-}
-
-.recommend-song:hover .cover-overlay {
-    opacity: 1;
-}
-
-.recommend-song button {
-    transform: scale(0.7);
-    opacity: 0;
-}
-
-.cover-overlay button {
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-}
-
-.recommend-song:hover button {
-    opacity: 1;
-}
-
-.recommend-name {
-    width: 55%;
-    margin-left: 10px;
-}
-
-.song-name {
-    color: white;
-    font-weight: bold;
-}
-
-.song-name:hover {
-    color: rgb(66, 158, 255);
-    cursor: pointer;
-}
-
-.author-name a {
-    padding-top: 5px;
-    color: gray;
-    font-size: 14px;
-    text-decoration: none;
-}
-
-.author-name:hover a {
-    color: rgb(66, 158, 255);
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.boxtestMenuBtn {
-    width: 40px;
-    height: 40px;
-    padding-top: 2px;
-    border-radius: 100%;
-    font-size: 25px;
-    background-color: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-
-.boxtestMenuBtn:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-.add-playlist {
-    position: absolute;
-    top: 50%;
-    right: 50px;
-    transform: translateY(-50%);
-    background-color: rgb(34, 53, 78);
-    padding: 10px;
-    color: white;
-    z-index: 999;
-    display: none;
-    width: 200px;
-}
-
-.add-playlist p {
-    padding: 10px 5px 0 5px;
-    margin: 20px 0 10px;
-    font-weight: bold;
-    font-size: 19px;
-}
-
-.add-playlist ul li {
-    margin: 0 0 10px 15px;
-    list-style: none;
-    cursor: pointer;
-}
-
-.add-playlist ul li a {
-    color: white;
-    text-decoration: none;
-}
-
-.add-playlist ul li a:hover {
-    text-decoration: underline;
-}
 
 /* hot album, playlist */
 .album-box,
@@ -283,7 +102,8 @@
 .album-container .boxtest,
 .playlist-container .boxtest {
     border-radius: 10px;
-    width: 100%;
+    width: 170px;
+    height: 170px;
     position: relative;
     overflow: hidden;
 }
@@ -292,10 +112,12 @@
 .playlist-cover {
     display: flex;
     flex-flow: row wrap;
+    width: 100%;
+    height: 100%;
 }
 
 .album-cover img {
-    width: 100%;
+    width: 170px;
     height: 100%;
     transition: 0.5s;
 }

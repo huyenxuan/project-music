@@ -1,0 +1,156 @@
+body {
+    height: 100%;
+}
+
+.title {
+    margin: auto;
+    padding-top: 35px;
+}
+
+.mainBody {
+    height: auto;
+}
+
+main {
+    width: 70%;
+    height: auto;
+    margin: 10px auto;
+    background-color: rgb(57, 74, 96);
+    padding: 10px 20px 40px 20px;
+    box-sizing: border-box;
+}
+
+.form-ctn form {
+    margin-top: 20px;
+}
+
+.form-ctn form div {
+    margin-top: 20px;
+}
+
+.form-ctn form .info {
+    display: flex;
+    margin: 0;
+    width: 100%;
+}
+
+.info div {
+    margin: 0;
+}
+
+.form-ctn form label {
+    color: white;
+    font-size: 20px;
+}
+
+.form-ctn form input[type="text"] {
+    width: 100%;
+    height: 40px;
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 17px;
+    outline: none;
+    margin-left: 15px;
+}
+
+.form-ctn form span {
+    font-size: 13px;
+    color: red;
+}
+
+.form-ctn form select {
+    width: 250px;
+    height: 40px;
+    border-radius: 15px;
+    padding: 5 10px;
+    font-size: 17px;
+    outline: none;
+    margin-left: 15px !important;
+}
+
+.form-ctn form .list-song {
+    margin-left: 100px;
+}
+
+.list-song button {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    margin-left: 10px;
+}
+
+form input,
+textarea {
+    color: black;
+}
+
+.description textarea {
+    width: 710px;
+    border-radius: 10px;
+    height: 100px;
+    margin-left: 15px;
+    padding: 7px 10px;
+    font-size: 17px;
+    outline: none;
+}
+
+.form-ctn form .album-image {
+    color: white;
+}
+
+.form-ctn .album-image input {
+    margin-left: 15px;
+    font-size: 17px;
+}
+
+.btn-update {
+    width: 150px;
+    height: 50px;
+    margin: 20px 0;
+    border-radius: 10px;
+    font-weight: 600;
+    background-color: rgb(34, 53, 78, 0.9);
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 20px;
+}
+
+table {
+    width: 95%;
+    border-collapse: collapse;
+    text-align: center;
+    color: white;
+    margin-top: 5px;
+}
+
+thead tr {
+    height: 30px;
+}
+
+tbody tr td {
+    height: 70px;
+}
+
+.action {
+    width: 100px;
+}
+
+.action button {
+    color: black;
+    background: red;
+    width: 50px;
+    margin: 0;
+}
+
+td a {
+    color: green;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+td a:last-child {
+    color: red;
+}

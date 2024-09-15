@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_start();
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['email']) || $_SESSION['role'] !== 'admin') {
     header('location: login.php');
     exit();
 }
@@ -17,7 +17,7 @@ if (!isset($_SESSION['email'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="shortcut icon" type="image/png" href="../asset/img/icon.jpg" />
+    <link rel="shortcut icon" type="image/png" href="../asset/img/logo.png" />
     <link rel="stylesheet" href="./css/main.css">
     <style>
         .main-content {
@@ -53,7 +53,8 @@ if (!isset($_SESSION['email'])) {
                     $fullName = $_SESSION['fullName'];
                 } ?>
                 <h1 style="font-size:16px; color:white; text-align:center; padding-bottom: 10px;">
-                    <?php echo $fullName ?></h1>
+                    <?php echo $fullName ?>
+                </h1>
             </div>
             <div class="menu">
                 <div class="item">

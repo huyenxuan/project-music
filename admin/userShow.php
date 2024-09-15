@@ -102,7 +102,13 @@ include("include/header.php");
                             <td style="width:110px;"><?php echo $count_follow_user ?></td>
                             <td><?php echo $count_user_follow ?></td>
                             <td class="image">
-                                <img src="upload/images/imageuser/<?php echo $result['userimage'] ?>" alt="">
+                                <?php
+                                if (!empty($result['userimage'])) {
+                                    echo '<img src="upload/images/imageuser/' . $result['userimage'] . '" alt="">';
+                                } else {
+                                    echo '<img src="../asset/img/user-default.png" alt="">';
+                                }
+                                ?>
                             </td>
                             <td class="action">
                                 <a href="userEdit.php?user_id=<?php echo $result['user_id'] ?>">Sửa</a>
