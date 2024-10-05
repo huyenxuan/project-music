@@ -89,7 +89,7 @@ $show_user = $frontend->show_user();
               <div class="recommend-name">
                 <div class="song-name"><?php echo $format->textShorten($resultSongHot['song_name'], 25) ?></div>
                 <div class="author-name"><a
-                    href="otheruser.php?user_id=<?php echo $resultSongHot['user_id'] ?>"><?php echo $resultSongHot['authorSong'] ?></a>
+                    href="otheruser?user_id=<?php echo $resultSongHot['user_id'] ?>"><?php echo $resultSongHot['authorSong'] ?></a>
                 </div>
               </div>
               <button class="boxtestMenuBtn btn-heart">
@@ -115,7 +115,7 @@ $show_user = $frontend->show_user();
                       echo '<li></li>';
                     }
                   } else {
-                    echo '<li>Bạn cần <a href="login.php">đăng nhập</a> trước</li>';
+                    echo '<li>Bạn cần <a href="login">đăng nhập</a> trước</li>';
                   }
                   ?>
                 </ul>
@@ -148,7 +148,7 @@ $show_user = $frontend->show_user();
               </div>
               <div class="album-name"><?php echo $resultAlbumHot['album_name'] ?></div>
               <div class="album-user"><a
-                  href="otheruser.php?user_id=<?php echo $resultAlbumHot['user_id'] ?>"><?php echo $resultAlbumHot['authorAlbum'] ?></a>
+                  href="otheruser?user_id=<?php echo $resultAlbumHot['user_id'] ?>"><?php echo $resultAlbumHot['authorAlbum'] ?></a>
               </div>
             </div>
             <?php
@@ -184,7 +184,7 @@ $show_user = $frontend->show_user();
               </div>
               <div class="playlist-name"><?php echo $resultPlaylistHot['playlist_name'] ?></div>
               <div class="playlist-user"><a
-                  href="otheruser.php?user_id=<?php echo $resultPlaylistHot['user_id'] ?>"><?php echo $resultPlaylistHot['authorPlaylist'] ?></a>
+                  href="otheruser?user_id=<?php echo $resultPlaylistHot['user_id'] ?>"><?php echo $resultPlaylistHot['authorPlaylist'] ?></a>
               </div>
             </div>
             <?php
@@ -223,7 +223,7 @@ $show_user = $frontend->show_user();
               <div class="recommend-name">
                 <div class="song-name"><?php echo $format->textShorten($resultSongNew['song_name'], 25) ?></div>
                 <div class="author-name"><a
-                    href="otheruser.php?user_id=<?php echo $resultSongNew['user_id'] ?>"><?php echo $resultSongNew['authorSong'] ?></a>
+                    href="otheruser?user_id=<?php echo $resultSongNew['user_id'] ?>"><?php echo $resultSongNew['authorSong'] ?></a>
                 </div>
               </div>
               <button class="boxtestMenuBtn btn-heart">
@@ -249,7 +249,7 @@ $show_user = $frontend->show_user();
                       echo '<li></li>';
                     }
                   } else {
-                    echo '<li>Bạn cần <a href="login.php">đăng nhập</a> trước</li>';
+                    echo '<li>Bạn cần <a href="login">đăng nhập</a> trước</li>';
                   }
                   ?>
                 </ul>
@@ -285,7 +285,7 @@ $show_user = $frontend->show_user();
               </div>
               <div class="album-name"><?php echo $resultAlbumNew['album_name'] ?></div>
               <div class="album-user"><a
-                  href="otheruser.php?user_id=<?php echo $resultAlbumNew['user_id'] ?>"><?php echo $resultAlbumNew['authorAlbum'] ?></a>
+                  href="otheruser?user_id=<?php echo $resultAlbumNew['user_id'] ?>"><?php echo $resultAlbumNew['authorAlbum'] ?></a>
               </div>
             </div>
             <?php
@@ -321,7 +321,7 @@ $show_user = $frontend->show_user();
               </div>
               <div class="playlist-name"><?php echo $resultPlaylistNew['playlist_name'] ?></div>
               <div class="playlist-user"><a
-                  href="otheruser.php?user_id=<?php echo $resultPlaylistNew['user_id'] ?>"><?php echo $resultPlaylistNew['authorPlaylist'] ?></a>
+                  href="otheruser?user_id=<?php echo $resultPlaylistNew['user_id'] ?>"><?php echo $resultPlaylistNew['authorPlaylist'] ?></a>
               </div>
             </div>
             <?php
@@ -359,7 +359,7 @@ $show_user = $frontend->show_user();
               <div class="recommend-name">
                 <div class="song-name"><?php echo $format->textShorten($resultSongRandom['song_name'], 25) ?></div>
                 <div class="author-name"><a
-                    href="otheruser.php?user_id=<?php echo $resultSongRandom['user_id'] ?>"><?php echo $resultSongRandom['authorSong'] ?></a>
+                    href="otheruser?user_id=<?php echo $resultSongRandom['user_id'] ?>"><?php echo $resultSongRandom['authorSong'] ?></a>
                 </div>
               </div>
               <button class="boxtestMenuBtn btn-heart">
@@ -385,7 +385,7 @@ $show_user = $frontend->show_user();
                       echo '<li></li>';
                     }
                   } else {
-                    echo '<li>Bạn cần <a href="login.php">đăng nhập</a> trước</li>';
+                    echo '<li>Bạn cần <a href="login">đăng nhập</a> trước</li>';
                   }
                   ?>
                 </ul>
@@ -416,7 +416,7 @@ $show_user = $frontend->show_user();
         if ($show_user) {
           while ($resultUser = $show_user->fetch_assoc()) {
             ?>
-            <a href="otheruser.php?user_id=<?php echo $resultUser['user_id'] ?>" class="follower-container">
+            <a href="otheruser?user_id=<?php echo $resultUser['user_id'] ?>" class="follower-container">
               <div class="follower-image">
                 <?php
                 if (!empty($resultUser['userimage'])) {
@@ -458,7 +458,7 @@ include('./inc/footer.php');
       console.log(dataId);
 
       function updateListenCount(songId) {
-        return fetch(`update_listen_count.php?song_id=${songId}`)
+        return fetch(`update_listen_count?song_id=${songId}`)
           .then(response => {
             if (!response.ok) {
               throw new Error(`Lỗi: ${response.status}`);

@@ -49,11 +49,11 @@ $format = new Format();
             <div class="menu">
                 <!-- menu -->
                 <div class="headerMenu">
-                    <div class="menuTab"><a href="index.php">Trang chủ</a></div>
-                    <div class="menuTab"><a href="vnsong.php">Nhạc Việt</a></div>
-                    <div class="menuTab"><a href="usuksong.php">Nhạc Âu - Mĩ</a></div>
-                    <div class="menuTab"><a href="discovery.php">Khám phá</a></div>
-                    <div class="menuTab"><a href="library.php">Thư viện</a></div>
+                    <div class="menuTab"><a href="index">Trang chủ</a></div>
+                    <div class="menuTab"><a href="vnsong">Nhạc Việt</a></div>
+                    <div class="menuTab"><a href="usuksong">Nhạc Âu - Mĩ</a></div>
+                    <div class="menuTab"><a href="discovery">Khám phá</a></div>
+                    <div class="menuTab"><a href="library">Thư viện</a></div>
                 </div>
                 <!-- timer -->
                 <div class="timer">

@@ -2,7 +2,7 @@
 ob_start();
 session_start();
 if (!isset($_SESSION['email']) || $_SESSION['role'] !== 'admin') {
-    header('location: login.php');
+    header('location: login');
     exit();
 }
 ?>
@@ -60,47 +60,47 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] !== 'admin') {
                 <div class="item">
                     <a class="sub-btn">Quản lý Banner<i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
-                        <a href="bannerAdd.php" class="sub-item">Thêm Banner</a>
-                        <a href="bannerShow.php" class="sub-item">Danh sách Banner</a>
+                        <a href="bannerAdd" class="sub-item">Thêm Banner</a>
+                        <a href="bannerShow" class="sub-item">Danh sách Banner</a>
                     </div>
                 </div>
                 <div class="item">
                     <a class="sub-btn">Quản lý Thể loại<i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
-                        <a href="cateAdd.php" class="sub-item">Thêm Thể loại</a>
-                        <a href="cateShow.php" class="sub-item">Danh sách Thể loại</a>
+                        <a href="cateAdd" class="sub-item">Thêm Thể loại</a>
+                        <a href="cateShow" class="sub-item">Danh sách Thể loại</a>
                     </div>
                 </div>
                 <div class="item">
                     <a class="sub-btn">Quản lý Bài hát<i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
-                        <a href="songAdd.php" class="sub-item">Thêm Bài hát</a>
-                        <a href="songShow.php" class="sub-item">Danh sách Bài hát</a>
+                        <a href="songAdd" class="sub-item">Thêm Bài hát</a>
+                        <a href="songShow" class="sub-item">Danh sách Bài hát</a>
                     </div>
                 </div>
                 <div class="item">
                     <a class="sub-btn">Quản lý Playlist<i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
-                        <a href="playlistAdd.php" class="sub-item">Thêm Playlist</a>
-                        <a href="playlistShow.php" class="sub-item">Danh sách Playlist</a>
+                        <a href="playlistAdd" class="sub-item">Thêm Playlist</a>
+                        <a href="playlistShow" class="sub-item">Danh sách Playlist</a>
                     </div>
                 </div>
                 <div class="item">
                     <a class="sub-btn">Quản lý Album<i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
-                        <a href="albumAdd.php" class="sub-item">Thêm Album</a>
-                        <a href="albumShow.php" class="sub-item">Danh sách Album</a>
+                        <a href="albumAdd" class="sub-item">Thêm Album</a>
+                        <a href="albumShow" class="sub-item">Danh sách Album</a>
                     </div>
                 </div>
                 <div class="item">
                     <a class="sub-btn">Quản lý Người dùng<i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
-                        <a href="userAdd.php" class="sub-item">Thêm người dùng</a>
-                        <a href="userShow.php" class="sub-item">Danh sách người dùng</a>
+                        <a href="userAdd" class="sub-item">Thêm người dùng</a>
+                        <a href="userShow" class="sub-item">Danh sách người dùng</a>
                     </div>
                 </div>
                 <div class="item">
-                    <a href="activities.php">Activities</a>
+                    <a href="activities">Activities</a>
                 </div>
             </div>
         </div>
